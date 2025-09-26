@@ -1,32 +1,45 @@
 'use client';
 
 import { useMemo } from 'react';
+import Link from 'next/link';
 import { CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import { Profile } from '@/lib/types';
 import { getRankIcon } from '@/lib/helpers';
 import { calcARProgressFromSchema } from '@/lib/ar';
+import { LogoutButton } from '@/components/auth/logout-button';
 
 export function LobbyProfileHeader({
   profile,
   connected,
 }: {
-  profile: Profile; // has adventureRank: number; exp: number; nickname, avatar_url, wins, losses...
+  profile: Profile | null; // <-- allow null for guests
   connected: boolean;
 }) {
-  const currentPlayer = useMemo(
-    () => ({
+  const currentPlayer = useMemo(() => {
+    if (!profile) {
+      return {
+        nickname: 'Guest',
+        avatar_url: '/assets/ui/UI_AvatarIcon_PlayerGirl.png',
+        adventure_rank: 1,
+        exp: 0,
+        wins: 0,
+        losses: 0,
+      };
+    }
+    return {
       nickname: profile.nickname,
-      avatar_url: profile.avatar_url ?? '/placeholder.svg',
+      avatar_url:
+        profile.avatar_url ?? '/assets/ui/UI_AvatarIcon_PlayerGirl.png',
       adventure_rank: profile.adventure_rank ?? 1,
       exp: profile.exp ?? 0,
       wins: profile.wins ?? 0,
       losses: profile.losses ?? 0,
-    }),
-    [profile]
-  );
+    };
+  }, [profile]);
 
   const winrate = useMemo(() => {
     const total = (currentPlayer.wins ?? 0) + (currentPlayer.losses ?? 0);
@@ -41,6 +54,7 @@ export function LobbyProfileHeader({
   return (
     <CardContent className="p-6">
       <div className="flex items-center justify-between">
+        {/* Left: avatar + stats */}
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16 border-2 border-primary">
             <AvatarImage
@@ -75,7 +89,8 @@ export function LobbyProfileHeader({
             </div>
           </div>
         </div>
-
+        MMR: {profile?.mmr ?? 0}
+        {/* Right: status + AR progress + auth controls */}
         <div className="text-right">
           <Badge variant={connected ? 'secondary' : 'outline'} className="mb-2">
             <div
@@ -85,6 +100,24 @@ export function LobbyProfileHeader({
           </Badge>
           <Progress value={ar.percent} className="w-32" />
           <p className="text-xs text-muted-foreground mt-1">{ar.label}</p>
+
+          {/* Auth controls */}
+          <div className="mt-3 flex items-center justify-end gap-2">
+            {!profile?.guest ? (
+              <LogoutButton />
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button size="sm" variant="outline">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm">Register</Button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </CardContent>

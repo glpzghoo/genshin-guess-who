@@ -1,38 +1,89 @@
+// game-store.ts
 import { create } from 'zustand';
 
-export interface Player {
+export type Answer = 'yes' | 'no';
+
+export type Player = {
   id: string;
   name: string;
-  avatar: string;
-  adventureRank: number;
-  secretCharacter?: string;
+  avatar?: string;
+  adventureRank?: number;
+  secretCharacter?: string | null;
   isReady: boolean;
   isConnected: boolean;
-}
+  hasPicked?: boolean;
+};
 
-export interface GameState {
-  gameId: string;
-  players: Player[];
-  currentTurn: string; // player id
-  phase: 'waiting' | 'character-select' | 'playing' | 'finished';
-  eliminatedCharacters: string[];
-  gameHistory: GameAction[];
-  winner?: string;
-  timeRemaining: number;
-}
-
-export interface GameAction {
+export type GameAction = {
   id: string;
   playerId: string;
   playerName: string;
   type: 'question' | 'guess' | 'elimination' | 'system';
   content: string;
   timestamp: number;
-  response?: string;
-}
+  response?: Answer;
+  correct?: boolean;
+  timeout?: boolean;
+};
 
-interface GameStore {
+export type GameState = {
+  gameId: string;
+  players: Player[];
+  currentTurn: string;
+  phase: 'waiting' | 'character-select' | 'playing' | 'finalize' | 'finished';
+  eliminatedCharacters: string[];
+  gameHistory: GameAction[];
+  winner?: string | null;
+  timeRemaining: number;
+  finalizeActive?: boolean;
+  finalResult?: {
+    roomId: string;
+    a: { playerId: string; name: string; correct: boolean; secret: string };
+    b: { playerId: string; name: string; correct: boolean; secret: string };
+    tie: boolean;
+    winner?: string | null;
+  };
+
+  // NEW: room meta for UI
+  roomName?: string | null;
+  inviteCode?: string | null;
+  visibility?: 'public' | 'private' | null;
+  hostId?: string | null;
+  isCustom?: boolean;
+};
+
+type ServerPlayer = {
+  id: string;
+  name: string;
+  isConnected?: boolean;
+  secretCharacter?: string | null;
+  hasPicked?: boolean;
+};
+
+type ServerState = {
+  id: string;
+  phase: GameState['phase'];
+  currentTurn: string;
+  gameHistory: GameAction[];
+  timeRemaining: number;
+  winner?: string | null;
+  finalizeActive?: boolean;
+  players: ServerPlayer[];
+
+  // meta (emitted by server in state:update)
+  roomName?: string | null;
+  inviteCode?: string | null;
+  visibility?: 'public' | 'private' | null;
+  hostId?: string | null;
+  isCustom?: boolean;
+};
+
+type GameStore = {
   gameState: GameState;
+  socketConnected: boolean; // NEW
+  setSocketConnected: (v: boolean) => void; // NEW
+  hydrateFromServer: (s: ServerState) => void; // NEW
+
   setGameState: (state: Partial<GameState>) => void;
   addPlayer: (player: Player) => void;
   removePlayer: (playerId: string) => void;
@@ -41,7 +92,7 @@ interface GameStore {
   eliminateCharacter: (characterName: string) => void;
   makeGuess: (playerId: string, characterName: string) => void;
   resetGame: () => void;
-}
+};
 
 export const useGameStore = create<GameStore>((set) => ({
   gameState: {
@@ -52,12 +103,52 @@ export const useGameStore = create<GameStore>((set) => ({
     eliminatedCharacters: [],
     gameHistory: [],
     timeRemaining: 60,
+    finalizeActive: false,
+    finalResult: undefined,
+
+    roomName: null,
+    inviteCode: null,
+    visibility: null,
+    hostId: null,
+    isCustom: false,
   },
 
-  setGameState: (newState) =>
+  socketConnected: false,
+  setSocketConnected: (v) => set({ socketConnected: v }),
+
+  hydrateFromServer: (s) =>
     set((state) => ({
-      gameState: { ...state.gameState, ...newState },
+      gameState: {
+        ...state.gameState,
+        gameId: s.id,
+        phase: s.phase,
+        currentTurn: s.currentTurn,
+        gameHistory: s.gameHistory ?? [],
+        timeRemaining: s.timeRemaining ?? state.gameState.timeRemaining,
+        winner: s.winner ?? null,
+        finalizeActive: !!s.finalizeActive,
+        players: (s.players ?? []).map((p) => ({
+          id: p.id,
+          name: p.name,
+          avatar: undefined,
+          adventureRank: 0,
+          secretCharacter: p.secretCharacter ?? null,
+          isReady: !!p.hasPicked,
+          hasPicked: !!p.hasPicked || !!p.secretCharacter,
+          isConnected: !!p.isConnected,
+        })),
+
+        // meta
+        roomName: s.roomName ?? state.gameState.roomName ?? null,
+        inviteCode: s.inviteCode ?? state.gameState.inviteCode ?? null,
+        visibility: (s.visibility ?? state.gameState.visibility ?? null) as any,
+        hostId: s.hostId ?? state.gameState.hostId ?? null,
+        isCustom: !!s.isCustom,
+      },
     })),
+
+  setGameState: (newState) =>
+    set((state) => ({ gameState: { ...state.gameState, ...newState } })),
 
   addPlayer: (player) =>
     set((state) => ({
@@ -77,10 +168,10 @@ export const useGameStore = create<GameStore>((set) => ({
 
   nextTurn: () =>
     set((state) => {
-      const currentIndex = state.gameState.players.findIndex(
+      const idx = state.gameState.players.findIndex(
         (p) => p.id === state.gameState.currentTurn
       );
-      const nextIndex = (currentIndex + 1) % state.gameState.players.length;
+      const nextIndex = (idx + 1) % (state.gameState.players.length || 1);
       return {
         gameState: {
           ...state.gameState,
@@ -98,7 +189,7 @@ export const useGameStore = create<GameStore>((set) => ({
           ...state.gameState.gameHistory,
           {
             ...action,
-            id: Math.random().toString(36).substr(2, 9),
+            id: Math.random().toString(36).slice(2, 11),
             timestamp: Date.now(),
           },
         ],
@@ -120,12 +211,11 @@ export const useGameStore = create<GameStore>((set) => ({
     set((state) => {
       const opponent = state.gameState.players.find((p) => p.id !== playerId);
       const isCorrect = opponent?.secretCharacter === characterName;
-
       return {
         gameState: {
           ...state.gameState,
           phase: isCorrect ? 'finished' : state.gameState.phase,
-          winner: isCorrect ? playerId : undefined,
+          winner: isCorrect ? playerId : state.gameState.winner,
         },
       };
     }),
@@ -140,6 +230,13 @@ export const useGameStore = create<GameStore>((set) => ({
         eliminatedCharacters: [],
         gameHistory: [],
         timeRemaining: 60,
+        finalizeActive: false,
+        finalResult: undefined,
+        roomName: null,
+        inviteCode: null,
+        visibility: null,
+        hostId: null,
+        isCustom: false,
       },
     })),
 }));

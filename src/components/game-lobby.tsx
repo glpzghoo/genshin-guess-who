@@ -13,13 +13,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Sword, Users, Trophy, Star, Crown, Zap } from 'lucide-react';
+import { Sword, Users, Trophy, Star, Crown, Zap, Loader2 } from 'lucide-react';
 
 import { realtimeService } from '@/lib/realtime-service';
 import { useGameStore } from '@/lib/game-store';
 import axios from 'axios';
 import { LobbyProfileHeader } from './LobbyProfileHeader';
 import { Profile } from '@/lib/types';
+import Header from './Header';
+import CustomLobby from './room/CustomLobby';
+import RoomsList from './room/RoomsList';
+import Leaderboard from './leaderboard';
 
 export function GameLobby() {
   const router = useRouter();
@@ -52,8 +56,9 @@ export function GameLobby() {
           wins: user?.wins ?? 0,
           losses: user?.losses ?? 0,
           exp: user.exp ?? 0,
+          guest: !!user.guest,
+          mmr: user.mmr ?? 0,
         };
-        console.log(p);
         setProfile(p);
 
         // 3) Connect using JWT (authoritative identity from server)
@@ -83,6 +88,7 @@ export function GameLobby() {
           wins: 0,
           losses: 0,
           exp: 0,
+          mmr: 0,
         });
 
         // IMPORTANT: replace this with your real endpoint that returns a JWT signed with your server's JWT_SECRET
@@ -115,10 +121,11 @@ export function GameLobby() {
 
   // navigate once matched
   useEffect(() => {
-    if (
-      gameState.phase === 'character-select' ||
-      gameState.phase === 'playing'
-    ) {
+    if (gameState.phase === 'playing') {
+      setIsInQueue(false);
+      stopQueueTimer();
+      router.push('/game');
+    } else if (gameState.phase === 'character-select') {
       setIsInQueue(false);
       stopQueueTimer();
       router.push('/character-select');
@@ -155,7 +162,6 @@ export function GameLobby() {
     // server supports 'match:cancel'
     realtimeService.cancelMatch?.();
   };
-  const handleCreateRoom = () => router.push('/character-select');
 
   // derive display model from profile (works for guest & logged-in)
   const currentPlayer = useMemo(() => {
@@ -171,30 +177,21 @@ export function GameLobby() {
     };
   }, [profile, connected]);
 
-  const getRankIcon = (ar: number) => {
-    if (ar >= 55) return <Crown className="h-4 w-4 text-accent" />;
-    if (ar >= 45) return <Star className="h-4 w-4 text-primary" />;
-    if (ar >= 35) return <Zap className="h-4 w-4 text-chart-2" />;
-    return <Sword className="h-4 w-4 text-muted-foreground" />;
-  };
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-balance mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-          Genshin Guess Who
-        </h1>
-        <p className="text-muted-foreground text-lg">
-          Test your knowledge of Teyvat&lsquo;s finest adventurers
-        </p>
-      </div>
+      <Header />
 
       {/* Player Profile Card */}
-      {profile && (
+      {profile ? (
         <Card className="mb-6 glow">
           <LobbyProfileHeader profile={profile} connected={connected} />
         </Card>
+      ) : (
+        <div className=" flex justify-center items-center gap-2 min-h-24">
+          <Loader2 className=" animate-spin" />
+          Please wait...
+        </div>
       )}
 
       <Tabs
@@ -259,35 +256,7 @@ export function GameLobby() {
             </Card>
 
             {/* Create Room */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-primary" />
-                  Create Room
-                </CardTitle>
-                <CardDescription>
-                  Set up a custom game with your friends
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="room-name">Room Name</Label>
-                  <Input
-                    id="room-name"
-                    placeholder="Enter room name..."
-                    value={roomName}
-                    onChange={(e) => setRoomName(e.target.value)}
-                  />
-                </div>
-                <Button
-                  className="w-full bg-transparent"
-                  variant="outline"
-                  onClick={handleCreateRoom}
-                >
-                  Create Room
-                </Button>
-              </CardContent>
-            </Card>
+            <CustomLobby />
           </div>
 
           {/* Game Modes */}
@@ -333,97 +302,11 @@ export function GameLobby() {
         </TabsContent>
 
         <TabsContent value="rooms" className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold">Active Rooms</h2>
-            <Button
-              variant="outline"
-              onClick={() => {
-                /* TODO: socket 'rooms:list' */
-              }}
-            >
-              Refresh
-            </Button>
-          </div>
+          <RoomsList />
         </TabsContent>
 
         <TabsContent value="leaderboard" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Trophy className="h-5 w-5 text-accent" />
-                Top Adventurers
-              </CardTitle>
-              <CardDescription>
-                The most skilled players in Teyvat
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[
-                  {
-                    rank: 1,
-                    username: 'ArchonSlayer',
-                    ar: 60,
-                    wins: 342,
-                    losses: 23,
-                  },
-                  {
-                    rank: 2,
-                    username: 'VisionHunter',
-                    ar: 59,
-                    wins: 298,
-                    losses: 45,
-                  },
-                  {
-                    rank: 3,
-                    username: 'ElementalMaster',
-                    ar: 58,
-                    wins: 267,
-                    losses: 38,
-                  },
-                  {
-                    rank: 4,
-                    username: currentPlayer.username,
-                    ar: currentPlayer.adventureRank,
-                    wins: currentPlayer.wins,
-                    losses: currentPlayer.losses,
-                  },
-                ].map((player) => (
-                  <div
-                    key={player.rank}
-                    className="flex items-center justify-between p-3 rounded-lg bg-secondary/20"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-sm font-bold">
-                        {player.rank}
-                      </div>
-                      <div>
-                        <p className="font-semibold">{player.username}</p>
-                        <p className="text-sm text-muted-foreground">
-                          AR {player.ar}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-medium">
-                        {(() => {
-                          const total =
-                            (player.wins ?? 0) + (player.losses ?? 0);
-                          return total
-                            ? Math.round(((player.wins ?? 0) / total) * 100)
-                            : 0;
-                        })()}
-                        % WR
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {player.wins}W / {player.losses}L
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <Leaderboard />
         </TabsContent>
       </Tabs>
     </div>

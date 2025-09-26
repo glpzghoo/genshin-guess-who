@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,33 +10,47 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { TurnTimer } from '@/components/turn-timer';
-import { QuestionPanel } from '@/components/question-panel';
 import { ConnectionStatus } from '@/components/connection-status';
 import { LiveNotifications } from '@/components/live-notifications';
 import { useGameStore } from '@/lib/game-store';
-import { Star, Check, Eye, X } from 'lucide-react';
 import * as c from '@/lib/characters';
 import Image from 'next/image';
-import CharacterCard from './character-card';
-import { realtimeService } from '@/lib/realtime-service'; // ⬅️ use socket
+import { realtimeService } from '@/lib/realtime-service';
+import { FinalResultDialog } from './final-result-dialog';
+import { MobileQASheet } from './mobile-qa-sheet';
+import { DesktopQACollapsible } from './desktop-qa-collapsible';
+import SelectCharacter from './SelectCharacter';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import CharactersTable from './CharactersTable';
+import { ElimOrder, sortByEliminated } from '@/lib/sort-characters';
+import LeaveConfirm from './LeaveConfirm';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 
 const data = Object.values(c);
-
 type InGameCharacters = Character & { isEliminated: boolean };
-const LS_KEY = 'characters-ingame';
 
 export function GameBoard() {
+  const router = useRouter();
   const { gameState } = useGameStore(); // server drives this via state:update
-
+  const resetGame = useGameStore((s: any) => s.resetGame);
   const [characters, setCharacters] = useState<InGameCharacters[]>([]);
+  const [isConnected, setIsConnected] = useState(
+    typeof window !== 'undefined'
+      ? realtimeService.getConnectionStatus()
+      : false
+  );
   const [selectedCharacter, setSelectedCharacter] =
     useState<InGameCharacters | null>(null);
   const [mySecretCharacter, setMySecretCharacter] = useState<Character | null>(
     null
   );
-
+  const [elimOrder, setElimOrder] = useState<ElimOrder>('asc');
+  const viewCharacters = useMemo(
+    () => sortByEliminated(characters, elimOrder, 'release'),
+    [characters, elimOrder]
+  );
   // --- helpers ---
   const parseJSON = <T,>(s: string | null, fallback: T): T => {
     try {
@@ -45,6 +59,9 @@ export function GameBoard() {
       return fallback;
     }
   };
+  const matchId = (gameState as any).id || gameState.gameId || 'no-match';
+  const LS_KEY = `characters-ingame:${matchId}`;
+  const SECRET_KEY = `selectedCharacter:${matchId}`;
   const persist = (next: InGameCharacters[]) => {
     const sorted = [...next].sort((a, b) => b.release - a.release);
     setCharacters(sorted);
@@ -65,6 +82,88 @@ export function GameBoard() {
     const storedSecret = localStorage.getItem('selectedCharacter');
     if (storedSecret) setMySecretCharacter(JSON.parse(storedSecret));
   }, []);
+
+  useEffect(() => {
+    const saved = parseJSON<InGameCharacters[]>(
+      localStorage.getItem(LS_KEY),
+      []
+    );
+    if (saved.length > 0) setCharacters(saved);
+    else persist(data.map((d) => ({ ...d, isEliminated: false })));
+
+    const storedSecret = localStorage.getItem(SECRET_KEY);
+    if (storedSecret) setMySecretCharacter(JSON.parse(storedSecret));
+    // re-seed again whenever matchId changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [LS_KEY, SECRET_KEY]);
+
+  useEffect(() => {
+    const off = realtimeService.onAdvantage(({ count }) => {
+      setCharacters((curr) => {
+        if (!curr.length) return curr;
+
+        const secret = (mySecretCharacter?.name ?? '').toLowerCase();
+        const active = curr.filter(
+          (c) => !c.isEliminated && c.name.toLowerCase() !== secret
+        );
+
+        if (!active.length) return curr;
+
+        // choose how many to prune (advantage)
+        const pct = Math.floor(active.length * 0.15); // 15%
+        const n = Math.min(
+          Math.max(count ?? pct, 3), // at least 3
+          Math.min(10, active.length) // cap at 10 (or fewer if not enough)
+        );
+
+        const pool = [...active];
+        const toEliminate = new Set<string | number>();
+        for (let i = 0; i < n; i++) {
+          const idx = Math.floor(Math.random() * pool.length);
+          const chosen = pool.splice(idx, 1)[0];
+          toEliminate.add(chosen.id as any);
+        }
+
+        const next = curr.map((c) =>
+          toEliminate.has(c.id as any) ? { ...c, isEliminated: true } : c
+        );
+        const sorted = [...next].sort((a, b) => b.release - a.release);
+        localStorage.setItem(LS_KEY, JSON.stringify(sorted));
+        return sorted;
+      });
+
+      // Optional: local system log
+      realtimeService.addSystemLog?.(
+        'Timeout advantage: auto-eliminated candidates.'
+      );
+    });
+
+    return off;
+  }, [mySecretCharacter]);
+
+  useEffect(() => {
+    // keep in sync with socket connection state
+    const unsubscribe = realtimeService.onConnectionChange((connected) => {
+      setIsConnected(connected);
+    });
+    // also set initial once (in case connect fired before mount)
+    setIsConnected(realtimeService.getConnectionStatus());
+    return unsubscribe;
+  }, [realtimeService.getConnectionStatus()]);
+
+  // If the selected character becomes eliminated (e.g., via right-click) while the dialog is open, close it.
+  useEffect(() => {
+    if (selectedCharacter?.isEliminated) {
+      setSelectedCharacter(null);
+    }
+  }, [selectedCharacter?.isEliminated]);
+
+  // Optional: close the dialog when the phase changes (e.g., finalize/finished)
+  useEffect(() => {
+    if (gameState.phase !== 'playing' && gameState.phase !== 'finalize') {
+      setSelectedCharacter(null);
+    }
+  }, [gameState.phase]);
 
   // Toggle eliminate/restore → emit to server (optimistic UI)
   const toggleElimination = useCallback(
@@ -96,43 +195,82 @@ export function GameBoard() {
 
   const handleMakeGuess = () => {
     if (!selectedCharacter) return;
-    // if your client service exposes .finalGuess:
-    realtimeService.finalGuess(selectedCharacter.name);
+
+    realtimeService.finalGuess(selectedCharacter.name, (ok) => {
+      if (!ok) {
+        // Log quick context so we know why server refused
+        const s = useGameStore.getState().gameState;
+        console.warn('[guess rejected]', {
+          phase: s.phase,
+          currentTurn: s.currentTurn,
+          myId: realtimeService.getSelfId?.(),
+          name: selectedCharacter.name,
+        });
+      }
+    });
+  };
+  const onGoHome = () => {
+    (realtimeService as any).leaveRoom?.();
+    (realtimeService as any).cancelMatch?.();
+    try {
+      localStorage.removeItem('characters-ingame');
+      localStorage.removeItem('selectedCharacter');
+      if (matchId) {
+        localStorage.removeItem(`characters-ingame:${matchId}`);
+        localStorage.removeItem(`selectedCharacter:${matchId}`);
+      }
+    } catch {}
+    if (typeof resetGame === 'function') {
+      resetGame();
+    } else {
+      useGameStore.setState({
+        gameState: {
+          gameId: '',
+          players: [],
+          currentTurn: '',
+          phase: 'waiting',
+          eliminatedCharacters: [],
+          gameHistory: [],
+          timeRemaining: 60,
+          winner: undefined,
+          finalizeActive: false,
+          finalResult: undefined,
+        },
+      } as any);
+    }
+    router.push('/');
   };
 
   const activeCharacters = characters.filter((c) => !c.isEliminated);
-  const eliminatedCharacters = characters
-    .filter((c) => c.isEliminated)
-    .sort((a, b) => b.release - a.release);
-  const progress =
-    characters.length === 0
-      ? 0
-      : (eliminatedCharacters.length / characters.length) * 100;
+  const eliminatedCharacters = characters.filter((c) => c.isEliminated);
+
+  const myId = realtimeService.getSelfId() ?? 'current-user';
+  const canGuess =
+    gameState.phase === 'finalize' || gameState.currentTurn === myId;
 
   return (
-    <div className="px-4 py-6 bg-slate-900">
-      <LiveNotifications />
-      <TurnTimer />
-
+    <div className="px-4 py-6 ">
+      <FinalResultDialog />
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold text-white">Genshin Guess Who</h1>
+          <Link href={'/'}>
+            <h1 className="text-2xl font-bold text-white">Genshin Guess Who</h1>
+          </Link>
           <Badge
             variant={
               gameState.currentTurn === 'current-user' ? 'default' : 'secondary'
             }
           >
-            {gameState.currentTurn === 'current-user'
-              ? 'Your Turn'
-              : "Opponent's Turn"}
+            {gameState.currentTurn === myId ? 'Your Turn' : "Opponent's Turn"}
           </Badge>
           <Badge variant="outline" className="text-slate-300">
             {gameState.phase}
           </Badge>
         </div>
+        <LeaveConfirm onGoHome={onGoHome} />
 
         <div className="flex items-center gap-4">
-          <ConnectionStatus />
+          <ConnectionStatus isConnected={isConnected} />
           <div className="flex items-center gap-4 text-slate-300 text-sm">
             <span>
               Round: {Math.floor(gameState.gameHistory.length / 2) + 1}
@@ -147,21 +285,59 @@ export function GameBoard() {
           </div>
         </div>
       </div>
+      <LiveNotifications />
+      <TurnTimer />
+      {gameState.phase === 'finalize' && (
+        <div className="mb-4 rounded-lg border border-yellow-600/40 bg-yellow-500/10 text-yellow-300 px-3 py-2">
+          Opponent has locked a final guess. Pick your final guess to conclude
+          the match.
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
-          <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
+          <Card className="backdrop-blur-sm border-foreground bg-secondary">
             <CardHeader>
               <CardTitle className="flex items-center justify-between text-white">
                 <span>Character Board</span>
                 <div className="flex items-center gap-2 text-sm text-slate-400">
-                  <Eye className="h-4 w-4" />
-                  <span>{activeCharacters.length} remaining</span>
+                  <div className="flex justify-between gap-2 text-sm text-slate-300">
+                    <span>Active Characters:</span>
+                    <span className="font-semibold text-white">
+                      {activeCharacters.length}
+                    </span>
+                  </div>
+                  <div className="flex justify-between gap-2 text-sm text-slate-300">
+                    <span>Eliminated:</span>
+                    <span className="font-semibold text-red-400">
+                      {eliminatedCharacters.length}
+                    </span>
+                  </div>
+                  <div className="flex justify-between gap-2 text-sm text-slate-300">
+                    <span>Questions Asked:</span>
+                    <span className="font-semibold text-blue-400">
+                      {
+                        gameState.gameHistory.filter(
+                          (m) => m.type === 'question'
+                        ).length
+                      }
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      setElimOrder((o) => (o === 'asc' ? 'desc' : 'asc'))
+                    }
+                  >
+                    {elimOrder === 'asc'
+                      ? 'Eliminated first'
+                      : 'Eliminated last'}
+                  </Button>
                 </div>
               </CardTitle>
               <CardDescription className="text-slate-400">
-                Click once to eliminate/restore • Double-click to select for
-                guess
+                Click once to eliminate/restore • Right-click to guess
               </CardDescription>
             </CardHeader>
 
@@ -172,31 +348,12 @@ export function GameBoard() {
                   gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
                 }}
               >
-                {characters.map((character) => {
-                  const isSelected = selectedCharacter?.id === character.id;
-                  return (
-                    <div key={character.id} className="group">
-                      <Card
-                        title={
-                          character.isEliminated
-                            ? 'Click to restore'
-                            : 'Click to eliminate'
-                        }
-                        className={`cursor-pointer transition-all bg-slate-700/50 border-slate-600 ${
-                          character.isEliminated
-                            ? 'opacity-40 grayscale'
-                            : isSelected
-                              ? 'ring-2 ring-blue-400 glow scale-[1.02]'
-                              : 'hover:scale-105 hover:shadow-lg hover:bg-slate-600/50'
-                        }`}
-                        onClick={() => toggleElimination(character.id)}
-                        onDoubleClick={() => handleDoubleClick(character)}
-                      >
-                        <CharacterCard character={character} />
-                      </Card>
-                    </div>
-                  );
-                })}
+                <CharactersTable
+                  characters={viewCharacters}
+                  selectedCharacter={selectedCharacter}
+                  toggleElimination={toggleElimination}
+                  handleDoubleClick={handleDoubleClick}
+                />
               </div>
             </CardContent>
           </Card>
@@ -205,7 +362,7 @@ export function GameBoard() {
         {/* Sidebar */}
         <div className="lg:col-span-1 space-y-4">
           {mySecretCharacter && (
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
+            <Card className=" backdrop-blur-sm border-slate-700">
               <CardHeader>
                 <CardTitle className="text-sm text-white">
                   Your Secret Character
@@ -229,73 +386,47 @@ export function GameBoard() {
               </CardContent>
             </Card>
           )}
-
+          {/* NEW right sidebar */}
+          <div className="lg:col-span-1">
+            <div className="space-y-4 lg:sticky lg:top-4 max-h-[calc(100vh-2rem)] overflow-y-auto pr-1">
+              {/* Q&A first = most prominent */}
+              <DesktopQACollapsible />
+            </div>
+          </div>
           {selectedCharacter && !selectedCharacter.isEliminated && (
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
-              <CardHeader>
-                <CardTitle className="text-sm text-white">
-                  Selected: {selectedCharacter.name}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="aspect-square relative overflow-hidden rounded-lg">
-                  <Image
-                    fill
-                    src={`/assets/ui/${selectedCharacter.icon}.png`}
-                    alt={selectedCharacter.name}
-                    sizes="220px"
-                    className="object-cover"
+            <Dialog
+              open={!!selectedCharacter}
+              onOpenChange={(isOpen) => {
+                if (!isOpen) setSelectedCharacter(null);
+              }}
+            >
+              <DialogContent>
+                <DialogTitle>{selectedCharacter.name}</DialogTitle>
+                {/* Only render the content if the selection is valid (not eliminated) */}
+                {selectedCharacter && !selectedCharacter.isEliminated ? (
+                  <SelectCharacter
+                    key={selectedCharacter.id} // ensures fresh content when selecting a different char
+                    selectedCharacter={selectedCharacter}
+                    canGuess={canGuess}
+                    handleMakeGuess={() => {
+                      handleMakeGuess();
+                      // close the dialog after guessing
+                      setSelectedCharacter(null);
+                    }}
                   />
-                </div>
-
-                <Button
-                  onClick={handleMakeGuess}
-                  variant="default"
-                  size="sm"
-                  className="w-full shimmer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  disabled={!selectedCharacter} // ← only require a selection
-                >
-                  <Check className="h-4 w-4 mr-2" />
-                  Final Guess
-                </Button>
-              </CardContent>
-            </Card>
+                ) : null}
+              </DialogContent>
+            </Dialog>
           )}
-
-          <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
-            <CardHeader>
-              <CardTitle className="text-sm text-white">Game Stats</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm text-slate-300">
-                <span>Active Characters:</span>
-                <span className="font-semibold text-white">
-                  {activeCharacters.length}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm text-slate-300">
-                <span>Eliminated:</span>
-                <span className="font-semibold text-red-400">
-                  {eliminatedCharacters.length}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm text-slate-300">
-                <span>Questions Asked:</span>
-                <span className="font-semibold text-blue-400">
-                  {
-                    gameState.gameHistory.filter((m) => m.type === 'question')
-                      .length
-                  }
-                </span>
-              </div>
-              <Progress value={progress} className="mt-2" />
-            </CardContent>
-          </Card>
         </div>
 
-        <div className="lg:col-span-1 fixed bottom-56 right-1/2 min-h-56 left-1/2 w-1/2 -translate-y-1/2 -translate-x-1/2">
-          <QuestionPanel />
-        </div>
+        {/* OLD (remove this) */}
+        {/* 
+<div className="lg:col-span-1 fixed bottom-56 right-1/2 min-h-56 left-1/2 w-1/2 -translate-y-1/2 -translate-x-1/2">
+  <QuestionPanel />
+</div>
+*/}
+        <MobileQASheet />
       </div>
     </div>
   );

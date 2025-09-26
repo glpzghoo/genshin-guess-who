@@ -21,4 +21,6 @@ export type Profile = {
   wins: number | null;
   losses: number | null;
   exp: number;
+  mmr: number;
+  guest?: boolean;
 };

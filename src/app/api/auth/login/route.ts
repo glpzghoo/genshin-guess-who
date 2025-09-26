@@ -48,7 +48,7 @@ export async function POST(req: Request) {
       email: user.email,
       nickname: user.nickname,
       tokenVersion: user.tokenVersion,
-      mmr: user.exp,
+      mmr: user.mmr,
     };
     const token = signAuthToken(payload, 7);
 

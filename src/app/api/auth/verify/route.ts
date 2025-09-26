@@ -45,7 +45,7 @@ export async function GET(req: Request) {
       email: user.email,
       nickname: user.nickname,
       tokenVersion: user.tokenVersion,
-      mmr: user.exp,
+      mmr: user.mmr,
     };
     const tokenOut = signAuthToken(jwtPayload, 7);
 

@@ -26,6 +26,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import axios from 'axios';
+import { ArrowBigLeft } from 'lucide-react';
+import Header from '@/components/Header';
 
 type ApiResult = { ok: true; message?: string } | { ok: false; error: string };
 
@@ -91,9 +93,21 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[80vh] grid place-items-center px-4">
+      <Header />
+
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Create account</CardTitle>
+          <CardTitle>
+            <div className=" flex justify-between ">
+              <div>Create account</div>
+              <Link
+                href={'/'}
+                className="text-forefround flex items-center gap-2"
+              >
+                <ArrowBigLeft /> Go back
+              </Link>
+            </div>
+          </CardTitle>
           <CardDescription>
             Register to play ranked matches and track your AR.
           </CardDescription>
@@ -109,7 +123,7 @@ export default function RegisterPage() {
                     <FormLabel>Nickname</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="PaimonMain"
+                        placeholder="AYAYA"
                         {...field}
                         autoComplete="nickname"
                       />

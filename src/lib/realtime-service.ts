@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import { io, Socket } from 'socket.io-client';
@@ -91,6 +92,64 @@ class RealtimeService {
     this.socket.on('match:searching', () => {
       // show spinner if desired
     });
+
+    this.socket.on('final:prompt', () => {
+      // switch UI to finalize mode; timer will pause server-side
+      useGameStore.setState((s) => ({
+        gameState: { ...s.gameState, phase: 'finalize' },
+      }));
+    });
+
+    this.socket.on('final:result', (payload: any) => {
+      useGameStore.setState((s) => ({
+        gameState: {
+          ...s.gameState,
+          phase: 'finished',
+          winner: payload?.winner ?? null,
+          finalResult: payload, // store it for the dialog
+        },
+      }));
+    });
+  }
+
+  customCreate(
+    payload: {
+      name?: string;
+      visibility?: 'public' | 'private';
+      password?: string;
+    },
+    cb: (res: {
+      ok: boolean;
+      roomId?: string;
+      code?: string;
+      reason?: string;
+    }) => void
+  ) {
+    this.socket?.emit('custom:create', payload, cb);
+  }
+
+  customJoin(
+    payload: { roomId?: string; code?: string; password?: string },
+    cb: (res: { ok: boolean; roomId?: string; reason?: string }) => void
+  ) {
+    this.socket?.emit('custom:join', payload, cb);
+  }
+
+  customStart(cb?: (ok: boolean) => void) {
+    this.socket?.emit('custom:start', cb);
+  }
+
+  customList(
+    cb: (
+      rooms: Array<{
+        roomId: string;
+        name: string;
+        slots: string;
+        code?: string;
+      }>
+    ) => void
+  ) {
+    this.socket?.emit('custom:list', cb);
   }
 
   /** Who am I? Useful for isMyTurn checks */
@@ -146,14 +205,10 @@ class RealtimeService {
     this.socket?.emit('guess:make', name, ack);
   }
 
-  /** DEPRECATED on server; kept here as no-op passthrough to avoid client errors */
   finalGuess(name: string, ack?: (ok?: boolean) => void) {
-    // Server will warn and handle as guess:make internally; you can remove this once old callers are gone.
     this.socket?.emit('guess:final', name, ack);
   }
 
-  /** Server is authoritative for timeouts; client should NOT call this anymore */
-  // Keeping method to avoid compile errors; it always resolves false.
   turnTimeout(ack?: (ok?: boolean) => void) {
     this.socket?.emit('turn:timeout', (ok?: boolean) => {
       ack?.(ok); // server returns false by design
@@ -171,6 +226,52 @@ class RealtimeService {
 
   addSystemLog(text: string) {
     this.socket?.emit('log:system', text);
+  }
+
+  leaveRoom() {
+    this.socket?.emit('room:leave');
+  }
+
+  onAdvantage(cb: (p: { roomId: string; count?: number }) => void): () => void {
+    const handler = (p: any) => cb(p ?? {});
+    this.socket?.on('advantage:timeout', handler);
+    return () => this.socket?.off('advantage:timeout', handler);
+  }
+
+  roomStatus(
+    ack: (res: { inRoom: boolean; roomId?: string; phase?: string }) => void
+  ) {
+    if (!this.socket) return ack({ inRoom: false });
+    // optional timeout so it doesn’t hang forever
+    (this.socket as any).timeout?.(1500).emit?.('room:status', ack) ||
+      this.socket.emit('room:status', ack);
+  }
+
+  onMatchFound(cb: (p: { roomId: string; opponent: string }) => void) {
+    const handler = (payload: any) => cb(payload);
+    this.socket?.on('match:found', handler);
+    return () => this.socket?.off('match:found', handler);
+  }
+
+  leaderboardList(
+    params: { limit?: number; offset?: number },
+    cb: (res: {
+      ok: boolean;
+      items?: Array<{
+        id: string;
+        nickname: string;
+        mmr: number;
+        wins: number;
+        losses: number;
+        rank: number;
+      }>;
+      total?: number;
+      nextOffset?: number;
+      you?: { id: string; rank: number } | null;
+      reason?: string;
+    }) => void
+  ) {
+    this.socket?.emit('leaderboard:list', params, cb);
   }
 }
 

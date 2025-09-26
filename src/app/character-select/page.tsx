@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { CharacterSelection } from '@/components/character-selection';
 import { useRouter } from 'next/navigation';
+import { useGameStore } from '@/lib/game-store';
 
 export default function CharacterSelectPage() {
+  const { gameState } = useGameStore(); // server drives this via state:update
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
   );
@@ -13,13 +15,11 @@ export default function CharacterSelectPage() {
   const handleCharacterSelect = (character: Character) => {
     setSelectedCharacter(character);
   };
-
+  const matchId = (gameState as any).id || gameState.gameId || 'no-match';
+  const SECRET_KEY = `selectedCharacter:${matchId}`;
   const handleReady = () => {
     if (selectedCharacter) {
-      localStorage.setItem(
-        'selectedCharacter',
-        JSON.stringify(selectedCharacter)
-      );
+      localStorage.setItem(SECRET_KEY, JSON.stringify(selectedCharacter));
       router.push('/game');
     }
   };

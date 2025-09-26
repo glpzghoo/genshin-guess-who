@@ -25,6 +25,8 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form';
+import { ArrowBigLeft } from 'lucide-react';
+import Header from '@/components/Header';
 
 type ApiResult = { ok: true; message?: string } | { ok: false; error: string };
 
@@ -85,9 +87,20 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[80vh] grid place-items-center px-4">
+      <Header />
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
+          <CardTitle>
+            <div className=" flex justify-between ">
+              <div>Sign in</div>
+              <Link
+                href={'/'}
+                className="text-forefround flex items-center gap-2"
+              >
+                <ArrowBigLeft /> Go back
+              </Link>
+            </div>
+          </CardTitle>
           <CardDescription>
             Welcome back! Let&apos;s get you into a match.
           </CardDescription>

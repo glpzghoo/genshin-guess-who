@@ -1,31 +1,32 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useGameStore } from '@/lib/game-store';
 import { realtimeService } from '@/lib/realtime-service';
-import { Send, MessageSquare, Clock } from 'lucide-react';
+import { Send, Clock, MessageSquare } from 'lucide-react';
 
-export function QuestionPanel() {
+export function QuestionPanel({
+  hideHeader = false,
+}: {
+  hideHeader?: boolean;
+}) {
   const gameState = useGameStore((s) => s.gameState);
 
   const [question, setQuestion] = useState('');
   const [pendingAsk, setPendingAsk] = useState(false);
   const [pendingAnswer, setPendingAnswer] = useState<null | 'yes' | 'no'>(null);
 
-  // who am I?
   const myId = realtimeService.getSelfId();
   const me = useMemo(
     () => gameState.players.find((p) => p.id === myId) ?? null,
     [gameState.players, myId]
   );
-
   const currentPlayer = useMemo(
     () => gameState.players.find((p) => p.id === gameState.currentTurn),
     [gameState.players, gameState.currentTurn]
   );
-
   const isMyTurn = !!me && gameState.currentTurn === me.id;
 
   const lastQuestion = useMemo(
@@ -35,6 +36,8 @@ export function QuestionPanel() {
   );
   const waitingForAnswer =
     !!lastQuestion && typeof (lastQuestion as any).response === 'undefined';
+
+  const phase = gameState.phase;
 
   const handleAskQuestion = () => {
     const text = question.trim();
@@ -54,61 +57,105 @@ export function QuestionPanel() {
     });
   };
 
+  // Status line (always visible)
+  let statusIcon = <MessageSquare className="w-4 h-4" />;
+  let statusText = 'Ask a question';
+  let statusTone = 'text-white';
+
+  if (phase === 'character-select') {
+    statusIcon = <Clock className="w-4 h-4" />;
+    statusText = 'Lock your character to start asking';
+    statusTone = 'text-slate-300';
+  } else if (phase === 'finalize') {
+    statusIcon = <Clock className="w-4 h-4" />;
+    statusText = 'Final guesses in progress… Q&A paused';
+    statusTone = 'text-yellow-300';
+  } else if (phase === 'finished') {
+    statusIcon = <Clock className="w-4 h-4" />;
+    statusText = 'Match finished';
+    statusTone = 'text-slate-300';
+  } else if (phase === 'playing') {
+    if (waitingForAnswer && isMyTurn) {
+      statusIcon = <Clock className="w-4 h-4 animate-spin" />;
+      statusText = "Waiting for opponent's answer…";
+      statusTone = 'text-slate-300';
+    } else if (waitingForAnswer && !isMyTurn) {
+      statusIcon = <Clock className="w-4 h-4 animate-spin" />;
+      statusText = 'Answer opponent’s question';
+      statusTone = 'text-yellow-300';
+    } else if (!isMyTurn) {
+      statusIcon = <Clock className="w-4 h-4" />;
+      statusText = 'Waiting for opponent to ask…';
+      statusTone = 'text-slate-300';
+    } else {
+      statusIcon = <MessageSquare className="w-4 h-4" />;
+      statusText = 'Ask a question';
+      statusTone = 'text-white';
+    }
+  }
+
   return (
     <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-4">
-        <MessageSquare className="w-5 h-5 text-blue-400" />
-        <h3 className="text-white font-semibold">Questions &amp; Answers</h3>
-        {waitingForAnswer && (
-          <div className="flex items-center gap-1 text-yellow-400">
-            <Clock className="w-4 h-4 animate-spin" />
-            <span className="text-xs">Waiting...</span>
+      {!hideHeader && (
+        <div className="flex items-center gap-2 mb-4">
+          <div className={`flex items-center gap-2 ${statusTone}`}>
+            {statusIcon}
+            <h3 className="font-semibold">{statusText}</h3>
           </div>
-        )}
-      </div>
+          {waitingForAnswer && (
+            <div className="flex items-center gap-1 text-yellow-400 ml-2">
+              <Clock className="w-4 h-4 animate-spin" />
+              <span className="text-xs">Waiting…</span>
+            </div>
+          )}
+        </div>
+      )}
 
-      <div className="space-y-3 mb-4 max-h-40 overflow-y-auto">
+      {/* Recent questions — label with You/Opponent */}
+      <div className="space-y-3 mb-4 max-h-40 lg:max-h-64 overflow-y-auto">
         {gameState.gameHistory
           .filter((a) => a.type === 'question')
           .slice(-3)
-          .map((action) => (
-            <div key={action.id} className="bg-slate-700/50 rounded-lg p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-blue-400 font-medium">
-                  {action.playerName}:
-                </span>
+          .map((action) => {
+            const label = action.playerId === myId ? 'You' : 'Opponent';
+            const answered = typeof (action as any).response !== 'undefined';
+            return (
+              <div key={action.id} className="bg-slate-700/50 rounded-lg p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-blue-400 font-medium">{label}:</span>
+                </div>
+                <p className="text-white text-sm mb-2">{action.content}</p>
+                {answered ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-400 text-sm">Answer:</span>
+                    <span
+                      className={`text-sm font-medium ${
+                        (action as any).response === 'yes'
+                          ? 'text-green-400'
+                          : 'text-red-400'
+                      }`}
+                    >
+                      {String((action as any).response).toUpperCase()}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                    <span className="text-yellow-400 text-sm">
+                      Waiting for answer...
+                    </span>
+                  </div>
+                )}
               </div>
-              <p className="text-white text-sm mb-2">{action.content}</p>
-              {typeof (action as any).response !== 'undefined' ? (
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-400 text-sm">Answer:</span>
-                  <span
-                    className={`text-sm font-medium ${
-                      (action as any).response === 'yes'
-                        ? 'text-green-400'
-                        : 'text-red-400'
-                    }`}
-                  >
-                    {String((action as any).response).toUpperCase()}
-                  </span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                  <span className="text-yellow-400 text-sm">
-                    Waiting for answer...
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
       </div>
 
       {/* Opponent answers */}
-      {waitingForAnswer && !isMyTurn && lastQuestion && (
+      {phase === 'playing' && waitingForAnswer && !isMyTurn && lastQuestion && (
         <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
           <p className="text-yellow-400 text-sm mb-3">
-            Answer {lastQuestion.playerName}'s question:
+            Answer opponent&apos;s question:
           </p>
           <p className="text-white mb-3">"{lastQuestion.content}"</p>
           <div className="flex gap-2">
@@ -127,11 +174,18 @@ export function QuestionPanel() {
               No
             </Button>
           </div>
+
+          {/* ⬇️ New hint */}
+          <p className="text-xs text-yellow-300 mt-2">
+            If you don&apos;t answer before time runs out, your opponent may
+            receive an advantage (we&apos;ll auto-eliminate several of their
+            candidates).
+          </p>
         </div>
       )}
 
       {/* I ask */}
-      {isMyTurn && !waitingForAnswer && (
+      {phase === 'playing' && isMyTurn && !waitingForAnswer && (
         <div className="space-y-3">
           <div className="flex gap-2">
             <Input
@@ -157,12 +211,36 @@ export function QuestionPanel() {
       )}
 
       {/* My waiting indicator */}
-      {waitingForAnswer && isMyTurn && (
+      {phase === 'playing' && waitingForAnswer && isMyTurn && (
         <div className="text-center py-4">
           <div className="flex items-center justify-center gap-2 text-slate-400">
             <Clock className="w-4 h-4 animate-spin" />
             <p>Waiting for opponent&apos;s answer...</p>
           </div>
+        </div>
+      )}
+
+      {/* Neutral idle message */}
+      {phase === 'playing' && !isMyTurn && !waitingForAnswer && (
+        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
+          Waiting for opponent to ask…
+        </div>
+      )}
+
+      {/* Pre-/post-game messages */}
+      {phase === 'character-select' && (
+        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
+          Lock in your character to start Q&amp;A.
+        </div>
+      )}
+      {phase === 'finalize' && (
+        <div className="mt-3 p-3 border border-yellow-600/40 rounded-lg bg-yellow-500/10 text-yellow-300 text-sm">
+          Final guesses are being made—questions are disabled.
+        </div>
+      )}
+      {phase === 'finished' && (
+        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
+          Match finished.
         </div>
       )}
     </div>

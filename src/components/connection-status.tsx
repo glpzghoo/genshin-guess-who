@@ -1,30 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Wifi, WifiOff, Users } from 'lucide-react';
-import { realtimeService } from '@/lib/realtime-service';
 import { useGameStore } from '@/lib/game-store';
 
-export function ConnectionStatus() {
+export function ConnectionStatus({ isConnected }: { isConnected: boolean }) {
   const playersOnline = useGameStore((s) =>
     Math.max(1, s.gameState.players?.length ?? 0)
   );
-  const [isConnected, setIsConnected] = useState(
-    typeof window !== 'undefined'
-      ? realtimeService.getConnectionStatus()
-      : false
-  );
-
-  useEffect(() => {
-    // keep in sync with socket connection state
-    const unsubscribe = realtimeService.onConnectionChange((connected) => {
-      setIsConnected(connected);
-    });
-    // also set initial once (in case connect fired before mount)
-    setIsConnected(realtimeService.getConnectionStatus());
-    return unsubscribe;
-  }, []);
 
   return (
     <div className="flex items-center gap-3">

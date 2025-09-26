@@ -12,13 +12,27 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Search, Filter, Star, Sword, Loader2 } from 'lucide-react';
+import {
+  Search,
+  Filter,
+  Star,
+  Sword,
+  Copy,
+  Check,
+  LinkIcon,
+  LogOut,
+  User,
+  Users,
+  Wifi,
+  WifiOff,
+} from 'lucide-react';
 import { elements, weapons } from '@/lib/helper';
 import * as c from '@/lib/characters';
 import Image from 'next/image';
 import CharacterCard from './character-card';
 import { realtimeService } from '@/lib/realtime-service';
 import { useGameStore } from '@/lib/game-store';
+import { useRouter } from 'next/navigation';
 
 export function CharacterSelection({
   onCharacterSelect,
@@ -27,8 +41,8 @@ export function CharacterSelection({
   onCharacterSelect: (character: Character) => void;
   onReady: () => void;
 }) {
-  const { gameState } = useGameStore();
-
+  const router = useRouter();
+  const { gameState, socketConnected } = useGameStore();
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
   );
@@ -38,31 +52,56 @@ export function CharacterSelection({
   const [selectedRarity, setSelectedRarity] = useState<string>('all');
   const [submitting, setSubmitting] = useState(false);
 
+  const [copied, setCopied] = useState(false);
+  const [myId, setMyId] = useState<string | null>(null);
+
+  // pick up your id the same way you store it on connect
+  useEffect(() => {
+    try {
+      setMyId(localStorage.getItem('user_id'));
+    } catch {}
+  }, []);
+
   const characters = useMemo(() => Object.values(c), []);
+  const players = gameState?.players || [];
+  const me = useMemo(
+    () => players.find((p: any) => p.id === myId),
+    [players, myId]
+  );
+  const opp = useMemo(
+    () => players.find((p: any) => p && p.id !== myId),
+    [players, myId]
+  );
 
-  const navigatedRef = useRef(false); // ⬅️ prevents double onReady()
+  const bothLocked = useMemo(
+    () => players.length >= 2 && players.every((p: any) => !!p.secretCharacter),
+    [players]
+  );
+  const inRoomAlone = useMemo(() => players.length < 2, [players]);
 
-  const bothLocked = useMemo(() => {
-    const players = gameState.players ?? [];
-    return players.length >= 2 && players.every((p) => !!p.secretCharacter);
-  }, [gameState.players]);
+  // Navigation to /game once both have locked (or phase flips to playing)
+  const navigatedRef = useRef(false);
+  useEffect(() => {
+    if (navigatedRef.current) return;
+    if (gameState.phase === 'playing' || bothLocked) {
+      navigatedRef.current = true;
+      setSubmitting(false);
+      onReady();
+    }
+  }, [gameState.phase, bothLocked, onReady]);
 
   const filteredCharacters = useMemo(() => {
     return characters.filter((character) => {
       const matchesSearch = character.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
-
       const matchesElement =
         selectedElement === 'all' || character.element === selectedElement;
-
       const matchesWeapon =
         selectedWeapon === 'all' || character.weaponType === selectedWeapon;
-
       const matchesRarity =
         selectedRarity === 'all' ||
         character.rank.toString() === selectedRarity;
-
       return matchesSearch && matchesElement && matchesWeapon && matchesRarity;
     });
   }, [
@@ -78,49 +117,215 @@ export function CharacterSelection({
     [filteredCharacters]
   );
 
-  // When server transitions to 'playing', move forward
-  useEffect(() => {
-    if (navigatedRef.current) return;
-
-    if (gameState.phase === 'playing' || bothLocked) {
-      navigatedRef.current = true;
-      setSubmitting(false);
-      onReady(); // e.g., route to /game
-    }
-  }, [gameState.phase, bothLocked, onReady]);
-
   const handleCharacterSelect = (character: Character) => {
-    if (submitting) return; // lock while waiting
+    if (submitting) return;
     setSelectedCharacter(character);
     onCharacterSelect(character);
   };
 
   const handleReadyClick = () => {
     if (!selectedCharacter || submitting) return;
-    localStorage.setItem(
-      'selectedCharacter',
-      JSON.stringify(selectedCharacter)
-    );
-    realtimeService.selectCharacter(selectedCharacter.name); // tell server
-    setSubmitting(true); // show "Waiting for opponent…"
+    try {
+      localStorage.setItem(
+        'selectedCharacter',
+        JSON.stringify(selectedCharacter)
+      );
+    } catch {}
+    realtimeService.selectCharacter(selectedCharacter.name);
+    setSubmitting(true);
+  };
+
+  const copyInvite = async () => {
+    const code = (gameState as any)?.inviteCode;
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      // ignore
+    }
+  };
+
+  const leaveRoom = () => {
+    realtimeService.leaveRoom?.(); // add method below if you don't have it
+    // As a fallback, emit directly:
+    realtimeService.socket?.emit('room:leave');
+    router.push('/');
   };
 
   const WeaponIcon = selectedCharacter
     ? weapons[selectedCharacter.weaponType].icon
     : Sword;
 
+  const RoomTopBar = () => {
+    const name = (gameState as any)?.roomName || 'Room';
+    const code = (gameState as any)?.inviteCode || null;
+    const isCustom = (gameState as any)?.isCustom;
+    return (
+      <div className="flex flex-col md:flex-row md:items-center gap-3 md:justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <Users className="h-5 w-5" />
+          <div>
+            <div className="text-lg font-semibold leading-none">{name}</div>
+            <div className="text-xs text-muted-foreground">
+              {players.length}/2 players ·{' '}
+              {isCustom ? 'Custom' : 'Ranked/Casual'}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Badge
+            variant={socketConnected ? 'default' : 'secondary'}
+            className="flex items-center gap-1"
+          >
+            {socketConnected ? (
+              <Wifi className="h-3 w-3" />
+            ) : (
+              <WifiOff className="h-3 w-3" />
+            )}
+            {socketConnected ? 'Connected' : 'Reconnecting…'}
+          </Badge>
+
+          {code && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={copyInvite}
+              className="gap-2"
+            >
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <LinkIcon className="h-4 w-4" />
+              )}
+              {copied ? 'Copied' : `Invite: ${code}`}
+            </Button>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={leaveRoom}
+            className="gap-2 text-destructive"
+          >
+            <LogOut className="h-4 w-4" /> Leave
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  const PlayersStatus = () => {
+    const Stat = ({
+      label,
+      value,
+      ok,
+    }: {
+      label: string;
+      value: string;
+      ok?: boolean;
+    }) => (
+      <div className="text-sm">
+        <span className="text-muted-foreground">{label}: </span>
+        <span
+          className={`font-medium ${ok === false ? 'text-muted-foreground' : ''}`}
+        >
+          {value}
+        </span>
+      </div>
+    );
+
+    const pill = (text: string, ok?: boolean) => (
+      <span
+        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
+          ok
+            ? 'bg-emerald-600/10 text-emerald-600'
+            : 'bg-amber-600/10 text-amber-600'
+        }`}
+      >
+        {text}
+      </span>
+    );
+
+    return (
+      <div className="grid md:grid-cols-2 gap-3 mb-6">
+        <Card>
+          <CardContent className="py-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center">
+              <User className="h-4 w-4" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-medium truncate">{me?.name ?? 'You'}</div>
+              <div className="flex items-center gap-2">
+                {pill(me?.hasPicked ? 'Locked' : 'Picking…', me?.hasPicked)}
+                {pill(me?.isConnected ? 'Online' : 'Offline', me?.isConnected)}
+              </div>
+              <div className="mt-1">
+                <Stat label="Role" value="You" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="py-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center">
+              <User className="h-4 w-4" />
+            </div>
+            <div className="min-w-0">
+              <div className="font-medium truncate">
+                {opp?.name ?? 'Waiting for opponent'}
+              </div>
+              <div className="flex items-center gap-2">
+                {pill(opp?.hasPicked ? 'Locked' : 'Picking…', opp?.hasPicked)}
+                {pill(
+                  opp?.isConnected ? 'Online' : 'Offline',
+                  opp?.isConnected
+                )}
+              </div>
+              <div className="mt-1">
+                <Stat label="Role" value="Opponent" ok />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-12xl">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-balance mb-2">
-          Choose Your Secret Character
-        </h1>
-        <p className="text-muted-foreground">
-          {submitting
-            ? 'Waiting for opponent to lock in…'
-            : 'Select the character your opponent will try to guess'}
-        </p>
-      </div>
+      <RoomTopBar />
+
+      {/* Context banner */}
+      {inRoomAlone && (
+        <div className="mb-6 rounded-lg border border-dashed p-4 text-sm flex items-center justify-between">
+          <div>
+            <div className="font-medium">Waiting for an opponent…</div>
+            <div className="text-muted-foreground">
+              Share the invite to bring a friend, or keep this tab open to wait.
+            </div>
+          </div>
+          {(gameState as any)?.inviteCode && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={copyInvite}
+              className="gap-2"
+            >
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+              {copied ? 'Copied' : 'Copy Invite'}
+            </Button>
+          )}
+        </div>
+      )}
+
+      <PlayersStatus />
 
       <div className="grid lg:grid-cols-4 gap-6">
         {/* Filters */}
@@ -258,7 +463,6 @@ export function CharacterSelection({
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-12">
               {sortedCharacters.map((character) => {
                 const isSelected = selectedCharacter?.id === character.id;
-
                 return (
                   <Card
                     key={character.id}
@@ -342,14 +546,7 @@ export function CharacterSelection({
                       size="lg"
                       disabled={!selectedCharacter || submitting}
                     >
-                      {submitting ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Waiting for Opponent…
-                        </>
-                      ) : (
-                        'Ready to Play'
-                      )}
+                      {submitting ? 'Waiting for Opponent…' : 'Ready to Play'}
                     </Button>
                   </div>
                 </div>
