@@ -258,47 +258,6 @@ export function GameLobby() {
             {/* Create Room */}
             <CustomLobby />
           </div>
-
-          {/* Game Modes */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Game Modes</CardTitle>
-              <CardDescription>
-                Choose your preferred way to play
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="p-4 border rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <Sword className="h-4 w-4" />
-                    Classic
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Traditional guess-who gameplay with all characters
-                  </p>
-                </div>
-                <div className="p-4 border rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <Zap className="h-4 w-4" />
-                    Blitz
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Fast-paced matches with time limits
-                  </p>
-                </div>
-                <div className="p-4 border rounded-lg hover:bg-secondary/50 transition-colors cursor-pointer">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <Trophy className="h-4 w-4" />
-                    Ranked
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Competitive matches that affect your Adventure Rank
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
 
         <TabsContent value="rooms" className="space-y-4">

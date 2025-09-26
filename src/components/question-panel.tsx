@@ -178,8 +178,7 @@ export function QuestionPanel({
           {/* ⬇️ New hint */}
           <p className="text-xs text-yellow-300 mt-2">
             If you don&apos;t answer before time runs out, your opponent may
-            receive an advantage (we&apos;ll auto-eliminate several of their
-            candidates).
+            receive an advantage.
           </p>
         </div>
       )}

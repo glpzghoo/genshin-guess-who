@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({
         ok: true,
         user: guest_user,
-        oldToken,
+        token: oldToken,
         guest: decoded.guest,
       });
     }
