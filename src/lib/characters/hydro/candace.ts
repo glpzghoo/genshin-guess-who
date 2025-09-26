@@ -1,0 +1,16 @@
+const candace: Character = {
+  id: 72,
+  rank: 4,
+  name: 'Candace',
+  element: 'Hydro',
+  weaponType: 'Polearm',
+  region: 'SUMERU',
+  specialProp: 'FIGHT_PROP_HP_PERCENT',
+  bodyType: 'LADY',
+  icon: 'UI_AvatarIcon_Candace',
+  birthday: [5, 3],
+  release: 1664226000,
+  route: 'Candace',
+};
+
+export { candace };

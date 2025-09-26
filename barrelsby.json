@@ -1,0 +1,5 @@
+{
+  "directory": ["src/lib/characters"],
+  "delete": true,
+  "location": "all"
+}

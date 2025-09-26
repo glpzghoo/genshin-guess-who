@@ -1,0 +1,16 @@
+const fischl: Character = {
+  id: 31,
+  rank: 4,
+  name: 'Fischl',
+  element: 'Electro',
+  weaponType: 'Bow',
+  region: 'MONDSTADT',
+  specialProp: 'FIGHT_PROP_ATTACK_PERCENT',
+  bodyType: 'GIRL',
+  icon: 'UI_AvatarIcon_Fischl',
+  birthday: [5, 27],
+  release: 1601244000,
+  route: 'Fischl',
+};
+
+export { fischl };

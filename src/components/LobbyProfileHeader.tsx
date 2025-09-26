@@ -1,0 +1,92 @@
+'use client';
+
+import { useMemo } from 'react';
+import { CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Progress } from '@/components/ui/progress';
+import { Profile } from '@/lib/types';
+import { getRankIcon } from '@/lib/helpers';
+import { calcARProgressFromSchema } from '@/lib/ar';
+
+export function LobbyProfileHeader({
+  profile,
+  connected,
+}: {
+  profile: Profile; // has adventureRank: number; exp: number; nickname, avatar_url, wins, losses...
+  connected: boolean;
+}) {
+  const currentPlayer = useMemo(
+    () => ({
+      nickname: profile.nickname,
+      avatar_url: profile.avatar_url ?? '/placeholder.svg',
+      adventure_rank: profile.adventure_rank ?? 1,
+      exp: profile.exp ?? 0,
+      wins: profile.wins ?? 0,
+      losses: profile.losses ?? 0,
+    }),
+    [profile]
+  );
+
+  const winrate = useMemo(() => {
+    const total = (currentPlayer.wins ?? 0) + (currentPlayer.losses ?? 0);
+    return total ? Math.round((currentPlayer.wins / total) * 100) : 0;
+  }, [currentPlayer.wins, currentPlayer.losses]);
+
+  const ar = calcARProgressFromSchema({
+    adventureRank: currentPlayer.adventure_rank,
+    exp: currentPlayer.exp,
+  });
+
+  return (
+    <CardContent className="p-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-16 w-16 border-2 border-primary">
+            <AvatarImage
+              src={currentPlayer.avatar_url}
+              alt={currentPlayer.nickname}
+            />
+            <AvatarFallback>
+              {currentPlayer.nickname?.[0]?.toUpperCase() ?? 'U'}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold">
+                {currentPlayer.nickname}
+              </h2>
+              {getRankIcon(ar.level)}
+              {ar.mismatched && (
+                <span className="text-xs text-yellow-500 ml-1">(syncing)</span>
+              )}
+            </div>
+            <p className="text-muted-foreground">Adventure Rank {ar.level}</p>
+            <div className="flex gap-4 mt-1">
+              <span className="text-sm text-chart-2">
+                {currentPlayer.wins}W
+              </span>
+              <span className="text-sm text-destructive">
+                {currentPlayer.losses}L
+              </span>
+              <span className="text-sm text-muted-foreground">
+                {winrate}% WR
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-right">
+          <Badge variant={connected ? 'secondary' : 'outline'} className="mb-2">
+            <div
+              className={`w-2 h-2 ${connected ? 'bg-chart-2' : 'bg-slate-400'} rounded-full mr-2`}
+            />
+            {connected ? 'Online' : 'Offline'}
+          </Badge>
+          <Progress value={ar.percent} className="w-32" />
+          <p className="text-xs text-muted-foreground mt-1">{ar.label}</p>
+        </div>
+      </div>
+    </CardContent>
+  );
+}

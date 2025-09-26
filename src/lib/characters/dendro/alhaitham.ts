@@ -1,0 +1,16 @@
+const alhaitham: Character = {
+  id: 78,
+  rank: 5,
+  name: 'Alhaitham',
+  element: 'Dendro',
+  weaponType: 'Sword',
+  region: 'SUMERU',
+  specialProp: 'FIGHT_PROP_GRASS_ADD_HURT',
+  bodyType: 'MALE',
+  icon: 'UI_AvatarIcon_Alhatham',
+  birthday: [2, 11],
+  release: 1673906400,
+  route: 'Alhaitham',
+};
+
+export { alhaitham };
