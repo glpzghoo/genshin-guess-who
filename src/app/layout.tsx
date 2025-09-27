@@ -1,19 +1,15 @@
 import type { Metadata } from 'next';
 import RealtimeAutoConnect from './realtime-auto-connect';
-import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/next';
+import { Montserrat } from 'next/font/google';
 import './globals.css';
-
-const hyWenHei = localFont({
-  src: [{ path: './fonts/HYWenHei85W.woff2', weight: '300', style: 'normal' }],
-  variable: '--font-hywenhei',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title: 'Genshin Impact - Guess who?',
   description: 'Genshin Impact - Guess who?',
 };
+
+const f = Montserrat({ subsets: ['latin'], weight: '400' });
 
 export default function RootLayout({
   children,
@@ -22,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${hyWenHei.className} antialiased dark`}>
+      <body className={` ${f.className} antialiased dark`}>
         <RealtimeAutoConnect />
         {children}
         <Analytics />
