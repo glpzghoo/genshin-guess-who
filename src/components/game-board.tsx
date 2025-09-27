@@ -288,7 +288,7 @@ export function GameBoard() {
       <LiveNotifications />
       <TurnTimer />
       {gameState.phase === 'finalize' && (
-        <div className="mb-4 rounded-lg border border-yellow-600/40 bg-yellow-500/10 text-yellow-300 px-3 py-2">
+        <div className="mb-4 rounded-lg  bg-yellow-500/10 text-yellow-300 px-3 py-2">
           Opponent has locked a final guess. Pick your final guess to conclude
           the match.
         </div>
@@ -296,7 +296,7 @@ export function GameBoard() {
 
       <div className="grid lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
-          <Card className="backdrop-blur-sm border-foreground bg-secondary">
+          <Card className="backdrop-blur-sm  bg-secondary">
             <CardHeader>
               <CardTitle className="flex items-center justify-between text-white">
                 <span>Character Board</span>
@@ -362,7 +362,7 @@ export function GameBoard() {
         {/* Sidebar */}
         <div className="lg:col-span-1 space-y-4">
           {mySecretCharacter && (
-            <Card className=" backdrop-blur-sm border-slate-700">
+            <Card className="backdrop-blur-sm border-slate-700">
               <CardHeader>
                 <CardTitle className="text-sm text-white">
                   Your Secret Character
@@ -371,12 +371,10 @@ export function GameBoard() {
               <CardContent>
                 <div className="text-center">
                   <div className="aspect-square mb-2 relative overflow-hidden rounded-lg">
-                    <Image
-                      fill
+                    <img
                       src={`/assets/ui/${mySecretCharacter.icon}.png`}
                       alt={mySecretCharacter.name}
-                      sizes="220px"
-                      className="object-cover"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
                   <h3 className="font-semibold text-white">
@@ -386,6 +384,7 @@ export function GameBoard() {
               </CardContent>
             </Card>
           )}
+
           {/* NEW right sidebar */}
           <div className="lg:col-span-1">
             <div className="space-y-4 lg:sticky lg:top-4 max-h-[calc(100vh-2rem)] overflow-y-auto pr-1">

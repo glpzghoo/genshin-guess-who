@@ -30,7 +30,7 @@ export function ConnectionStatus({ isConnected }: { isConnected: boolean }) {
 
       <Badge
         variant="outline"
-        className="flex items-center gap-1 text-slate-300 border-slate-600"
+        className="flex items-center gap-1 text-slate-300 "
       >
         <Users className="w-3 h-3" />
         {playersOnline} online

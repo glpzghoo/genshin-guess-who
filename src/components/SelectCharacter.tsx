@@ -16,12 +16,10 @@ const SelectCharacter = ({
     <Card className="backdrop-blur-sm">
       <CardContent className="space-y-3">
         <div className="aspect-square relative overflow-hidden rounded-lg">
-          <Image
-            fill
+          <img
             src={`/assets/ui/${selectedCharacter.icon}.png`}
             alt={selectedCharacter.name}
-            sizes="220px"
-            className="object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
 

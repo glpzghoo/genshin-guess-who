@@ -300,7 +300,7 @@ export function CharacterSelection({
 
       {/* Context banner */}
       {inRoomAlone && (
-        <div className="mb-6 rounded-lg border border-dashed p-4 text-sm flex items-center justify-between">
+        <div className="mb-6 rounded-lg  p-4 text-sm flex items-center justify-between">
           <div>
             <div className="font-medium">Waiting for an opponent…</div>
             <div className="text-muted-foreground">
@@ -376,11 +376,12 @@ export function CharacterSelection({
                         className="justify-start"
                         disabled={submitting}
                       >
-                        <Image
+                        <img
                           width={20}
                           height={20}
                           src={`/assets/ui/${config.icon}`}
                           alt={`element-${element}`}
+                          className="mr-2"
                         />
                         {element}
                       </Button>
@@ -496,10 +497,10 @@ export function CharacterSelection({
               {selectedCharacter ? (
                 <div className="space-y-4">
                   <div className="aspect-square relative overflow-hidden rounded-lg">
-                    <Image
-                      fill
+                    <img
                       src={`/assets/ui/${selectedCharacter.icon}.png`}
                       alt={selectedCharacter.name}
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
 

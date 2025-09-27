@@ -20,7 +20,7 @@ const CharactersTable = ({
           title={
             character.isEliminated ? 'Click to restore' : 'Click to eliminate'
           }
-          className={`cursor-pointer transition-all bg-secondary border-foreground ${
+          className={`cursor-pointer transition-all bg-secondary ${
             character.isEliminated
               ? 'opacity-40 grayscale'
               : isSelected

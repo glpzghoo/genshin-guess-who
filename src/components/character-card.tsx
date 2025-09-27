@@ -30,15 +30,14 @@ const CharacterCard = memo(function CharacterCard({
     weapons[weaponType]?.icon ?? ((props: any) => <Sword {...props} />);
 
   return (
-    <CardContent className={`p-3 rounded-lg`}>
+    <CardContent className="p-3 rounded-lg">
       {/* Portrait */}
       <div className="aspect-square mb-3 relative overflow-hidden rounded-lg">
-        <Image
-          fill
+        <img
           src={`/assets/ui/${icon}.png`}
           alt={`${name} portrait`}
+          className="absolute inset-0 h-full w-full object-cover"
           sizes={imgSizes}
-          priority={false}
         />
 
         {/* Element chip (moved on-image) */}
@@ -46,7 +45,7 @@ const CharacterCard = memo(function CharacterCard({
           className="absolute top-2 right-2 p-1 rounded bg-black/40 backdrop-blur-sm"
           title={`Element: ${element}`}
         >
-          <Image
+          <img
             width={18}
             height={18}
             src={`/assets/ui/${elementMeta.icon}`}
@@ -67,7 +66,7 @@ const CharacterCard = memo(function CharacterCard({
 
       {/* Name */}
       <h3
-        className={`font-semibold text-sm text-center truncate rounded-2xl px-4  ${rarityWrap}`}
+        className={`font-semibold text-sm text-center truncate rounded-2xl px-4 ${rarityWrap}`}
         title={name}
       >
         {name}

@@ -53,7 +53,7 @@ export function TurnTimer() {
   const progress = (timeLeft / 60) * 100;
 
   return (
-    <div className=" backdrop-blur-sm border border-foreground rounded-lg p-4 mb-4 bg-secondary">
+    <div className=" backdrop-blur-sm rounded-lg p-4 mb-4 bg-secondary">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-muted-foreground flex items-center justify-center">

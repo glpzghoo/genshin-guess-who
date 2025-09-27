@@ -95,7 +95,7 @@ export function QuestionPanel({
   }
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-lg p-4">
+    <div className="backdrop-blur-sm border border-slate-700 rounded-lg p-4">
       {!hideHeader && (
         <div className="flex items-center gap-2 mb-4">
           <div className={`flex items-center gap-2 ${statusTone}`}>
