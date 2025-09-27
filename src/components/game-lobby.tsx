@@ -10,8 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sword, Users, Trophy, Star, Crown, Zap, Loader2 } from 'lucide-react';
 
@@ -28,13 +26,12 @@ import Leaderboard from './leaderboard';
 export function GameLobby() {
   const router = useRouter();
   const gameState = useGameStore((s) => s.gameState);
+  const connection = useGameStore((s) => s.connection);
 
   const [activeTab, setActiveTab] = useState('play');
-  const [roomName, setRoomName] = useState('');
   const [isInQueue, setIsInQueue] = useState(false);
   const [queueTime, setQueueTime] = useState(0);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [connected, setConnected] = useState(false);
 
   // queue timer
   const queueTimerRef = useRef<number | null>(null);
@@ -107,11 +104,6 @@ export function GameLobby() {
           // If token fetch fails, leave disconnected; UI shows "Connecting…" disabled state
         }
       }
-
-      // reflect connection status in UI
-      const off = realtimeService.onConnectionChange?.((c) => setConnected(c));
-      setConnected(realtimeService.getConnectionStatus());
-      return () => off?.();
     })();
 
     return () => {
@@ -163,20 +155,6 @@ export function GameLobby() {
     realtimeService.cancelMatch?.();
   };
 
-  // derive display model from profile (works for guest & logged-in)
-  const currentPlayer = useMemo(() => {
-    const ar = profile?.adventure_rank ?? 1;
-    return {
-      id: profile?.id ?? 'guest',
-      username: profile?.nickname ?? 'Guest',
-      adventureRank: ar,
-      avatar: profile?.avatar_url ?? '/placeholder.png',
-      isOnline: connected,
-      wins: profile?.wins ?? 0,
-      losses: profile?.losses ?? 0,
-    };
-  }, [profile, connected]);
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header */}
@@ -185,7 +163,7 @@ export function GameLobby() {
       {/* Player Profile Card */}
       {profile ? (
         <Card className="mb-6 glow">
-          <LobbyProfileHeader profile={profile} connected={connected} />
+          <LobbyProfileHeader profile={profile} />
         </Card>
       ) : (
         <div className=" flex justify-center items-center gap-2 min-h-24">
@@ -233,9 +211,13 @@ export function GameLobby() {
                     onClick={handleFindMatch}
                     className="w-full shimmer"
                     size="lg"
-                    disabled={!connected}
+                    disabled={connection !== 'connected'}
                   >
-                    {connected ? 'Find Match' : 'Connecting…'}
+                    {connection === 'connecting'
+                      ? 'Connecting…'
+                      : connection === 'connected'
+                        ? 'Find Match'
+                        : 'Disconnected'}
                   </Button>
                 ) : (
                   <div className="text-center space-y-2">

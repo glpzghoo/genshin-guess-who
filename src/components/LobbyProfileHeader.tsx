@@ -11,14 +11,10 @@ import { Profile } from '@/lib/types';
 import { getRankIcon } from '@/lib/helpers';
 import { calcARProgressFromSchema } from '@/lib/ar';
 import { LogoutButton } from '@/components/auth/logout-button';
+import { useGameStore } from '@/lib/game-store';
 
-export function LobbyProfileHeader({
-  profile,
-  connected,
-}: {
-  profile: Profile | null; // <-- allow null for guests
-  connected: boolean;
-}) {
+export function LobbyProfileHeader({ profile }: { profile: Profile | null }) {
+  const connection = useGameStore((s) => s.connection);
   const currentPlayer = useMemo(() => {
     if (!profile) {
       return {
@@ -98,11 +94,31 @@ export function LobbyProfileHeader({
         {!profile?.guest && `MMR: ${profile?.mmr ?? 0}`}
         {/* Right: status + AR progress + auth controls */}
         <div className="text-right">
-          <Badge variant={connected ? 'secondary' : 'outline'} className="mb-2">
-            <div
-              className={`w-2 h-2 ${connected ? 'bg-chart-2' : 'bg-slate-400'} rounded-full mr-2`}
+          <Badge
+            variant={
+              connection === 'connected'
+                ? 'default'
+                : connection === 'connecting'
+                  ? 'secondary'
+                  : 'outline'
+            }
+            className="mb-2 flex items-center gap-2"
+          >
+            <span
+              className={[
+                'w-2 h-2 rounded-full',
+                connection === 'connected'
+                  ? 'bg-emerald-500'
+                  : connection === 'connecting'
+                    ? 'bg-amber-500 animate-pulse' // or your 'bg-chart-2'
+                    : 'bg-slate-400',
+              ].join(' ')}
             />
-            {connected ? 'Online' : 'Offline'}
+            {connection === 'connecting'
+              ? 'Connecting…'
+              : connection === 'connected'
+                ? 'Online'
+                : 'Offline'}
           </Badge>
           {!profile?.guest && (
             <>
