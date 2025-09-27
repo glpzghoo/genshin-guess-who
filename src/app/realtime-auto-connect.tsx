@@ -6,8 +6,13 @@ import axios from 'axios';
 import { realtimeService } from '@/lib/realtime-service';
 import type { Profile } from '@/lib/types';
 import { notify } from '@/lib/notify';
+import { useSingleTabGuard } from '@/lib/useSingleTabGuard';
 
 export default function RealtimeAutoConnect() {
+  const { isDuplicate } = useSingleTabGuard({
+    mode: 'close',
+    redirectTo: '/already-open',
+  });
   const router = useRouter();
   const redirectedRef = useRef(false); // avoid double redirects
 
@@ -151,20 +156,34 @@ export default function RealtimeAutoConnect() {
   }, []);
 
   // Trap common shortcuts (F12, Ctrl+Shift+I/J, Cmd+Opt+I on Mac)
-  // useEffect(() => {
-  //   const onKey = (e: KeyboardEvent) => {
-  //     const k = e.key?.toLowerCase();
-  //     if (
-  //       k === 'f12' ||
-  //       ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(k))
-  //     ) {
-  //       e.preventDefault();
-  //       e.stopPropagation();
-  //     }
-  //   };
-  //   window.addEventListener('keydown', onKey, true);
-  //   return () => window.removeEventListener('keydown', onKey, true);
-  // }, []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const k = e.key?.toLowerCase();
+      if (
+        k === 'f12' ||
+        ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i', 'j', 'c'].includes(k))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
+  }, []);
+
+  if (isDuplicate) {
+    // Optional: show a blocking UI while close/redirect happens
+    return (
+      <div className="fixed inset-0 grid place-items-center bg-black/70 text-white">
+        <div className="text-center space-y-2">
+          <h2 className="text-xl font-semibold">App already open</h2>
+          <p>
+            Using multiple tabs is not allowed. This tab will close or redirect.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return null;
 }
