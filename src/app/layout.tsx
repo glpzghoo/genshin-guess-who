@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import RealtimeAutoConnect from './realtime-auto-connect';
 import localFont from 'next/font/local';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const hyWenHei = localFont({
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={` ${hyWenHei.className} antialiased dark`}>
         <RealtimeAutoConnect />
         {children}
+        <Analytics />
       </body>
     </html>
   );
