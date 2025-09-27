@@ -25,6 +25,7 @@ import {
   Users,
   Wifi,
   WifiOff,
+  Loader2,
 } from 'lucide-react';
 import { elements, weapons } from '@/lib/helper';
 import * as c from '@/lib/characters';
@@ -42,7 +43,8 @@ export function CharacterSelection({
   onReady: () => void;
 }) {
   const router = useRouter();
-  const { gameState, socketConnected } = useGameStore();
+  const { gameState } = useGameStore();
+  const connection = useGameStore((s) => s.connection);
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
   );
@@ -176,15 +178,21 @@ export function CharacterSelection({
 
         <div className="flex items-center gap-2">
           <Badge
-            variant={socketConnected ? 'default' : 'secondary'}
+            variant={connection === 'connected' ? 'default' : 'secondary'}
             className="flex items-center gap-1"
           >
-            {socketConnected ? (
+            {connection === 'connected' ? (
               <Wifi className="h-3 w-3" />
+            ) : connection === 'connecting' ? (
+              <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
               <WifiOff className="h-3 w-3" />
             )}
-            {socketConnected ? 'Connected' : 'Reconnecting…'}
+            {connection === 'connected'
+              ? 'Connected'
+              : connection === 'connecting'
+                ? 'Reconnecting…'
+                : 'Disconnected'}
           </Badge>
 
           {code && (

@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 
 export type Answer = 'yes' | 'no';
-
+type ConnState = 'connecting' | 'connected' | 'disconnected';
 export type Player = {
   id: string;
   name: string;
@@ -80,8 +80,6 @@ type ServerState = {
 
 type GameStore = {
   gameState: GameState;
-  socketConnected: boolean; // NEW
-  setSocketConnected: (v: boolean) => void; // NEW
   hydrateFromServer: (s: ServerState) => void; // NEW
 
   setGameState: (state: Partial<GameState>) => void;
@@ -92,6 +90,9 @@ type GameStore = {
   eliminateCharacter: (characterName: string) => void;
   makeGuess: (playerId: string, characterName: string) => void;
   resetGame: () => void;
+
+  connection: ConnState; // NEW
+  setConnection: (c: ConnState) => void; // NEW
 };
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -113,8 +114,8 @@ export const useGameStore = create<GameStore>((set) => ({
     isCustom: false,
   },
 
-  socketConnected: false,
-  setSocketConnected: (v) => set({ socketConnected: v }),
+  connection: 'disconnected',
+  setConnection: (c: ConnState) => set({ connection: c }),
 
   hydrateFromServer: (s) =>
     set((state) => ({

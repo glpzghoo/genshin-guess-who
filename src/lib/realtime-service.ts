@@ -23,12 +23,14 @@ export interface RealtimeEvent {
 
 class RealtimeService {
   public socket: Socket | null = null;
-
   private listeners: Array<(e: RealtimeEvent) => void> = [];
   private selfId: string | null = null;
   private selfName: string | null = null;
 
-  /** Call once after login/user known */
+  // version guard: every connect() increments this;
+  // handlers from older sockets are ignored
+  private _ver = 0;
+
   connect(
     token: string,
     playerId?: string,
@@ -36,81 +38,169 @@ class RealtimeService {
     url = process.env.NEXT_PUBLIC_WS_URL!
   ) {
     if (typeof window === 'undefined') return; // SSR guard
-    if (this.socket?.connected) return;
+    if (this.socket?.connected) return this.socket;
+
+    // Tear down any previous instance
+    if (this.socket) {
+      try {
+        this.socket.removeAllListeners();
+      } catch {
+        // deez
+      }
+      try {
+        this.socket.disconnect();
+      } catch {
+        // deez
+      }
+      this.socket = null;
+    }
+
+    const ver = ++this._ver; // capture version for this socket
+    const setConn = useGameStore.getState().setConnection;
+    setConn('connecting');
 
     this.selfId = playerId ?? null;
     this.selfName = name ?? null;
 
-    this.socket = io(url, {
-      transports: ['websocket'],
-      auth: { accessToken: token }, // <<< matches server.ts auth middleware
+    const s = io(url, {
+      transports: ['websocket'], // avoids poll→ws churn
+      auth: { accessToken: token },
       reconnection: true,
       reconnectionAttempts: Infinity,
       reconnectionDelay: 500,
       reconnectionDelayMax: 3000,
+      timeout: 10000,
+      withCredentials: true,
     });
 
-    this.socket.on('connect', () => {
-      // If server never echoes identity directly, we can infer from state:update players.
-      if (!this.selfId) this.selfId = this.socket?.id ?? null;
-    });
+    const safe =
+      (fn: (...a: any[]) => void) =>
+      (...a: any[]) => {
+        if (ver === this._ver) fn(...a);
+      };
 
-    this.socket.on('disconnect', () => {
-      // up to you to surface UI state
-    });
+    s.on(
+      'connect',
+      safe(() => {
+        setConn('connected');
+        if (!this.selfId) this.selfId = s.id ?? null;
+      })
+    );
 
-    /** Authoritative game state from server (already per-socket) */
-    this.socket.on('state:update', (serverState: any) => {
-      // If we still don't know who we are, try to infer from state players by name match (last resort)
-      if (
-        !this.selfId &&
-        this.selfName &&
-        Array.isArray(serverState?.players)
-      ) {
-        const me = serverState.players.find(
-          (p: any) => p?.name === this.selfName
-        );
-        if (me?.id) this.selfId = me.id;
-      }
-      useGameStore.setState((s) => ({
-        gameState: { ...s.gameState, ...serverState },
-      }));
-    });
+    s.on(
+      'disconnect',
+      safe((reason) => {
+        // If Socket.IO will try to reconnect, show "connecting"; else "disconnected"
+        // (io v4: s.active === false while reconnecting)
+        setConn(s.active ? 'connected' : 'connecting');
+        console.debug('[socket] disconnect:', reason);
+      })
+    );
 
-    /** Optional: user-facing events for toast/notification UIs */
-    this.socket.on('event', (evt: RealtimeEvent) => {
-      this.listeners.forEach((cb) => cb(evt));
-    });
+    s.io.on(
+      'reconnect_attempt',
+      safe(() => setConn('connecting'))
+    );
+    s.io.on(
+      'reconnect',
+      safe(() => setConn('connected'))
+    );
+    s.on(
+      'connect_error',
+      safe(() => setConn('connecting'))
+    );
+    s.io.on(
+      'reconnect_error',
+      safe(() => setConn('connecting'))
+    );
+    s.io.on(
+      'reconnect_failed',
+      safe(() => setConn('disconnected'))
+    );
 
-    /** Optional: server warnings (e.g., deprecated events) */
-    this.socket.on('warn', (payload: { msg: string }) => {
-      // surface as a toast/snackbar in your UI if you want
-      console.warn('[server warn]', payload?.msg);
-    });
+    // Authoritative game state from server
+    s.on(
+      'state:update',
+      safe((serverState: any) => {
+        // use your typed mapper instead of raw spread
+        useGameStore.getState().hydrateFromServer(serverState);
+      })
+    );
 
-    /** Optional: matchmaking progress */
-    this.socket.on('match:searching', () => {
-      // show spinner if desired
-    });
+    // Optional: user-facing events
+    s.on(
+      'event',
+      safe((evt: RealtimeEvent) => {
+        this.listeners.forEach((cb) => cb(evt));
+      })
+    );
 
-    this.socket.on('final:prompt', () => {
-      // switch UI to finalize mode; timer will pause server-side
-      useGameStore.setState((s) => ({
-        gameState: { ...s.gameState, phase: 'finalize' },
-      }));
-    });
+    s.on(
+      'warn',
+      safe((payload: { msg: string }) => {
+        console.warn('[server warn]', payload?.msg);
+      })
+    );
 
-    this.socket.on('final:result', (payload: any) => {
-      useGameStore.setState((s) => ({
-        gameState: {
-          ...s.gameState,
-          phase: 'finished',
-          winner: payload?.winner ?? null,
-          finalResult: payload, // store it for the dialog
-        },
-      }));
-    });
+    s.on(
+      'match:searching',
+      safe(() => {
+        // hook if you want
+      })
+    );
+
+    s.on(
+      'final:prompt',
+      safe(() => {
+        useGameStore.setState((s2) => ({
+          gameState: { ...s2.gameState, phase: 'finalize' },
+        }));
+      })
+    );
+
+    s.on(
+      'final:result',
+      safe((payload: any) => {
+        useGameStore.setState((s2) => ({
+          gameState: {
+            ...s2.gameState,
+            phase: 'finished',
+            winner: payload?.winner ?? null,
+            finalResult: payload,
+          },
+        }));
+      })
+    );
+
+    this.socket = s;
+    return s;
   }
+
+  /* ---------- helpers ---------- */
+
+  getSelfId(): string | null {
+    return this.selfId ?? this.socket?.id ?? null;
+  }
+  getSelfName(): string | null {
+    return this.selfName;
+  }
+  getConnectionStatus(): boolean {
+    return !!this.socket?.connected;
+  }
+
+  onConnectionChange(cb: (connected: boolean) => void): () => void {
+    if (!this.socket) return () => {};
+    const onC = () => cb(true);
+    const onD = () => cb(false);
+    this.socket.on('connect', onC);
+    this.socket.on('disconnect', onD);
+    return () => {
+      this.socket?.off('connect', onC);
+      this.socket?.off('disconnect', onD);
+    };
+  }
+
+  /* ---------- API used by your UI ---------- */
 
   customCreate(
     payload: {
@@ -138,7 +228,6 @@ class RealtimeService {
   customStart(cb?: (ok: boolean) => void) {
     this.socket?.emit('custom:start', cb);
   }
-
   customList(
     cb: (
       rooms: Array<{
@@ -152,47 +241,18 @@ class RealtimeService {
     this.socket?.emit('custom:list', cb);
   }
 
-  /** Who am I? Useful for isMyTurn checks */
-  getSelfId(): string | null {
-    return this.selfId ?? this.socket?.id ?? null;
-  }
-  getSelfName(): string | null {
-    return this.selfName;
-  }
-
-  /** Connection status */
-  getConnectionStatus(): boolean {
-    return !!this.socket?.connected;
-  }
-  onConnectionChange(cb: (connected: boolean) => void): () => void {
-    if (!this.socket) return () => {};
-    const onC = () => cb(true);
-    const onD = () => cb(false);
-    this.socket.on('connect', onC);
-    this.socket.on('disconnect', onD);
-    return () => {
-      this.socket?.off('connect', onC);
-      this.socket?.off('disconnect', onD);
-    };
-  }
-
-  /* ---------- API used by your UI ---------- */
-
   findMatch() {
     this.socket?.emit('match:find');
   }
   cancelMatch() {
     this.socket?.emit('match:cancel');
   }
-
   selectCharacter(name: string) {
     this.socket?.emit('character:select', name);
   }
-
   askQuestion(content: string, ack?: (ok?: boolean) => void) {
     this.socket?.emit('question:ask', content, ack);
   }
-
   answerQuestion(
     questionId: string,
     answer: QAAnswer,
@@ -200,22 +260,16 @@ class RealtimeService {
   ) {
     this.socket?.emit('question:answer', { questionId, answer }, ack);
   }
-
   makeGuess(name: string, ack?: (ok?: boolean) => void) {
     this.socket?.emit('guess:make', name, ack);
   }
-
   finalGuess(name: string, ack?: (ok?: boolean) => void) {
     this.socket?.emit('guess:final', name, ack);
   }
-
   turnTimeout(ack?: (ok?: boolean) => void) {
-    this.socket?.emit('turn:timeout', (ok?: boolean) => {
-      ack?.(ok); // server returns false by design
-    });
+    (this.socket as any)?.timeout?.(1500)?.emit?.('turn:timeout', ack) ??
+      this.socket?.emit('turn:timeout', ack);
   }
-
-  /* ---------- Notifications subscription ---------- */
 
   subscribe(cb: (e: RealtimeEvent) => void): () => void {
     this.listeners.push(cb);
@@ -227,7 +281,6 @@ class RealtimeService {
   addSystemLog(text: string) {
     this.socket?.emit('log:system', text);
   }
-
   leaveRoom() {
     this.socket?.emit('room:leave');
   }
@@ -242,7 +295,6 @@ class RealtimeService {
     ack: (res: { inRoom: boolean; roomId?: string; phase?: string }) => void
   ) {
     if (!this.socket) return ack({ inRoom: false });
-    // optional timeout so it doesn’t hang forever
     (this.socket as any).timeout?.(1500).emit?.('room:status', ack) ||
       this.socket.emit('room:status', ack);
   }
