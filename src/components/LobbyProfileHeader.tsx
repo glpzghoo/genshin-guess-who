@@ -71,25 +71,31 @@ export function LobbyProfileHeader({
                 {currentPlayer.nickname}
               </h2>
               {getRankIcon(ar.level)}
-              {ar.mismatched && (
+              {ar.mismatched && !profile?.guest && (
                 <span className="text-xs text-yellow-500 ml-1">(syncing)</span>
               )}
             </div>
-            <p className="text-muted-foreground">Adventure Rank {ar.level}</p>
-            <div className="flex gap-4 mt-1">
-              <span className="text-sm text-chart-2">
-                {currentPlayer.wins}W
-              </span>
-              <span className="text-sm text-destructive">
-                {currentPlayer.losses}L
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {winrate}% WR
-              </span>
-            </div>
+            {!profile?.guest && (
+              <>
+                <p className="text-muted-foreground">
+                  Adventure Rank {ar.level}
+                </p>
+                <div className="flex gap-4 mt-1">
+                  <span className="text-sm text-chart-2">
+                    {currentPlayer.wins}W
+                  </span>
+                  <span className="text-sm text-destructive">
+                    {currentPlayer.losses}L
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {winrate}% WR
+                  </span>
+                </div>
+              </>
+            )}
           </div>
         </div>
-        MMR: {profile?.mmr ?? 0}
+        {!profile?.guest && `MMR: ${profile?.mmr ?? 0}`}
         {/* Right: status + AR progress + auth controls */}
         <div className="text-right">
           <Badge variant={connected ? 'secondary' : 'outline'} className="mb-2">
@@ -98,8 +104,12 @@ export function LobbyProfileHeader({
             />
             {connected ? 'Online' : 'Offline'}
           </Badge>
-          <Progress value={ar.percent} className="w-32" />
-          <p className="text-xs text-muted-foreground mt-1">{ar.label}</p>
+          {!profile?.guest && (
+            <>
+              <Progress value={ar.percent} className="w-32" />
+              <p className="text-xs text-muted-foreground mt-1">{ar.label}</p>
+            </>
+          )}
 
           {/* Auth controls */}
           <div className="mt-3 flex items-center justify-end gap-2">
