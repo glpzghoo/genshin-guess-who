@@ -14,7 +14,7 @@ import { TurnTimer } from '@/components/turn-timer';
 import { ConnectionStatus } from '@/components/connection-status';
 import { LiveNotifications } from '@/components/live-notifications';
 import { useGameStore } from '@/lib/game-store';
-import * as c from '@/lib/characters';
+import * as c from '@/lib/character_db/characters';
 import Image from 'next/image';
 import { realtimeService } from '@/lib/realtime-service';
 import { FinalResultDialog } from './final-result-dialog';
@@ -65,7 +65,10 @@ export function GameBoard() {
   const persist = (next: InGameCharacters[]) => {
     const sorted = [...next].sort((a, b) => b.release - a.release);
     setCharacters(sorted);
-    localStorage.setItem(LS_KEY, JSON.stringify(sorted));
+
+    // only save small fields
+    const lightData = sorted.map(({ VL, ...rest }) => rest);
+    localStorage.setItem(LS_KEY, JSON.stringify(lightData));
   };
 
   // Seed local list & my secret character

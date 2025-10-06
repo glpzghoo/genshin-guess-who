@@ -11,6 +11,7 @@ export type Character = {
   birthday: number[];
   release: number;
   route: string;
+  VL: VoiceLine;
 };
 
 export type Profile = {
@@ -23,4 +24,37 @@ export type Profile = {
   exp: number;
   mmr: number;
   guest?: boolean;
+};
+
+// Voiceline types
+type VoiceLine = {
+  quotes: Record<string, Quote>;
+  story: Record<string, story>;
+};
+
+type story = {
+  title: string;
+  title2: string | null;
+  text: string;
+  text2: string | null;
+  tips: string;
+};
+type Quote = {
+  title: string;
+  audio: string;
+  text: string;
+  tips: string;
+  tasks: Task[] | null;
+};
+
+type Task = {
+  type: string;
+  questList: Quest[];
+};
+
+type Quest = {
+  id: number;
+  questTitle?: string | null;
+  chapterId?: number;
+  chapterTitle?: string;
 };

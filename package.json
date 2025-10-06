@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "up": "npx barrelsby --delete --location all --directory src/lib/characters"
+    "up": "npx barrelsby --delete --location all --directory src/lib/character_db/characters"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

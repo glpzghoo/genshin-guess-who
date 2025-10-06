@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { useGameStore } from '@/lib/game-store';
 import { realtimeService } from '@/lib/realtime-service';
 import CharacterCard from './character-card';
-import * as allChars from '@/lib/characters';
+import * as allChars from '@/lib/character_db/characters';
 import { Check } from 'lucide-react';
 
 type CharacterType = Character;

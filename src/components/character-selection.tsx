@@ -28,7 +28,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { elements, weapons } from '@/lib/helper';
-import * as c from '@/lib/characters';
+import * as c from '@/lib/character_db/characters';
 import Image from 'next/image';
 import CharacterCard from './character-card';
 import { realtimeService } from '@/lib/realtime-service';
