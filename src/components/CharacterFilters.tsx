@@ -129,86 +129,85 @@ export function CharacterFilters({
             </div>
           </div>
 
- 100        <div className="space-y-2">
- 101          <label className="text-xs uppercase tracking-wide text-white/60">
- 102            Weapon
- 103          </label>
- 104          <div className="flex flex-wrap gap-2">
- 105            <Button
- 106              variant="ghost"
- 107              size="sm"
- 108              onClick={() => apply({ weapon: 'all' })}
- 109              disabled={disabled}
- 110              className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
- 111                value.weapon === 'all' ? 'bg-white/20 text-white' : ''
- 112              }`}
- 113            >
- 114              All
- 115            </Button>
- 116            {Object.entries(weapons).map(([weapon, config]) => {
- 117              const Icon = config.icon ?? Wand2;
- 118              return (
- 119                <Button
- 120                  key={weapon}
- 121                  variant="ghost"
- 122                  size="sm"
- 123                  onClick={() => apply({ weapon })}
- 124                  disabled={disabled}
- 125                  className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
- 126                    value.weapon === weapon ? 'bg-white/20 text-white' : ''
- 127                  }`}
- 128                >
- 129                  <Icon className="mr-2 h-3 w-3" />
- 130                  {config.name}
- 131                </Button>
- 132              );
- 133            })}
- 134          </div>
- 135        </div>
- 136
- 137        <div className="space-y-2">
- 138          <label className="text-xs uppercase tracking-wide text-white/60">
- 139            Rarity
- 140          </label>
- 141          <div className="flex items-center gap-2">
- 142            <Button
- 143              variant="ghost"
- 144              size="sm"
- 145              onClick={() => apply({ rarity: 'all' })}
- 146              disabled={disabled}
- 147              className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
- 148                value.rarity === 'all' ? 'bg-white/20 text-white' : ''
- 149              }`}
- 150            >
- 151              All
- 152            </Button>
- 153            <Button
- 154              variant="ghost"
- 155              size="sm"
- 156              onClick={() => apply({ rarity: '4' })}
- 157              disabled={disabled}
- 158              className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
- 159                value.rarity === '4' ? 'bg-white/20 text-white' : ''
- 160              }`}
- 161            >
- 162              4<Star className="ml-1 h-3 w-3" />
- 163            </Button>
- 164            <Button
- 165              variant="ghost"
- 166              size="sm"
- 167              onClick={() => apply({ rarity: '5' })}
- 168              disabled={disabled}
- 169              className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
- 170                value.rarity === '5' ? 'bg-white/20 text-white' : ''
- 171              }`}
- 172            >
- 173              5<Star className="ml-1 h-3 w-3" />
- 174            </Button>
- 175          </div>
- 176        </div>
- 177      </div>
-    </PopoverContent>
-  </Popover>
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-wide text-white/60">
+              Weapon
+            </label>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => apply({ weapon: 'all' })}
+                disabled={disabled}
+                className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
+                  value.weapon === 'all' ? 'bg-white/20 text-white' : ''
+                }`}
+              >
+                All
+              </Button>
+              {Object.entries(weapons).map(([weapon, config]) => {
+                const Icon = config.icon ?? Wand2;
+                return (
+                  <Button
+                    key={weapon}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => apply({ weapon })}
+                    disabled={disabled}
+                    className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
+                      value.weapon === weapon ? 'bg-white/20 text-white' : ''
+                    }`}
+                  >
+                    <Icon className="mr-2 h-3 w-3" />
+                    {config.name}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-wide text-white/60">
+              Rarity
+            </label>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => apply({ rarity: 'all' })}
+                disabled={disabled}
+                className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
+                  value.rarity === 'all' ? 'bg-white/20 text-white' : ''
+                }`}
+              >
+                All
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => apply({ rarity: '4' })}
+                disabled={disabled}
+                className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
+                  value.rarity === '4' ? 'bg-white/20 text-white' : ''
+                }`}
+              >
+                4<Star className="ml-1 h-3 w-3" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => apply({ rarity: '5' })}
+                disabled={disabled}
+                className={`h-8 border border-white/20 bg-transparent text-white/75 hover:bg-white/10 ${
+                  value.rarity === '5' ? 'bg-white/20 text-white' : ''
+                }`}
+              >
+                5<Star className="ml-1 h-3 w-3" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }
-
