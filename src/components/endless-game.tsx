@@ -42,7 +42,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const STATS_KEY = 'endless-mode-stats';
-const MAX_ATTEMPTS = 4;
+const MAX_ATTEMPTS = 5;
 
 type EndlessGuess = {
   character: Character;
@@ -369,6 +369,12 @@ export function EndlessGame() {
                   icon={<Crown className="h-3.5 w-3.5" />}
                 >
                   Best streak: {stats.bestStreak}
+                </BadgePill>
+                <BadgePill
+                  theme={theme}
+                  icon={<Crown className="h-3.5 w-3.5" />}
+                >
+                  Current streak: {stats.currentStreak}
                 </BadgePill>
               </div>
               <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-white/60">
