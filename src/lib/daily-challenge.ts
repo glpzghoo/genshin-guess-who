@@ -20,6 +20,8 @@ export type DailyStoredEntry = {
   guesses: DailyStoredGuess[];
 };
 
+export const MAX_FAILED_ATTEMPTS = 4;
+
 export type ElementTheme = {
   gradient: string;
   glow: string;
@@ -31,12 +33,16 @@ export type ElementTheme = {
 };
 
 const compareCharacterNames = (a: Character, b: Character): number => {
-  const nameComparison = a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+  const nameComparison = a.name.localeCompare(b.name, 'en', {
+    sensitivity: 'base',
+  });
   if (nameComparison !== 0) return nameComparison;
   return String(a.id).localeCompare(String(b.id), 'en', { numeric: true });
 };
 
-const allCharacters: Character[] = Object.values(characterExports).sort(compareCharacterNames);
+const allCharacters: Character[] = Object.values(characterExports).sort(
+  compareCharacterNames
+);
 
 const characterMap = new Map<string, Character>(
   allCharacters.map((ch) => [String(ch.id), ch])
@@ -63,11 +69,14 @@ const regionLabels: Record<string, string> = {
   NATLAN: 'Natlan',
   'NOD-KRAI': 'Nod-Krai',
   RANGER: 'Outlander',
-  'OMNI_SCOURGE': 'Omni Scourge',
+  OMNI_SCOURGE: 'Omni Scourge',
   MAINACTOR: 'Traveler',
 };
 
-const formatWithFallback = (source: string, dictionary: Record<string, string>) => {
+const formatWithFallback = (
+  source: string,
+  dictionary: Record<string, string>
+) => {
   if (!source) return 'Unknown';
   if (dictionary[source]) return dictionary[source];
 
@@ -101,7 +110,9 @@ const formatRelease = (release: number): string | null => {
   }
 };
 
-const pickVoiceLine = (character: Character): { title: string; text: string } | null => {
+const pickVoiceLine = (
+  character: Character
+): { title: string; text: string } | null => {
   const quotes = character?.VL?.quotes;
   if (!quotes) return null;
 
@@ -178,7 +189,7 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
   const gender = genderByBodyType[character.bodyType] ?? 'Unknown';
   hints.push({
     id: 'gender',
-    label: 'Body Type',
+    label: 'Gender',
     value: gender,
   });
 
@@ -213,6 +224,17 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
       label: `Voice Line – ${voiceLine.title}`,
       value: voiceLine.text,
     });
+  }
+
+  if (hints.length > 1) {
+    let seed = stringHash(`hints-${character.id}`);
+    for (let i = hints.length - 1; i > 0; i -= 1) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      const swapIndex = seed % (i + 1);
+      if (swapIndex !== i) {
+        [hints[i], hints[swapIndex]] = [hints[swapIndex], hints[i]];
+      }
+    }
   }
 
   return hints;
@@ -305,7 +327,10 @@ const fallbackTheme: ElementTheme = {
   button: 'linear-gradient(120deg, #6366f1 0%, #8b5cf6 50%, #22d3ee 100%)',
 };
 
-const themePalette: ElementTheme[] = [...Object.values(elementThemes), fallbackTheme];
+const themePalette: ElementTheme[] = [
+  ...Object.values(elementThemes),
+  fallbackTheme,
+];
 
 export const getElementTheme = (character: Character): ElementTheme =>
   elementThemes[character.element] ?? fallbackTheme;
@@ -354,12 +379,14 @@ export const getDailyShowcaseCharacters = (
 export const getRandomCharacter = (
   exclude: Array<string | number> | Set<string | number> = []
 ): Character => {
-  const excludeSet = Array.isArray(exclude) ? new Set(exclude.map(String)) : new Set(
-    Array.from(exclude).map(String)
-  );
+  const excludeSet = Array.isArray(exclude)
+    ? new Set(exclude.map(String))
+    : new Set(Array.from(exclude).map(String));
 
   const pool = excludeSet.size
-    ? dailyCharacters.filter((character) => !excludeSet.has(String(character.id)))
+    ? dailyCharacters.filter(
+        (character) => !excludeSet.has(String(character.id))
+      )
     : dailyCharacters;
 
   if (!pool.length) {

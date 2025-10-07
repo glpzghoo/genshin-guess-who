@@ -9,7 +9,6 @@ import {
   ChevronsUpDown,
   Check as CheckIcon,
   Infinity as InfinityIcon,
-  RefreshCw,
   Sparkles,
   Target,
   Flame,
@@ -18,7 +17,6 @@ import {
 
 import {
   buildDailyHints,
-  DailyHint,
   ElementTheme,
   getAllCharacters,
   getDisplayName,
@@ -44,6 +42,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const STATS_KEY = 'endless-mode-stats';
+const MAX_ATTEMPTS = 4;
 
 type EndlessGuess = {
   character: Character;
@@ -224,8 +223,8 @@ export function EndlessGame() {
 
   const failedAttempts = guesses.filter((guess) => !guess.correct).length;
   const revealedHints = hints.slice(0, failedAttempts);
-  const stillGuessing = roundStatus === 'playing';
-
+  const stillGuessing =
+    roundStatus === 'playing' && failedAttempts < MAX_ATTEMPTS;
   const submitGuess = useCallback(
     (guess: Character) => {
       if (!currentCharacter || !stillGuessing) return;
@@ -256,9 +255,20 @@ export function EndlessGame() {
         setSelection(guess);
       } else {
         setSelection(null);
+
+        // NEW: if this miss hits the cap, auto-lose and reset streak
+        const nextFailed = failedAttempts + 1; // failedAttempts is from current render
+        if (nextFailed >= MAX_ATTEMPTS) {
+          setRoundStatus('revealed');
+          setRecentReveals((c) => c + 1);
+          updateStats((prev) => ({
+            ...prev,
+            currentStreak: 0,
+          }));
+        }
       }
     },
-    [currentCharacter, stillGuessing, updateStats]
+    [currentCharacter, stillGuessing, updateStats, failedAttempts]
   );
 
   const handleGiveUp = useCallback(() => {
@@ -381,7 +391,10 @@ export function EndlessGame() {
               <div className="rounded-2xl border border-white/15 bg-black/30 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between text-xs uppercase tracking-wide text-white/60">
                   <span>Round {roundNumber}</span>
-                  <span>{guesses.length} guesses</span>
+                  <span>
+                    {guesses.length} guesses • {failedAttempts}/{MAX_ATTEMPTS}{' '}
+                    misses
+                  </span>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -483,8 +496,8 @@ export function EndlessGame() {
                             {hint.id === 'element'
                               ? renderElementWithIcon(hint.value)
                               : hint.id === 'weapon'
-                              ? renderWeaponWithIcon(hint.value)
-                              : hint.value}
+                                ? renderWeaponWithIcon(hint.value)
+                                : hint.value}
                           </div>
                         </motion.div>
                       ))}

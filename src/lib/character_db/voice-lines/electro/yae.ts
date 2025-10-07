@@ -78,14 +78,14 @@ export const yaeVL = {
       tasks: null,
     },
     '11': {
-      title: 'About Yae Miko: Eternity',
+      title: 'About ___: Eternity',
       audio: '2001',
       text: "Eternity means never having to let go of what you already have. But on the other hand, it also means giving up on all other possibilities. That's just the way of the world... No one can have everything.",
       tips: '',
       tasks: null,
     },
     '12': {
-      title: 'About Yae Miko: Interests',
+      title: 'About ___: Interests',
       audio: '2005',
       text: "Humans are just fascinating creatures, that's why I'm so fond of them. They live such short lives, but for the time they're around, they shine as bright as the midday sun. There are some whose light never grows dim, even over great stretches of time... These are the lives that make for real page-turners.",
       tips: '',
@@ -94,7 +94,7 @@ export const yaeVL = {
     '13': {
       title: 'About Us: Authorship',
       audio: '2003',
-      text: "Boring. Utterly boring... Ugh, what could have possibly persuaded these people to become authors? Say, why don't you write out your story and submit it to Yae Publishing House? I'm sure that would keep me amused— Ahem, I mean, I'm sure it would be a best-seller.",
+      text: "Boring. Utterly boring... Ugh, what could have possibly persuaded these people to become authors? Say, why don't you write out your story and submit it to ___ Publishing House? I'm sure that would keep me amused— Ahem, I mean, I'm sure it would be a best-seller.",
       tips: '',
       tasks: null,
     },
@@ -165,7 +165,7 @@ export const yaeVL = {
     '20': {
       title: 'About Kamisato Ayaka',
       audio: '4003',
-      text: "I'm very fond indeed of the Yashiro Commission girl. She adroitly handles every matter that comes before her. Unfortunately, it's often thankless work. Pity. Were she not a member of the Kamisato Clan, I would have long since snatched her up for the Yae Publishing House.",
+      text: "I'm very fond indeed of the Yashiro Commission girl. She adroitly handles every matter that comes before her. Unfortunately, it's often thankless work. Pity. Were she not a member of the Kamisato Clan, I would have long since snatched her up for the ___ Publishing House.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
         {
@@ -288,7 +288,7 @@ export const yaeVL = {
     '31': {
       title: 'About Yumemizuki Mizuki: Business Rivalry',
       audio: '4014',
-      text: "\"Anxiety and exhaustion strip people of the emotional energy for novels\"? Hmph, well, I suppose Yae Publishing House needs to work harder, then. Apparently, we haven't published a single volume to Miss Mizuki's liking. I'll give my editors and writers more time... If we still can't satisfy her, then as the Editor-in-Chief, I suppose I'll have to write one myself. Hm...\"The Baku Chronicles\" has a nice ring to it, hmm?",
+      text: "\"Anxiety and exhaustion strip people of the emotional energy for novels\"? Hmph, well, I suppose ___ Publishing House needs to work harder, then. Apparently, we haven't published a single volume to Miss Mizuki's liking. I'll give my editors and writers more time... If we still can't satisfy her, then as the Editor-in-Chief, I suppose I'll have to write one myself. Hm...\"The Baku Chronicles\" has a nice ring to it, hmm?",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
@@ -311,23 +311,23 @@ export const yaeVL = {
       ],
     },
     '33': {
-      title: 'More About Yae Miko: I',
+      title: 'More About ___: I',
       audio: '5001',
       text: "Oh? You'd like to know more about me? I'm willing to tell, but what will I gain in exchange, hmm? It has to be a fair trade. So you tell me all about you, and I'll tell you all about me. Deal?",
       tips: '',
       tasks: null,
     },
     '34': {
-      title: 'More About Yae Miko: II',
+      title: 'More About ___: II',
       audio: '5002',
       text: "Kitsune Saiguu said that she was going off on a long trip, and she's never been back since. *sigh* At the time, I wasn't the least bit inclined to take on the burden of managing the Grand Narukami Shrine. So she told me that as Guuji, I would be able to eat all the Fried Tofu I desired. As if that would be a convincing reason... That woman spoke so much nonsense, honestly, she could be so insufferable...",
       tips: 'Unlocks at Friendship Lv. 3',
       tasks: null,
     },
     '35': {
-      title: 'More About Yae Miko: III',
+      title: 'More About ___: III',
       audio: '5003',
-      text: "I decided to found Yae Publishing House simply because I wished to read more interesting light novels, that's all. But, it turns out that seeing frazzled authors scraping the bottom of their barrel in a desperate attempt to get their novels finished is where the real amusement comes from. You wouldn't believe some of the excuses they come up with when they're trying to get a deadline extension. Oh, so much more creative than the novels themselves.",
+      text: "I decided to found ___ Publishing House simply because I wished to read more interesting light novels, that's all. But, it turns out that seeing frazzled authors scraping the bottom of their barrel in a desperate attempt to get their novels finished is where the real amusement comes from. You wouldn't believe some of the excuses they come up with when they're trying to get a deadline extension. Oh, so much more creative than the novels themselves.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
         {
@@ -343,7 +343,7 @@ export const yaeVL = {
       ],
     },
     '36': {
-      title: 'More About Yae Miko: IV',
+      title: 'More About ___: IV',
       audio: '5004',
       text: "Even supernatural beings eventually pass away, including gods. It's a terrible shame when their tales are lost to time along with them, never to be remembered again. The problem is, only those with first-class writing and composition skills are qualified to commit these stories to paper. If there is no qualified writing talent in the world, we must cultivate it... Yes, home-grown writers are what we need, capable of adequately capturing these stories with the written word.",
       tips: 'Unlocks at Friendship Lv. 5',
@@ -361,7 +361,7 @@ export const yaeVL = {
       ],
     },
     '37': {
-      title: 'More About Yae Miko: V',
+      title: 'More About ___: V',
       audio: '5005',
       text: "Though I'm an avid reader of novels written by others, I've yet to pick up the pen myself. Writing a novel is quite an undertaking, after all. But, if there comes a day when you reach the end of your adventure and want somebody to record it — and if I happen to have the time when that day comes... We'll see.",
       tips: 'Unlocks at Friendship Lv. 6',
@@ -379,14 +379,14 @@ export const yaeVL = {
       ],
     },
     '38': {
-      title: "Yae Miko's Hobbies",
+      title: "___'s Hobbies",
       audio: '6001',
       text: "My favorite pastime is reading other people's stories. My second favorite is watching other people squirm... If I could find a way to combine the two, haha... Oh, that would be entertainment in its purest form.",
       tips: '',
       tasks: null,
     },
     '39': {
-      title: "Yae Miko's Troubles",
+      title: "___'s Troubles",
       audio: '6002',
       text: 'Peace and tranquility seems to be all the rage nowadays, but it gets dreadfully boring after a while...',
       tips: 'Complete "Omnipresence Over Mortals"',
@@ -668,21 +668,21 @@ export const yaeVL = {
     '0': {
       title: 'Character Details',
       title2: null,
-      text: "The head shrine maiden of the Grand Narukami Shrine, descendant of Hakushin's lineage, Eternity's servant and friend, and the intimidating editor-in-chief of Yae Publishing House, a publisher of light novels...\\nCome to think of it, Yae Miko's nicknames are as myriad as her changeable moods.\\nThe number of people who have tried to \"figure her out\" for various reasons could fill the streets from the Tenryou Commission estate to Yae Publishing House if you were to line them all up, but to this day, very few indeed have succeeded.\\nNot that Miko has ever intended to conceal anything, of course. Any capriciousness is but the result of doing as she wills and pleases. A riddle with no solution is no riddle at all, in any case!\\nYou just need to remember that she will always be none other than the wise and beautiful Yae Miko.",
+      text: "The head shrine maiden of the Grand Narukami Shrine, descendant of Hakushin's lineage, Eternity's servant and friend, and the intimidating editor-in-chief of ___ Publishing House, a publisher of light novels...\\nCome to think of it, ___'s nicknames are as myriad as her changeable moods.\\nThe number of people who have tried to \"figure her out\" for various reasons could fill the streets from the Tenryou Commission estate to ___ Publishing House if you were to line them all up, but to this day, very few indeed have succeeded.\\nNot that Miko has ever intended to conceal anything, of course. Any capriciousness is but the result of doing as she wills and pleases. A riddle with no solution is no riddle at all, in any case!\\nYou just need to remember that she will always be none other than the wise and beautiful ___.",
       text2: null,
       tips: '',
     },
     '1': {
       title: 'Character Story 1',
       title2: null,
-      text: 'Yae Publishing House\'s editors once submitted a certain manuscript to the editor-in-chief.\\nThis work was well-written, clearly thought out, and the themes were romance with a side of comedy — a prime slice of the zeitgeist.\\nSuch a gem would surely require but a thin coat of polish and a few beautiful illustrations to sell well!\\nBut unexpectedly, Yae Miko did not seem pleased with this, instead heaving a deep sigh before calling for the various head editors.\\nOne of them asked hesitantly, "Lady Yae, I... Well, I did ask him to write on this topic, yes, but isn\'t this the hot genre of the day?"\\nFaced with the editor\'s doubtful gaze, Miko gave her opinion forthrightly: that a book that should have been interesting yet was shackled at every turn by the topic was, simply put, "not free enough."\\nThings like "top sellers," "genre fiction," these were naught but fads that would come and go every decade.\\nGetting with the times was a shortcut, yes, but if a work had the quality that could surmount this tide, why go with the flow nonetheless?\\n"Pass this message to this new author of ours: tell him that there\'s no need to bother about genre. He just needs to write his story and write it well."\\nUpon hearing this, the author stopped writing for a time, as if suddenly having an epiphany. Several months later, a new manuscript was sent to Miko and her editors.\\nThe latter were stunned, and even Yae Miko, who cared little about taboos, furrowed her brows slightly — a rare sight indeed.\\n"Um... What do we do? This isn\'t good..."\\n"Exactly! I mean, there\'s \'not being concerned about genre, and then there\'s something like \'Shogun Almighty: Reborn as Raiden\'... This is just too much!"\\n"Hmm? Genre? No, no, there\'s no problem with that — it\'s his pen name I\'m worried about. It\'s too normal for a book like this."\\n"Huh, so that was what you were concerned about... No, uh, never mind. As long as you\'re happy, Lady Yae."\\nNot long after, the author of this book would take to the literary stage with the Yae Miko-approved (and overly long) pen name "Kadenokouji Kenzaburou."\\nAs to how the editor-in-chief got the idea to start a "Reborn as Guuji Yae" writing submission event, that would be a tale for another day.',
+      text: '___ Publishing House\'s editors once submitted a certain manuscript to the editor-in-chief.\\nThis work was well-written, clearly thought out, and the themes were romance with a side of comedy — a prime slice of the zeitgeist.\\nSuch a gem would surely require but a thin coat of polish and a few beautiful illustrations to sell well!\\nBut unexpectedly, ___ did not seem pleased with this, instead heaving a deep sigh before calling for the various head editors.\\nOne of them asked hesitantly, "Lady ___, I... Well, I did ask him to write on this topic, yes, but isn\'t this the hot genre of the day?"\\nFaced with the editor\'s doubtful gaze, Miko gave her opinion forthrightly: that a book that should have been interesting yet was shackled at every turn by the topic was, simply put, "not free enough."\\nThings like "top sellers," "genre fiction," these were naught but fads that would come and go every decade.\\nGetting with the times was a shortcut, yes, but if a work had the quality that could surmount this tide, why go with the flow nonetheless?\\n"Pass this message to this new author of ours: tell him that there\'s no need to bother about genre. He just needs to write his story and write it well."\\nUpon hearing this, the author stopped writing for a time, as if suddenly having an epiphany. Several months later, a new manuscript was sent to Miko and her editors.\\nThe latter were stunned, and even ___, who cared little about taboos, furrowed her brows slightly — a rare sight indeed.\\n"Um... What do we do? This isn\'t good..."\\n"Exactly! I mean, there\'s \'not being concerned about genre, and then there\'s something like \'Shogun Almighty: Reborn as Raiden\'... This is just too much!"\\n"Hmm? Genre? No, no, there\'s no problem with that — it\'s his pen name I\'m worried about. It\'s too normal for a book like this."\\n"Huh, so that was what you were concerned about... No, uh, never mind. As long as you\'re happy, Lady ___."\\nNot long after, the author of this book would take to the literary stage with the ___-approved (and overly long) pen name "Kadenokouji Kenzaburou."\\nAs to how the editor-in-chief got the idea to start a "Reborn as Guuji ___" writing submission event, that would be a tale for another day.',
       text2: null,
       tips: 'Unlocks at Friendship Lv. 2',
     },
     '2': {
       title: 'Character Story 2',
       title2: null,
-      text: 'If there was something inconvenient about being the Guuji, it is that she must attend every shrine ceremony, dressed up to the nines and in her proper place in the sanctuary.\\nThe fireworks paint the night skies as they blossom, and the sounds of human merriment fill the shrine, and yet she must sit within, a solemn smile on her face...\\nSuch tragedies are even more frightful to Miko than the possible wholesale disappearance of Fried Tofu from Teyvat.\\nWith the somewhat longer span of years that the Electro Archon\'s servants have, a hundred years pass in the blink of an eye. As the years fly by, boredom becomes the greatest foe.\\nAnd if even she were, archon-forbid, one day to accept sitting quietly still, obstinate as deadwood, would the world now sorely lack for another clever person adept at discovering fun and grasping opportunity?\\nAs such, looking for fun things to do in every nook and cranny can only be the most reasonable and necessary course.\\nAnd if she were to, say, utilize her authority as Guuji in making fun things happen — why, some things are unavoidable, are they not?\\nOn the day of the festival, Guuji Yae would nod in satisfaction as she received a delivery of fireworks from the Yashiro Commission — of Naganohara construction and specially-made to boot.\\nThat night\'s ceremony was, of course, performed with perfect respect to all etiquette and rites.\\nThe sight of the "Lady Guuji" kneeling gracefully the whole night through would be the object of awe for all the other shrine maidens.\\nIn the meantime, she would sit beneath the meteor shower of light adorning the skies, watching the festival-goers as they came and went.\\nAnd the din of the fireworks covered the mumbling that came between teeth chewing on a candy apple.\\n"You know, when you asked me to become Guuji, you never mentioned that I\'d only ever be able to sneak outside to watch the festivities from then on."',
+      text: 'If there was something inconvenient about being the Guuji, it is that she must attend every shrine ceremony, dressed up to the nines and in her proper place in the sanctuary.\\nThe fireworks paint the night skies as they blossom, and the sounds of human merriment fill the shrine, and yet she must sit within, a solemn smile on her face...\\nSuch tragedies are even more frightful to Miko than the possible wholesale disappearance of Fried Tofu from Teyvat.\\nWith the somewhat longer span of years that the Electro Archon\'s servants have, a hundred years pass in the blink of an eye. As the years fly by, boredom becomes the greatest foe.\\nAnd if even she were, archon-forbid, one day to accept sitting quietly still, obstinate as deadwood, would the world now sorely lack for another clever person adept at discovering fun and grasping opportunity?\\nAs such, looking for fun things to do in every nook and cranny can only be the most reasonable and necessary course.\\nAnd if she were to, say, utilize her authority as Guuji in making fun things happen — why, some things are unavoidable, are they not?\\nOn the day of the festival, Guuji ___ would nod in satisfaction as she received a delivery of fireworks from the Yashiro Commission — of Naganohara construction and specially-made to boot.\\nThat night\'s ceremony was, of course, performed with perfect respect to all etiquette and rites.\\nThe sight of the "Lady Guuji" kneeling gracefully the whole night through would be the object of awe for all the other shrine maidens.\\nIn the meantime, she would sit beneath the meteor shower of light adorning the skies, watching the festival-goers as they came and went.\\nAnd the din of the fireworks covered the mumbling that came between teeth chewing on a candy apple.\\n"You know, when you asked me to become Guuji, you never mentioned that I\'d only ever be able to sneak outside to watch the festivities from then on."',
       text2: null,
       tips: 'Unlocks at Friendship Lv. 3',
     },
@@ -710,14 +710,14 @@ export const yaeVL = {
     '6': {
       title: 'Fire-Soothing Festival Committee',
       title2: null,
-      text: 'The Fire-Soothing Festival Committee was once an organization chaired by the Tenryou Commission and managed by the Grand Narukami Shrine, whose remit was to pray for a lack of any fires in the coming year.\\nIn those days, Inazuman houses were mostly made of wood, and any carelessness while handling fire could lead to disaster.\\nThus, the Tenryou Commission was charged by the Shogun with setting up fire brigades to conduct rescues and damage control when fires did break out, and they also requested that the Grand Narukami Shrine set the Fire-Soothing Festival Committee up to comfort the frightened people.\\nIn later years, anti-fire precautions would become second nature and serious cases would no longer occur often, but still the annual festival would remain.\\nThe shrine maidens would dance elegantly, and the people would give generously... with the proceeds split forty-sixty between the Commission and the Shrine.\\nWhen Yae Miko was faced with financial issues while attempting to start Yae Publishing House, she considered the various services that the shrine ran at the time before locking onto this ancient traditional committee.\\n"I mean, the busywork is solely done by the Grand Narukami Shrine, so why do we have to split the proceeds with the Tenryou Commission?"\\n"What\'s more, all that Mora\'s just going into Kujou Senior\'s pockets. It\'s not like the fire brigade has ever gotten a year-end bonus or anything."\\nAs such, after some preparation, the Fire-Soothing Festival of that year would be changed to no longer feature dancing shrine maidens but a grand, rollicking light novel submission contest.\\nThe organizing body for this competition and any subsequent publications, the "Yae Publishing House," would also "borrow" the Fire-Soothing Festival Committee\'s budget.\\nAs for the profits? Into the shrine\'s coffers they went.\\n"Well, we no longer have many fires, and yet our budget keeps increasing. Thus, this restructuring relieves the financial burden placed upon the people."\\n"Also, the study of lore and the writing of literature and poetry is also a way of pleasing our Archon — surely you do not claim to know more of ritual and ceremony than I?"\\nThat was what Yae Miko said most solemnly to Kujou Takayuki when he came by unannounced.\\nThe Tenryou Commissioner was ultimately forced to leave the way he came, stormy-faced, along with his attendants.\\nLittle did any of them know that the moment they stepped out of the shrine, the somber Lady Miko would pluck a novel manuscript from the nearby offering box and continue annotating it.',
+      text: 'The Fire-Soothing Festival Committee was once an organization chaired by the Tenryou Commission and managed by the Grand Narukami Shrine, whose remit was to pray for a lack of any fires in the coming year.\\nIn those days, Inazuman houses were mostly made of wood, and any carelessness while handling fire could lead to disaster.\\nThus, the Tenryou Commission was charged by the Shogun with setting up fire brigades to conduct rescues and damage control when fires did break out, and they also requested that the Grand Narukami Shrine set the Fire-Soothing Festival Committee up to comfort the frightened people.\\nIn later years, anti-fire precautions would become second nature and serious cases would no longer occur often, but still the annual festival would remain.\\nThe shrine maidens would dance elegantly, and the people would give generously... with the proceeds split forty-sixty between the Commission and the Shrine.\\nWhen ___ was faced with financial issues while attempting to start ___ Publishing House, she considered the various services that the shrine ran at the time before locking onto this ancient traditional committee.\\n"I mean, the busywork is solely done by the Grand Narukami Shrine, so why do we have to split the proceeds with the Tenryou Commission?"\\n"What\'s more, all that Mora\'s just going into Kujou Senior\'s pockets. It\'s not like the fire brigade has ever gotten a year-end bonus or anything."\\nAs such, after some preparation, the Fire-Soothing Festival of that year would be changed to no longer feature dancing shrine maidens but a grand, rollicking light novel submission contest.\\nThe organizing body for this competition and any subsequent publications, the "___ Publishing House," would also "borrow" the Fire-Soothing Festival Committee\'s budget.\\nAs for the profits? Into the shrine\'s coffers they went.\\n"Well, we no longer have many fires, and yet our budget keeps increasing. Thus, this restructuring relieves the financial burden placed upon the people."\\n"Also, the study of lore and the writing of literature and poetry is also a way of pleasing our Archon — surely you do not claim to know more of ritual and ceremony than I?"\\nThat was what ___ said most solemnly to Kujou Takayuki when he came by unannounced.\\nThe Tenryou Commissioner was ultimately forced to leave the way he came, stormy-faced, along with his attendants.\\nLittle did any of them know that the moment they stepped out of the shrine, the somber Lady Miko would pluck a novel manuscript from the nearby offering box and continue annotating it.',
       text2: null,
       tips: 'Unlocks at Friendship Lv. 4',
     },
     '7': {
       title: 'Vision',
       title2: null,
-      text: '"That was a contest of magic for the ages! The foe split the seas as they strode across the skies, heaven and earth changing hue as they approached!"\\n"Gohei in hand, the Lady Guuji was solemn as she strode up Mt. Yougou."\\n"All around her the shrine maidens chanted their mantras as the clouds masked the sun, the thunder waiting within for the moment to strike!"\\n"..."\\n"The battle was a grinding, protracted affair. In time, even the Guuji began to falter, and the enemy seized that opening, lashing out with great force!"\\n"Just then, a bolt of lightning descended like a falling star before the Guuji — a glimmering Vision!"\\n"Grasping it in her hand, the revivified Guuji showed forth her power and..."\\n"Now wait just a minute! None of what you just said happened, right?"\\n"Hmm? Well, how about this then? It all started the day when I had a most vicious "Ramen Duel" down in Hanamizaka...\\n"Oh, come on! Nobody\'s ever gotten a Vision from eating ramen!"\\n"But wouldn\'t that be interesting? I mean, these are the sorts of stories you like to hear, right?"\\nYae Miko gave a thin, enigmatic smile as she was faced with the traveler\'s curiosity.\\n"After all, would you believe me if I said that \'my Vision is purely ornamental, just for show,\' little one? Hardly — not even if it were the truth."',
+      text: '"That was a contest of magic for the ages! The foe split the seas as they strode across the skies, heaven and earth changing hue as they approached!"\\n"Gohei in hand, the Lady Guuji was solemn as she strode up Mt. Yougou."\\n"All around her the shrine maidens chanted their mantras as the clouds masked the sun, the thunder waiting within for the moment to strike!"\\n"..."\\n"The battle was a grinding, protracted affair. In time, even the Guuji began to falter, and the enemy seized that opening, lashing out with great force!"\\n"Just then, a bolt of lightning descended like a falling star before the Guuji — a glimmering Vision!"\\n"Grasping it in her hand, the revivified Guuji showed forth her power and..."\\n"Now wait just a minute! None of what you just said happened, right?"\\n"Hmm? Well, how about this then? It all started the day when I had a most vicious "Ramen Duel" down in Hanamizaka...\\n"Oh, come on! Nobody\'s ever gotten a Vision from eating ramen!"\\n"But wouldn\'t that be interesting? I mean, these are the sorts of stories you like to hear, right?"\\n___ gave a thin, enigmatic smile as she was faced with the traveler\'s curiosity.\\n"After all, would you believe me if I said that \'my Vision is purely ornamental, just for show,\' little one? Hardly — not even if it were the truth."',
       text2: null,
       tips: 'Unlocks at Friendship Lv. 6',
     },

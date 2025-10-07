@@ -20,6 +20,7 @@ import {
   findCharacterById,
   getAllCharacters,
   getDailyKey,
+  MAX_FAILED_ATTEMPTS,
   getDailyShowcaseCharacters,
   getDisplayName,
   getRandomTheme,

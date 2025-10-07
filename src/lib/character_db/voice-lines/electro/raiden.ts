@@ -118,14 +118,14 @@ export const raidenVL = {
       tasks: null,
     },
     '12': {
-      title: 'About the Raiden Shogun: Transience',
+      title: 'About the ___: Transience',
       audio: '2001',
       text: "Thunder's roar and lightning's flash. So ephemeral. This is why reaching Eternity is desirable. ...Actually, no — this is why reaching Eternity is necessary.",
       tips: '',
       tasks: null,
     },
     '13': {
-      title: 'About the Raiden Shogun: Eternity',
+      title: 'About the ___: Eternity',
       audio: '2005',
       text: "Erosion is a terrible thing. This body's purpose is to withstand wear and tear, that the one within might achieve Eternity.",
       tips: '',
@@ -381,7 +381,7 @@ export const raidenVL = {
     '32': {
       title: 'About Furina',
       audio: '4013',
-      text: 'For five centuries I dueled the Raiden Shogun in my personal realm of consciousness, to confirm the steadfastness of my will. Yet this Furina you speak of, though possessing only a frail human body, committed herself to acting out her part every second of every day for five hundred years — a true battle of the spirit. Her willpower has indeed reached the level of a god.',
+      text: 'For five centuries I dueled the ___ in my personal realm of consciousness, to confirm the steadfastness of my will. Yet this Furina you speak of, though possessing only a frail human body, committed herself to acting out her part every second of every day for five hundred years — a true battle of the spirit. Her willpower has indeed reached the level of a god.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
         {
@@ -445,14 +445,14 @@ export const raidenVL = {
       ],
     },
     '35': {
-      title: 'More About the Raiden Shogun: I',
+      title: 'More About the ___: I',
       audio: '5001',
       text: 'State your query. To the point.',
       tips: '',
       tasks: null,
     },
     '36': {
-      title: 'More About the Raiden Shogun: II',
+      title: 'More About the ___: II',
       audio: '5002',
       text: 'On stormy days, the people of Inazuma chant "kuwabara, kuwabara," believing that this will protect themselves from being struck by lightning. You need not worry about any storm summoned by my own hand — they will bring you no harm. Lightning storms that occur naturally, however, can be more unpredictable.',
       tips: 'Unlocks at Friendship Lv. 3',
@@ -513,7 +513,7 @@ export const raidenVL = {
       ],
     },
     '40': {
-      title: "The Raiden Shogun's Hobbies",
+      title: "The ___'s Hobbies",
       audio: '6001',
       text: 'Foolish question. There are only two kinds of things — those that must be done and those that must not.',
       tips: '',
