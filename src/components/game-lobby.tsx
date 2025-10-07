@@ -287,18 +287,20 @@ export function GameLobby() {
                   <>
                     <Button
                       onClick={handleFindMatch}
-                      disabled={connection !== 'connected'}
+                      // disabled={connection !== 'connected'}
+                      disabled
                       className="h-12 sm:w-48 border-0 text-base font-semibold shadow-lg transition hover:scale-[1.02]"
                       style={{
                         backgroundImage:
                           'linear-gradient(120deg, rgba(59,130,246,0.95) 0%, rgba(236,72,153,0.92) 45%, rgba(79,70,229,0.95) 100%)',
                       }}
                     >
-                      {connection === 'connecting'
+                      {/* {connection === 'connecting'
                         ? 'Connecting…'
                         : connection === 'connected'
                           ? 'Find Match'
-                          : 'Disconnected'}
+                          : 'Disconnected'} */}
+                      In Development
                     </Button>
                   </>
                 ) : (

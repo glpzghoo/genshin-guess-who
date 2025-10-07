@@ -104,14 +104,16 @@ const CustomLobby = () => {
 
         <Button
           onClick={onCreate}
-          disabled={creating}
+          // disabled={creating}
+          disabled
           className="w-full border-0 text-base font-semibold shadow-lg transition hover:scale-[1.02]"
           style={{
             backgroundImage:
               'linear-gradient(120deg, rgba(56,189,248,0.95) 0%, rgba(236,72,153,0.95) 45%, rgba(79,70,229,0.95) 100%)',
           }}
         >
-          {creating ? 'Creating…' : 'Create Room'}
+          {/* {creating ? 'Creating…' : 'Create Room'} */}
+          In Development
         </Button>
       </CardContent>
     </Card>
