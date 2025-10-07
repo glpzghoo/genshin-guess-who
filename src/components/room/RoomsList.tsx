@@ -70,43 +70,61 @@ const RoomsList = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-white">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <h2 className="text-2xl font-semibold">Active Rooms</h2>
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={refresh} disabled={loading}>
+          <Button
+            variant="ghost"
+            onClick={refresh}
+            disabled={loading}
+            className="border border-white/20 bg-white/10 text-white hover:bg-white/20"
+          >
             {loading ? 'Refreshing…' : 'Refresh'}
           </Button>
         </div>
       </div>
 
       {/* Join by code (works for private or public) */}
-      <Card>
+      <Card className="rounded-3xl border border-white/12 bg-white/10 text-white backdrop-blur">
         <CardHeader>
           <CardTitle>Join by Code</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3 sm:grid-cols-3">
           <div className="space-y-1">
-            <Label htmlFor="join-code">Room Code</Label>
+            <Label htmlFor="join-code" className="text-white/70">
+              Room Code
+            </Label>
             <Input
               id="join-code"
               placeholder="e.g. 6H7K2Q"
               value={joinCode}
               onChange={(e) => setJoinCode(e.target.value)}
+              className="border-white/20 bg-black/40 text-white placeholder:text-white/60 focus-visible:ring-white/30"
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="join-pass">Password (if required)</Label>
+            <Label htmlFor="join-pass" className="text-white/70">
+              Password (if required)
+            </Label>
             <Input
               id="join-pass"
               type="password"
               placeholder="optional"
               value={joinPassword}
               onChange={(e) => setJoinPassword(e.target.value)}
+              className="border-white/20 bg-black/40 text-white placeholder:text-white/60 focus-visible:ring-white/30"
             />
           </div>
           <div className="flex items-end">
-            <Button className="w-full" onClick={joinByCode}>
+            <Button
+              className="w-full border-0 font-semibold shadow-lg transition hover:scale-[1.02]"
+              style={{
+                backgroundImage:
+                  'linear-gradient(120deg, rgba(56,189,248,0.95) 0%, rgba(236,72,153,0.9) 50%, rgba(79,70,229,0.95) 100%)',
+              }}
+              onClick={joinByCode}
+            >
               Join
             </Button>
           </div>
@@ -116,23 +134,26 @@ const RoomsList = () => {
       {/* Public Rooms List */}
       <div className="grid gap-3">
         {rooms.length === 0 ? (
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-white/70">
             No active rooms. Create one or check back later.
           </div>
         ) : (
           rooms.map((r) => (
-            <Card key={r.roomId}>
+            <Card
+              key={r.roomId}
+              className="rounded-2xl border border-white/12 bg-black/35 text-white backdrop-blur"
+            >
               <CardContent className="py-4 flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <div className="font-medium truncate">{r.name}</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-white/60">
                     {r.slots} {r.code ? `· Code: ${r.code}` : null}
                   </div>
                 </div>
                 <Button
                   onClick={() => joinRoom(r.roomId)}
                   disabled={joining === r.roomId}
-                  className="shrink-0"
+                  className="shrink-0 border border-white/20 bg-white/10 text-white hover:bg-white/20"
                 >
                   {joining === r.roomId ? 'Joining…' : 'Join'}
                 </Button>

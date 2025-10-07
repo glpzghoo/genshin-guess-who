@@ -2,19 +2,17 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Input } from '@/components/ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Search,
-  Filter,
   Star,
   Sword,
   Copy,
@@ -26,14 +24,15 @@ import {
   Wifi,
   WifiOff,
   Loader2,
+  Filter,
 } from 'lucide-react';
-import { elements, weapons } from '@/lib/helper';
 import * as c from '@/lib/character_db/characters';
-import Image from 'next/image';
 import CharacterCard from './character-card';
 import { realtimeService } from '@/lib/realtime-service';
 import { useGameStore } from '@/lib/game-store';
 import { useRouter } from 'next/navigation';
+import { CharacterFiltersState } from './CharacterFilters';
+import { elements, weapons } from '@/lib/helper';
 
 export function CharacterSelection({
   onCharacterSelect,
@@ -45,27 +44,29 @@ export function CharacterSelection({
   const router = useRouter();
   const { gameState } = useGameStore();
   const connection = useGameStore((s) => s.connection);
+
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(
     null
   );
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedElement, setSelectedElement] = useState<string>('all');
-  const [selectedWeapon, setSelectedWeapon] = useState<string>('all');
-  const [selectedRarity, setSelectedRarity] = useState<string>('all');
+  const [filters, setFilters] = useState<CharacterFiltersState>({
+    search: '',
+    element: 'all',
+    weapon: 'all',
+    rarity: 'all',
+  });
   const [submitting, setSubmitting] = useState(false);
-
   const [copied, setCopied] = useState(false);
   const [myId, setMyId] = useState<string | null>(null);
 
-  // pick up your id the same way you store it on connect
   useEffect(() => {
     try {
       setMyId(localStorage.getItem('user_id'));
     } catch {}
   }, []);
 
-  const characters = useMemo(() => Object.values(c), []);
+  const characters = useMemo(() => Object.values(c) as Character[], []);
   const players = gameState?.players || [];
+
   const me = useMemo(
     () => players.find((p: any) => p.id === myId),
     [players, myId]
@@ -81,38 +82,31 @@ export function CharacterSelection({
   );
   const inRoomAlone = useMemo(() => players.length < 2, [players]);
 
-  // Navigation to /game once both have locked (or phase flips to playing)
   const navigatedRef = useRef(false);
   useEffect(() => {
     if (navigatedRef.current) return;
-    if (gameState.phase === 'playing' || bothLocked) {
+    if (gameState?.phase === 'playing' || bothLocked) {
       navigatedRef.current = true;
       setSubmitting(false);
       onReady();
     }
-  }, [gameState.phase, bothLocked, onReady]);
+  }, [gameState?.phase, bothLocked, onReady]);
 
   const filteredCharacters = useMemo(() => {
     return characters.filter((character) => {
       const matchesSearch = character.name
         .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+        .includes(filters.search.toLowerCase());
       const matchesElement =
-        selectedElement === 'all' || character.element === selectedElement;
+        filters.element === 'all' || character.element === filters.element;
       const matchesWeapon =
-        selectedWeapon === 'all' || character.weaponType === selectedWeapon;
+        filters.weapon === 'all' || character.weaponType === filters.weapon;
       const matchesRarity =
-        selectedRarity === 'all' ||
-        character.rank.toString() === selectedRarity;
+        filters.rarity === 'all' ||
+        character.rank.toString() === filters.rarity;
       return matchesSearch && matchesElement && matchesWeapon && matchesRarity;
     });
-  }, [
-    characters,
-    searchQuery,
-    selectedElement,
-    selectedWeapon,
-    selectedRarity,
-  ]);
+  }, [characters, filters]);
 
   const sortedCharacters = useMemo(
     () => [...filteredCharacters].sort((a, b) => b.release - a.release),
@@ -137,20 +131,20 @@ export function CharacterSelection({
     setSubmitting(true);
   };
 
-  const copyInvite = async () => {
+  const copyInvite = () => {
     const code = (gameState as any)?.inviteCode;
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    } catch {
-      // ignore
-    }
+    if (!code) return;
+    navigator.clipboard
+      ?.writeText(code)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1200);
+      })
+      .catch(() => {});
   };
 
   const leaveRoom = () => {
-    realtimeService.leaveRoom?.(); // add method below if you don't have it
-    // As a fallback, emit directly:
+    realtimeService.leaveRoom?.();
     realtimeService.socket?.emit('room:leave');
     router.push('/');
   };
@@ -164,92 +158,82 @@ export function CharacterSelection({
     const code = (gameState as any)?.inviteCode || null;
     const isCustom = (gameState as any)?.isCustom;
     return (
-      <div className="flex flex-col md:flex-row md:items-center gap-3 md:justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <Users className="h-5 w-5" />
-          <div>
-            <div className="text-lg font-semibold leading-none">{name}</div>
-            <div className="text-xs text-muted-foreground">
-              {players.length}/2 players ·{' '}
-              {isCustom ? 'Custom' : 'Ranked/Casual'}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-2xl border border-white/15 bg-white/10 flex items-center justify-center">
+              <Users className="h-5 w-5 text-sky-300" />
+            </div>
+            <div>
+              <div className="text-lg font-semibold leading-none text-white">
+                {name}
+              </div>
+              <div className="text-xs uppercase tracking-wide text-white/60">
+                {players.length}/2 players ·{' '}
+                {isCustom ? 'Custom room' : 'Matchmaking lobby'}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2">
-          <Badge
-            variant={connection === 'connected' ? 'default' : 'secondary'}
-            className="flex items-center gap-1"
-          >
-            {connection === 'connected' ? (
-              <Wifi className="h-3 w-3" />
-            ) : connection === 'connecting' ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
-            ) : (
-              <WifiOff className="h-3 w-3" />
-            )}
-            {connection === 'connected'
-              ? 'Connected'
-              : connection === 'connecting'
-                ? 'Reconnecting…'
-                : 'Disconnected'}
-          </Badge>
-
-          {code && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={copyInvite}
-              className="gap-2"
-            >
-              {copied ? (
-                <Check className="h-4 w-4" />
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge className="flex items-center gap-2 bg-white/10 border border-white/20 text-white">
+              {connection === 'connected' ? (
+                <Wifi className="h-3 w-3" />
+              ) : connection === 'connecting' ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
               ) : (
-                <LinkIcon className="h-4 w-4" />
+                <WifiOff className="h-3 w-3" />
               )}
-              {copied ? 'Copied' : `Invite: ${code}`}
-            </Button>
-          )}
+              {connection === 'connected'
+                ? 'Connected'
+                : connection === 'connecting'
+                  ? 'Reconnecting…'
+                  : 'Disconnected'}
+            </Badge>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={leaveRoom}
-            className="gap-2 text-destructive"
-          >
-            <LogOut className="h-4 w-4" /> Leave
-          </Button>
+            {code && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={copyInvite}
+                className="gap-2 border border-white/20 bg-white/10 text-white hover:bg-white/20"
+              >
+                {copied ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <LinkIcon className="h-4 w-4" />
+                )}
+                {copied ? 'Copied' : `Invite: ${code}`}
+              </Button>
+            )}
+
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={leaveRoom}
+              className="gap-2 text-rose-300 hover:text-rose-200"
+            >
+              <LogOut className="h-4 w-4" /> Leave
+            </Button>
+          </div>
         </div>
       </div>
     );
   };
 
   const PlayersStatus = () => {
-    const Stat = ({
-      label,
-      value,
-      ok,
+    const StatusPill = ({
+      text,
+      active,
     }: {
-      label: string;
-      value: string;
-      ok?: boolean;
+      text: string;
+      active?: boolean;
     }) => (
-      <div className="text-sm">
-        <span className="text-muted-foreground">{label}: </span>
-        <span
-          className={`font-medium ${ok === false ? 'text-muted-foreground' : ''}`}
-        >
-          {value}
-        </span>
-      </div>
-    );
-
-    const pill = (text: string, ok?: boolean) => (
       <span
-        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
-          ok
-            ? 'bg-emerald-600/10 text-emerald-600'
-            : 'bg-amber-600/10 text-amber-600'
+        className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] uppercase tracking-wide ${
+          active
+            ? 'bg-emerald-500/15 text-emerald-200 border border-emerald-400/40'
+            : 'bg-amber-500/15 text-amber-200 border border-amber-400/40'
         }`}
       >
         {text}
@@ -257,320 +241,418 @@ export function CharacterSelection({
     );
 
     return (
-      <div className="grid md:grid-cols-2 gap-3 mb-6">
-        <Card>
-          <CardContent className="py-4 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center">
-              <User className="h-4 w-4" />
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-2xl border border-white/12 bg-white/10 px-5 py-4 backdrop-blur flex items-center gap-4">
+          <div className="h-11 w-11 rounded-2xl bg-white/15 flex items-center justify-center">
+            <User className="h-5 w-5 text-white" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-base font-semibold text-white truncate">
+              {me?.name ?? 'You'}
             </div>
-            <div className="min-w-0">
-              <div className="font-medium truncate">{me?.name ?? 'You'}</div>
-              <div className="flex items-center gap-2">
-                {pill(me?.hasPicked ? 'Locked' : 'Picking…', me?.hasPicked)}
-                {pill(me?.isConnected ? 'Online' : 'Offline', me?.isConnected)}
-              </div>
-              <div className="mt-1">
-                <Stat label="Role" value="You" />
-              </div>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <StatusPill
+                text={me?.hasPicked ? 'Locked in' : 'Picking…'}
+                active={me?.hasPicked}
+              />
+              <StatusPill
+                text={me?.isConnected ? 'Online' : 'Offline'}
+                active={me?.isConnected}
+              />
             </div>
-          </CardContent>
-        </Card>
+            <div className="mt-2 text-xs uppercase tracking-wide text-white/60">
+              Role: You
+            </div>
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="py-4 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center">
-              <User className="h-4 w-4" />
+        <div className="rounded-2xl border border-white/12 bg-white/10 px-5 py-4 backdrop-blur flex items-center gap-4">
+          <div className="h-11 w-11 rounded-2xl bg-white/15 flex items-center justify-center">
+            <User className="h-5 w-5 text-white" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-base font-semibold text-white truncate">
+              {opp?.name ?? 'Waiting for opponent'}
             </div>
-            <div className="min-w-0">
-              <div className="font-medium truncate">
-                {opp?.name ?? 'Waiting for opponent'}
-              </div>
-              <div className="flex items-center gap-2">
-                {pill(opp?.hasPicked ? 'Locked' : 'Picking…', opp?.hasPicked)}
-                {pill(
-                  opp?.isConnected ? 'Online' : 'Offline',
-                  opp?.isConnected
-                )}
-              </div>
-              <div className="mt-1">
-                <Stat label="Role" value="Opponent" ok />
-              </div>
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <StatusPill
+                text={opp?.hasPicked ? 'Locked in' : 'Picking…'}
+                active={opp?.hasPicked}
+              />
+              <StatusPill
+                text={opp?.isConnected ? 'Online' : 'Offline'}
+                active={opp?.isConnected}
+              />
             </div>
-          </CardContent>
-        </Card>
+            <div className="mt-2 text-xs uppercase tracking-wide text-white/60">
+              Role: Opponent
+            </div>
+          </div>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-12xl">
-      <RoomTopBar />
+    <div className="relative min-h-screen overflow-hidden text-white w-full">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-sky-950 to-slate-900" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.35),transparent_60%)] opacity-80" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(236,72,153,0.28),transparent_65%)] opacity-80" />
 
-      {/* Context banner */}
-      {inRoomAlone && (
-        <div className="mb-6 rounded-lg  p-4 text-sm flex items-center justify-between">
-          <div>
-            <div className="font-medium">Waiting for an opponent…</div>
-            <div className="text-muted-foreground">
-              Share the invite to bring a friend, or keep this tab open to wait.
-            </div>
-          </div>
-          {(gameState as any)?.inviteCode && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={copyInvite}
-              className="gap-2"
-            >
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <Copy className="h-4 w-4" />
+      <div className="relative z-10 w-full justify-items-center">
+        <div className="space-y-6 w-8/12">
+          <RoomTopBar />
+
+          {inRoomAlone && (
+            <div className="rounded-2xl border border-white/12 bg-white/10 px-5 py-4 text-sm text-white/80 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <div>
+                <div className="font-semibold text-white">
+                  Waiting for an opponent…
+                </div>
+                <div className="text-white/70">
+                  Share the invite link or keep this tab open—the match starts
+                  once both players lock in.
+                </div>
+              </div>
+              {(gameState as any)?.inviteCode && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={copyInvite}
+                  className="gap-2 border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                  {copied ? 'Copied!' : 'Copy Invite'}
+                </Button>
               )}
-              {copied ? 'Copied' : 'Copy Invite'}
-            </Button>
-          )}
-        </div>
-      )}
-
-      <PlayersStatus />
-
-      <div className="grid lg:grid-cols-4 gap-6">
-        {/* Filters */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-4">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Filter className="h-5 w-5" />
-                Filters
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Search</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Character name..."
-                    value={searchQuery}
-                    disabled={submitting}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Element</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    variant={selectedElement === 'all' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedElement('all')}
-                    className="justify-start"
-                    disabled={submitting}
-                  >
-                    All
-                  </Button>
-                  {Object.entries(elements).map(([element, config]) => {
-                    return (
-                      <Button
-                        key={element}
-                        variant={
-                          selectedElement === element ? 'default' : 'outline'
-                        }
-                        size="sm"
-                        onClick={() => setSelectedElement(element)}
-                        className="justify-start"
-                        disabled={submitting}
-                      >
-                        <img
-                          width={20}
-                          height={20}
-                          src={`/assets/ui/${config.icon}`}
-                          alt={`element-${element}`}
-                          className="mr-2"
-                        />
-                        {element}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Weapon</label>
-                <div className="space-y-1">
-                  <Button
-                    variant={selectedWeapon === 'all' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedWeapon('all')}
-                    className="w-full justify-start"
-                    disabled={submitting}
-                  >
-                    All Weapons
-                  </Button>
-                  {Object.entries(weapons).map(([weapon, config]) => {
-                    const Icon = config.icon;
-                    return (
-                      <Button
-                        key={weapon}
-                        variant={
-                          selectedWeapon === weapon ? 'default' : 'outline'
-                        }
-                        size="sm"
-                        onClick={() => setSelectedWeapon(weapon)}
-                        className="w-full justify-start"
-                        disabled={submitting}
-                      >
-                        <Icon className="h-3 w-3 mr-2" />
-                        {config.name}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Rarity</label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={selectedRarity === 'all' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedRarity('all')}
-                    disabled={submitting}
-                  >
-                    All
-                  </Button>
-                  <Button
-                    variant={selectedRarity === '4' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedRarity('4')}
-                    className="flex items-center gap-1"
-                    disabled={submitting}
-                  >
-                    4<Star className="h-3 w-3" />
-                  </Button>
-                  <Button
-                    variant={selectedRarity === '5' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setSelectedRarity('5')}
-                    className="flex items-center gap-1"
-                    disabled={submitting}
-                  >
-                    5<Star className="h-3 w-3" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Grid */}
-        <div className="lg:col-span-2">
-          <ScrollArea className="h-[600px]">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-12">
-              {sortedCharacters.map((character) => {
-                const isSelected = selectedCharacter?.id === character.id;
-                return (
-                  <Card
-                    key={character.id}
-                    className={`cursor-pointer transition-all ${
-                      isSelected
-                        ? 'ring-2 ring-primary glow'
-                        : 'hover:scale-105 hover:shadow-lg'
-                    } ${submitting ? 'opacity-60 pointer-events-none' : ''}`}
-                    onClick={() => handleCharacterSelect(character)}
-                  >
-                    <CharacterCard character={character} />
-                  </Card>
-                );
-              })}
             </div>
-          </ScrollArea>
+          )}
+
+          <PlayersStatus />
         </div>
 
-        {/* Sidebar */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-4">
-            <CardHeader>
-              <CardTitle>Selected Character</CardTitle>
-              <CardDescription>
-                {selectedCharacter
-                  ? 'Your secret character'
-                  : 'Choose a character to continue'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {selectedCharacter ? (
-                <div className="space-y-4">
-                  <div className="aspect-square relative overflow-hidden rounded-lg">
+        <div className="flex flex-col lg:flex-row items-start justify-center px-4 py-10 gap-10 w-8/12 mx-auto">
+          <section className="w-full lg:w-1/2">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
+              {/* Right-hand preview & lock-in */}
+              <div className="rounded-2xl border border-white/12 bg-white/10 px-6 py-6 backdrop-blur space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs uppercase tracking-wide text-white/60">
+                    {selectedCharacter
+                      ? 'Your secret pick'
+                      : 'Choose your secret hero'}
+                  </div>
+                  {selectedCharacter && (
+                    <div className="flex items-center gap-1 text-xs text-white/70">
+                      Release{' '}
+                      {new Date(
+                        selectedCharacter.release * 1000
+                      ).getUTCFullYear()}
+                    </div>
+                  )}
+                </div>
+
+                <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/12 bg-black/30">
+                  {selectedCharacter ? (
                     <img
                       src={`/assets/ui/${selectedCharacter.icon}.png`}
                       alt={selectedCharacter.name}
                       className="absolute inset-0 h-full w-full object-cover"
                     />
-                  </div>
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/60">
+                      <Search className="h-8 w-8" />
+                      <span className="text-sm">
+                        Pick a character from the roster
+                      </span>
+                    </div>
+                  )}
+                </div>
 
+                {selectedCharacter && (
                   <div className="space-y-3">
-                    <div className="text-center">
-                      <h3 className="text-xl font-bold">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white text-center">
                         {selectedCharacter.name}
                       </h3>
-                      <div className="flex items-center justify-center gap-1 mt-1">
+                      <div className="mt-2 flex items-center justify-center gap-1 text-amber-200">
                         {Array.from({ length: selectedCharacter.rank }).map(
                           (_, i) => (
-                            <Star
-                              key={i}
-                              className="h-4 w-4 fill-accent text-accent"
-                            />
+                            <Star key={i} className="h-4 w-4 fill-current" />
                           )
                         )}
                       </div>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="capitalize">
+                    <div className="grid grid-cols-2 gap-3 text-xs uppercase tracking-wide text-white/70">
+                      <div className="rounded-xl border border-white/10 bg-black/25 px-3 py-2">
+                        Element
+                        <div className="mt-1 text-sm font-semibold text-white">
                           {selectedCharacter.element}
-                        </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <WeaponIcon className="h-4 w-4" />
-                        <span className="capitalize">
+                      <div className="rounded-xl border border-white/10 bg-black/25 px-3 py-2">
+                        Weapon
+                        <div className="mt-1 text-sm font-semibold text-white flex items-center gap-2">
+                          <WeaponIcon className="h-4 w-4" />
                           {selectedCharacter.weaponType}
-                        </span>
+                        </div>
                       </div>
-                      <div className="col-span-2">
-                        <span className="text-muted-foreground">Region: </span>
-                        <span className="capitalize">
+                      <div className="col-span-2 rounded-xl border border-white/10 bg-black/25 px-3 py-2">
+                        Region
+                        <div className="mt-1 text-sm font-semibold text-white">
                           {selectedCharacter.region}
-                        </span>
+                        </div>
                       </div>
                     </div>
+                  </div>
+                )}
 
-                    <Button
-                      onClick={handleReadyClick}
-                      className="w-full shimmer"
-                      size="lg"
-                      disabled={!selectedCharacter || submitting}
-                    >
-                      {submitting ? 'Waiting for Opponent…' : 'Ready to Play'}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                    <Search className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <p className="text-muted-foreground">
-                    Select a character from the grid to see details
+                <Button
+                  onClick={handleReadyClick}
+                  disabled={!selectedCharacter || submitting}
+                  className="w-full border-0 text-base font-semibold shadow-lg transition hover:scale-[1.02]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(120deg, rgba(59,130,246,0.95) 0%, rgba(236,72,153,0.95) 45%, rgba(129,140,248,0.95) 100%)',
+                  }}
+                >
+                  {submitting
+                    ? 'Waiting for opponent…'
+                    : selectedCharacter
+                      ? 'Lock in character'
+                      : 'Select a character'}
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* Roster */}
+          <section className="w-full lg:w-1/2">
+            <div className="rounded-3xl border border-white/12 bg-black/30 p-6 backdrop-blur">
+              <div className="flex items-center justify-between gap-3 text-sm text-white/70">
+                <div>
+                  <h3 className="text-lg font-semibold text-white">
+                    Choose your secret character
+                  </h3>
+                  <p>
+                    Newest recruits appear first. Click to preview and lock in.
                   </p>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-white/10 border border-white/20 text-white">
+                    {sortedCharacters.length} results
+                  </Badge>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-2 border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                      >
+                        <Filter className="h-4 w-4" />
+                        Filters
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      align="end"
+                      className="w-80 space-y-4 border-white/20 bg-slate-950/95 p-4 text-white shadow-xl backdrop-blur-md"
+                    >
+                      <div className="grid gap-2">
+                        <span className="text-xs uppercase tracking-wide text-white/60">
+                          Search
+                        </span>
+                        <Input
+                          placeholder="Search by name…"
+                          value={filters.search}
+                          onChange={(e) =>
+                            setFilters((f) => ({
+                              ...f,
+                              search: e.target.value,
+                            }))
+                          }
+                          disabled={submitting}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-sky-400"
+                        />
+                      </div>
+
+                      <div className="grid gap-2">
+                        <span className="text-xs uppercase tracking-wide text-white/60">
+                          Element
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setFilters((f) => ({ ...f, element: 'all' }))
+                            }
+                            disabled={submitting}
+                            className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                              filters.element === 'all'
+                                ? 'bg-white/20 text-white'
+                                : ''
+                            }`}
+                          >
+                            All
+                          </Button>
+                          {Object.entries(elements).map(([element, config]) => (
+                            <Button
+                              key={element}
+                              variant="ghost"
+                              size="sm"
+                              onClick={() =>
+                                setFilters((f) => ({ ...f, element }))
+                              }
+                              disabled={submitting}
+                              className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                                filters.element === element
+                                  ? 'bg-white/20 text-white'
+                                  : ''
+                              }`}
+                            >
+                              <img
+                                width={20}
+                                height={20}
+                                src={`/assets/ui/${(config as any).icon}`}
+                                alt={`element-${element}`}
+                                className="mr-2"
+                              />
+                              {element}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="grid gap-2">
+                        <span className="text-xs uppercase tracking-wide text-white/60">
+                          Weapon
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setFilters((f) => ({ ...f, weapon: 'all' }))
+                            }
+                            disabled={submitting}
+                            className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                              filters.weapon === 'all'
+                                ? 'bg-white/20 text-white'
+                                : ''
+                            }`}
+                          >
+                            All
+                          </Button>
+                          {Object.entries(weapons).map(([weaponKey, config]) => {
+                            const Icon = (config as any).icon ?? Sword;
+                            return (
+                              <Button
+                                key={weaponKey}
+                                variant="ghost"
+                                size="sm"
+                                onClick={() =>
+                                  setFilters((f) => ({
+                                    ...f,
+                                    weapon: weaponKey,
+                                  }))
+                                }
+                                disabled={submitting}
+                                className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                                  filters.weapon === weaponKey
+                                    ? 'bg-white/20 text-white'
+                                    : ''
+                                }`}
+                              >
+                                <Icon className="mr-2 h-3 w-3" />
+                                {(config as any).name ?? weaponKey}
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="grid gap-2">
+                        <span className="text-xs uppercase tracking-wide text-white/60">
+                          Rarity
+                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setFilters((f) => ({ ...f, rarity: 'all' }))
+                            }
+                            disabled={submitting}
+                            className={`border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                              filters.rarity === 'all'
+                                ? 'bg-white/20 text-white'
+                                : ''
+                            }`}
+                          >
+                            All
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setFilters((f) => ({ ...f, rarity: '4' }))
+                            }
+                            disabled={submitting}
+                            className={`flex items-center gap-1 border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                              filters.rarity === '4'
+                                ? 'bg-white/20 text-white'
+                                : ''
+                            }`}
+                          >
+                            4<Star className="h-3 w-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() =>
+                              setFilters((f) => ({ ...f, rarity: '5' }))
+                            }
+                            disabled={submitting}
+                            className={`flex items-center gap-1 border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                              filters.rarity === '5'
+                                ? 'bg-white/20 text-white'
+                                : ''
+                            }`}
+                          >
+                            5<Star className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+              <ScrollArea className="mt-6 h-[60vh] pr-4">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+                  {sortedCharacters.map((character) => {
+                    const isSelected = selectedCharacter?.id === character.id;
+                    return (
+                      <Card
+                        key={character.id}
+                        className={`cursor-pointer overflow-hidden border border-white/10 bg-white/10 text-white transition ${
+                          isSelected
+                            ? 'ring-2 ring-sky-300 shadow-lg shadow-sky-500/40'
+                            : 'hover:border-white/30 hover:bg-white/15'
+                        } ${submitting ? 'pointer-events-none opacity-60' : ''}`}
+                        onClick={() => handleCharacterSelect(character)}
+                      >
+                        <CharacterCard character={character} />
+                      </Card>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            </div>
+          </section>
         </div>
       </div>
     </div>

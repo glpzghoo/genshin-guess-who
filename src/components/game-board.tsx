@@ -2,20 +2,12 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TurnTimer } from '@/components/turn-timer';
 import { ConnectionStatus } from '@/components/connection-status';
 import { LiveNotifications } from '@/components/live-notifications';
 import { useGameStore } from '@/lib/game-store';
 import * as c from '@/lib/character_db/characters';
-import Image from 'next/image';
 import { realtimeService } from '@/lib/realtime-service';
 import { FinalResultDialog } from './final-result-dialog';
 import { MobileQASheet } from './mobile-qa-sheet';
@@ -252,101 +244,125 @@ export function GameBoard() {
     gameState.phase === 'finalize' || gameState.currentTurn === myId;
 
   return (
-    <div className="px-4 py-6 ">
-      <FinalResultDialog />
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <Link href={'/'}>
-            <h1 className="text-2xl font-bold text-white">Genshin Guess Who</h1>
-          </Link>
-          <Badge
-            variant={
-              gameState.currentTurn === 'current-user' ? 'default' : 'secondary'
-            }
-          >
-            {gameState.currentTurn === myId ? 'Your Turn' : "Opponent's Turn"}
-          </Badge>
-          <Badge variant="outline" className="text-slate-300">
-            {gameState.phase}
-          </Badge>
-        </div>
-        <LeaveConfirm onGoHome={onGoHome} />
+    <div className="relative min-h-screen overflow-hidden text-white">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.35),transparent_60%)] opacity-80" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(236,72,153,0.28),transparent_65%)] opacity-80" />
 
-        <div className="flex items-center gap-4">
-          <ConnectionStatus isConnected={isConnected} />
-          <div className="flex items-center gap-4 text-slate-300 text-sm">
-            <span>
-              Round: {Math.floor(gameState.gameHistory.length / 2) + 1}
-            </span>
-            <span>
-              Questions:{' '}
-              {
-                gameState.gameHistory.filter((a) => a.type === 'question')
-                  .length
-              }
-            </span>
-          </div>
-        </div>
-      </div>
-      <LiveNotifications />
-      <TurnTimer />
-      {gameState.phase === 'finalize' && (
-        <div className="mb-4 rounded-lg  bg-yellow-500/10 text-yellow-300 px-3 py-2">
-          Opponent has locked a final guess. Pick your final guess to conclude
-          the match.
-        </div>
-      )}
+      <div className="relative z-10 px-4 py-6">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+          <FinalResultDialog />
 
-      <div className="grid lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3">
-          <Card className="backdrop-blur-sm  bg-secondary">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between text-white">
-                <span>Character Board</span>
-                <div className="flex items-center gap-2 text-sm text-slate-400">
-                  <div className="flex justify-between gap-2 text-sm text-slate-300">
-                    <span>Active Characters:</span>
-                    <span className="font-semibold text-white">
+          <section className="rounded-3xl border border-white/12 bg-black/35 px-6 py-8 shadow-2xl backdrop-blur-xl">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <Link href="/">
+                  <h1 className="text-3xl font-bold leading-tight text-white">
+                    Genshin Guess Who
+                  </h1>
+                </Link>
+                <p className="mt-2 max-w-2xl text-sm text-white/70">
+                  Deduce the opponent&apos;s hero faster than they can unveil yours. Ask smart questions, watch their eliminations, and lock in a final guess when you are sure.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center justify-end gap-3">
+                <Badge className="bg-white/10 border border-white/20 text-white capitalize">
+                  {gameState.phase}
+                </Badge>
+                <Badge className="bg-white/10 border border-white/20 text-white">
+                  {gameState.currentTurn === myId ? 'Your turn' : "Opponent's turn"}
+                </Badge>
+                <LeaveConfirm onGoHome={onGoHome} />
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-white/12 bg-white/10 px-4 py-4 backdrop-blur">
+                <div className="text-xs uppercase tracking-wide text-white/60">
+                  Round
+                </div>
+                <div className="mt-1 text-2xl font-semibold text-white">
+                  {Math.floor(gameState.gameHistory.length / 2) + 1}
+                </div>
+                <div className="mt-2 text-xs text-white/70">
+                  Questions asked:{' '}
+                  {
+                    gameState.gameHistory.filter((m) => m.type === 'question')
+                      .length
+                  }
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/12 bg-white/10 px-4 py-4 backdrop-blur">
+                <div className="text-xs uppercase tracking-wide text-white/60">
+                  Board status
+                </div>
+                <div className="mt-2 flex items-center gap-4 text-white">
+                  <div>
+                    <div className="text-lg font-semibold">
                       {activeCharacters.length}
-                    </span>
+                    </div>
+                    <div className="text-xs text-white/70">Active</div>
                   </div>
-                  <div className="flex justify-between gap-2 text-sm text-slate-300">
-                    <span>Eliminated:</span>
-                    <span className="font-semibold text-red-400">
+                  <div>
+                    <div className="text-lg font-semibold text-rose-300">
                       {eliminatedCharacters.length}
-                    </span>
+                    </div>
+                    <div className="text-xs text-white/70">Eliminated</div>
                   </div>
-                  <div className="flex justify-between gap-2 text-sm text-slate-300">
-                    <span>Questions Asked:</span>
-                    <span className="font-semibold text-blue-400">
-                      {
-                        gameState.gameHistory.filter(
-                          (m) => m.type === 'question'
-                        ).length
-                      }
-                    </span>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/12 bg-white/10 px-4 py-4 backdrop-blur flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs uppercase tracking-wide text-white/60">
+                    Connection
                   </div>
+                  <ConnectionStatus isConnected={isConnected} />
+                </div>
+                <div className="rounded-xl border border-white/10 bg-black/25 px-3 py-3 text-center">
+                  <TurnTimer />
+                </div>
+                {gameState.phase === 'finalize' && (
+                  <div className="rounded-xl border border-yellow-400/30 bg-yellow-500/20 px-3 py-2 text-xs text-yellow-100">
+                    Opponent has locked a final guess. Pick yours to wrap up the match.
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          <LiveNotifications />
+
+          <div className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)]">
+            <section className="rounded-3xl border border-white/12 bg-black/30 p-6 backdrop-blur">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <h2 className="text-xl font-semibold text-white">
+                    Character board
+                  </h2>
+                  <p className="text-sm text-white/70">
+                    Left-click to eliminate or restore · Right-click to open guess panel
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-white/70">
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
                     onClick={() =>
                       setElimOrder((o) => (o === 'asc' ? 'desc' : 'asc'))
                     }
+                    className="border border-white/20 bg-white/10 text-white hover:bg-white/20"
                   >
                     {elimOrder === 'asc'
-                      ? 'Eliminated first'
-                      : 'Eliminated last'}
+                      ? 'Show eliminated first'
+                      : 'Show eliminated last'}
                   </Button>
                 </div>
-              </CardTitle>
-              <CardDescription className="text-slate-400">
-                Click once to eliminate/restore • Right-click to guess
-              </CardDescription>
-            </CardHeader>
+              </div>
 
-            <CardContent>
               <div
-                className="grid gap-3"
+                className="mt-5 grid gap-3"
                 style={{
                   gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
                 }}
@@ -358,43 +374,38 @@ export function GameBoard() {
                   handleDoubleClick={handleDoubleClick}
                 />
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </section>
 
-        {/* Sidebar */}
-        <div className="lg:col-span-1 space-y-4">
-          {mySecretCharacter && (
-            <Card className="backdrop-blur-sm border-slate-700">
-              <CardHeader>
-                <CardTitle className="text-sm text-white">
-                  Your Secret Character
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center">
-                  <div className="aspect-square mb-2 relative overflow-hidden rounded-lg">
-                    <img
-                      src={`/assets/ui/${mySecretCharacter.icon}.png`}
-                      alt={mySecretCharacter.name}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
+            <aside className="space-y-6">
+              {mySecretCharacter && (
+                <div className="rounded-3xl border border-white/12 bg-white/10 px-6 py-6 backdrop-blur">
+                  <div className="text-xs uppercase tracking-wide text-white/60">
+                    Your secret character
                   </div>
-                  <h3 className="font-semibold text-white">
-                    {mySecretCharacter.name}
-                  </h3>
+                  <div className="mt-4 text-center">
+                    <div className="relative mx-auto mb-3 aspect-square w-40 overflow-hidden rounded-2xl border border-white/12 bg-black/30">
+                      <img
+                        src={`/assets/ui/${mySecretCharacter.icon}.png`}
+                        alt={mySecretCharacter.name}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white">
+                      {mySecretCharacter.name}
+                    </h3>
+                    <div className="mt-2 text-xs uppercase tracking-wide text-white/60">
+                      {mySecretCharacter.element} • {mySecretCharacter.weaponType}
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
 
-          {/* NEW right sidebar */}
-          <div className="lg:col-span-1">
-            <div className="space-y-4 lg:sticky lg:top-4 max-h-[calc(100vh-2rem)] overflow-y-auto pr-1">
-              {/* Q&A first = most prominent */}
-              <DesktopQACollapsible />
-            </div>
+              <div className="rounded-3xl border border-white/12 bg-black/30 p-4 backdrop-blur">
+                <DesktopQACollapsible />
+              </div>
+            </aside>
           </div>
+
           {selectedCharacter && !selectedCharacter.isEliminated && (
             <Dialog
               open={!!selectedCharacter}
@@ -404,15 +415,13 @@ export function GameBoard() {
             >
               <DialogContent>
                 <DialogTitle>{selectedCharacter.name}</DialogTitle>
-                {/* Only render the content if the selection is valid (not eliminated) */}
                 {selectedCharacter && !selectedCharacter.isEliminated ? (
                   <SelectCharacter
-                    key={selectedCharacter.id} // ensures fresh content when selecting a different char
+                    key={selectedCharacter.id}
                     selectedCharacter={selectedCharacter}
                     canGuess={canGuess}
                     handleMakeGuess={() => {
                       handleMakeGuess();
-                      // close the dialog after guessing
                       setSelectedCharacter(null);
                     }}
                   />
@@ -420,15 +429,9 @@ export function GameBoard() {
               </DialogContent>
             </Dialog>
           )}
-        </div>
 
-        {/* OLD (remove this) */}
-        {/* 
-<div className="lg:col-span-1 fixed bottom-56 right-1/2 min-h-56 left-1/2 w-1/2 -translate-y-1/2 -translate-x-1/2">
-  <QuestionPanel />
-</div>
-*/}
-        <MobileQASheet />
+          <MobileQASheet />
+        </div>
       </div>
     </div>
   );
