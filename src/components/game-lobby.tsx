@@ -162,7 +162,7 @@ export function GameLobby() {
 
       <div className="relative z-10">
         <div className="container mx-auto max-w-6xl px-4 py-10 space-y-12">
-          {/* Hero */}
+          {/* Character */}
           <div className="grid gap-8 lg:grid-cols-[1.2fr,0.8fr]">
             <div className="space-y-6">
               <Card className="rounded-3xl border border-white/12 bg-white/10 text-white backdrop-blur">
@@ -270,7 +270,7 @@ export function GameLobby() {
               </h1>
               <p className="text-white/75 text-base md:text-lg max-w-2xl">
                 Match with adventurers worldwide, ask the right questions, and
-                be the first to name the mystery hero. Warm up solo or dive
+                be the first to name the mystery character. Warm up solo or dive
                 straight into realtime duels.
               </p>
 

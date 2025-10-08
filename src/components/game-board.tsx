@@ -282,9 +282,9 @@ export function GameBoard() {
                   </h1>
                 </Link>
                 <p className="mt-2 max-w-2xl text-sm text-white/70">
-                  Deduce the opponent&apos;s hero faster than they can unveil
-                  yours. Ask smart questions, watch their eliminations, and lock
-                  in a final guess when you are sure.
+                  Deduce the opponent&apos;s character faster than they can
+                  unveil yours. Ask smart questions, watch their eliminations,
+                  and lock in a final guess when you are sure.
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-3">

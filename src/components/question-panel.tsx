@@ -253,39 +253,42 @@ export function QuestionPanel({
       </div>
 
       <div className="mt-6 space-y-3">
-        {phase === 'playing' && waitingForAnswer && !isMyTurn && lastQuestion && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-100"
-          >
-            <p className="text-xs uppercase tracking-wide text-amber-200">
-              Answer now
-            </p>
-            <p className="mt-1 text-white">{lastQuestion.content}</p>
-            <div className="mt-4 flex gap-2">
-              <Button
-                onClick={() => handleAnswer('yes')}
-                disabled={pendingAnswer !== null}
-                className="flex-1 rounded-full bg-emerald-500 text-white hover:bg-emerald-600"
-              >
-                <CheckCircle2 className="mr-2 h-4 w-4" />
-                Yes
-              </Button>
-              <Button
-                onClick={() => handleAnswer('no')}
-                disabled={pendingAnswer !== null}
-                className="flex-1 rounded-full bg-rose-500 text-white hover:bg-rose-600"
-              >
-                <XCircle className="mr-2 h-4 w-4" />
-                No
-              </Button>
-            </div>
-            <p className="mt-2 text-[11px] text-amber-200">
-              Respond before the timer ends to avoid granting an advantage.
-            </p>
-          </motion.div>
-        )}
+        {phase === 'playing' &&
+          waitingForAnswer &&
+          !isMyTurn &&
+          lastQuestion && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-100"
+            >
+              <p className="text-xs uppercase tracking-wide text-amber-200">
+                Answer now
+              </p>
+              <p className="mt-1 text-white">{lastQuestion.content}</p>
+              <div className="mt-4 flex gap-2">
+                <Button
+                  onClick={() => handleAnswer('yes')}
+                  disabled={pendingAnswer !== null}
+                  className="flex-1 rounded-full bg-emerald-500 text-white hover:bg-emerald-600"
+                >
+                  <CheckCircle2 className="mr-2 h-4 w-4" />
+                  Yes
+                </Button>
+                <Button
+                  onClick={() => handleAnswer('no')}
+                  disabled={pendingAnswer !== null}
+                  className="flex-1 rounded-full bg-rose-500 text-white hover:bg-rose-600"
+                >
+                  <XCircle className="mr-2 h-4 w-4" />
+                  No
+                </Button>
+              </div>
+              <p className="mt-2 text-[11px] text-amber-200">
+                Respond before the timer ends to avoid granting an advantage.
+              </p>
+            </motion.div>
+          )}
 
         {phase === 'playing' && isMyTurn && !waitingForAnswer && (
           <motion.div
@@ -304,7 +307,7 @@ export function QuestionPanel({
                 id="question-input"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Does your hero wield a polearm?"
+                placeholder="Does your character wield a polearm?"
                 className="flex-1 rounded-full border-slate-600 bg-slate-800 text-white placeholder:text-slate-500"
                 onKeyDown={(e) => e.key === 'Enter' && handleAskQuestion()}
                 disabled={pendingAsk}

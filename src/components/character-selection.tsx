@@ -344,7 +344,7 @@ export function CharacterSelection({
                   <div className="text-xs uppercase tracking-wide text-white/60">
                     {selectedCharacter
                       ? 'Your secret pick'
-                      : 'Choose your secret hero'}
+                      : 'Choose your secret character'}
                   </div>
                   {selectedCharacter && (
                     <div className="flex items-center gap-1 text-xs text-white/70">
@@ -547,31 +547,33 @@ export function CharacterSelection({
                           >
                             All
                           </Button>
-                          {Object.entries(weapons).map(([weaponKey, config]) => {
-                            const Icon = (config as any).icon ?? Sword;
-                            return (
-                              <Button
-                                key={weaponKey}
-                                variant="ghost"
-                                size="sm"
-                                onClick={() =>
-                                  setFilters((f) => ({
-                                    ...f,
-                                    weapon: weaponKey,
-                                  }))
-                                }
-                                disabled={submitting}
-                                className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
-                                  filters.weapon === weaponKey
-                                    ? 'bg-white/20 text-white'
-                                    : ''
-                                }`}
-                              >
-                                <Icon className="mr-2 h-3 w-3" />
-                                {(config as any).name ?? weaponKey}
-                              </Button>
-                            );
-                          })}
+                          {Object.entries(weapons).map(
+                            ([weaponKey, config]) => {
+                              const Icon = (config as any).icon ?? Sword;
+                              return (
+                                <Button
+                                  key={weaponKey}
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() =>
+                                    setFilters((f) => ({
+                                      ...f,
+                                      weapon: weaponKey,
+                                    }))
+                                  }
+                                  disabled={submitting}
+                                  className={`justify-start border border-white/15 bg-transparent text-white/80 hover:bg-white/10 ${
+                                    filters.weapon === weaponKey
+                                      ? 'bg-white/20 text-white'
+                                      : ''
+                                  }`}
+                                >
+                                  <Icon className="mr-2 h-3 w-3" />
+                                  {(config as any).name ?? weaponKey}
+                                </Button>
+                              );
+                            }
+                          )}
                         </div>
                       </div>
 
