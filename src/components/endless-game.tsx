@@ -18,6 +18,7 @@ import {
 import {
   buildDailyHints,
   ElementTheme,
+  filterDependentHints,
   getAllCharacters,
   getDisplayName,
   getRandomTheme,
@@ -221,8 +222,20 @@ export function EndlessGame() {
     [currentCharacter]
   );
 
+  const availableHintCount = useMemo(
+    () => filterDependentHints(hints).length,
+    [hints]
+  );
+
   const failedAttempts = guesses.filter((guess) => !guess.correct).length;
-  const revealedHints = hints.slice(0, failedAttempts);
+  const unlockedHints = useMemo(
+    () => hints.slice(0, failedAttempts),
+    [hints, failedAttempts]
+  );
+  const revealedHints = useMemo(
+    () => filterDependentHints(unlockedHints),
+    [unlockedHints]
+  );
   const stillGuessing =
     roundStatus === 'playing' && failedAttempts < MAX_ATTEMPTS;
   const submitGuess = useCallback(
@@ -471,7 +484,7 @@ export function EndlessGame() {
                     theme={theme}
                     icon={<Sparkles className="h-3.5 w-3.5" />}
                   >
-                    {revealedHints.length} / {hints.length}
+                    {revealedHints.length} / {availableHintCount}
                   </BadgePill>
                 </div>
                 <AnimatePresence initial={false} mode="popLayout">

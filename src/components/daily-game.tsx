@@ -13,10 +13,10 @@ import {
 import { elements, weapons } from '@/lib/helper';
 import {
   buildDailyHints,
-  DailyHint,
   DailyStoredEntry,
   DailyStoredGuess,
   ElementTheme,
+  filterDependentHints,
   findCharacterById,
   getAllCharacters,
   getDailyKey,
@@ -192,6 +192,10 @@ export function DailyGame() {
 
   const characters = useMemo(() => getAllCharacters(), []);
   const hints = useMemo(() => buildDailyHints(solution), [solution]);
+  const availableHintCount = useMemo(
+    () => filterDependentHints(hints).length,
+    [hints]
+  );
   const theme = useMemo<ElementTheme>(
     () => getRandomTheme(dailyKey),
     [dailyKey]
@@ -343,7 +347,14 @@ export function DailyGame() {
     [guessState.history]
   );
 
-  const revealedHints = hints.slice(0, failedAttempts);
+  const unlockedHints = useMemo(
+    () => hints.slice(0, failedAttempts),
+    [hints, failedAttempts]
+  );
+  const revealedHints = useMemo(
+    () => filterDependentHints(unlockedHints),
+    [unlockedHints]
+  );
   const stillGuessing = !guessState.solved;
 
   return (
@@ -458,7 +469,7 @@ export function DailyGame() {
                       borderColor: theme.accent,
                     }}
                   >
-                    {revealedHints.length} / {hints.length}
+                    {revealedHints.length} / {availableHintCount}
                   </Badge>
                 </div>
                 <AnimatePresence initial={false} mode="popLayout">

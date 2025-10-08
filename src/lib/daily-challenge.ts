@@ -268,6 +268,40 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
 export const useDailyHints = (character: Character): DailyHint[] =>
   useMemo(() => buildDailyHints(character), [character]);
 
+export const filterDependentHints = (hints: DailyHint[]): DailyHint[] => {
+  let hasElement = false;
+  let hasWeapon = false;
+  let hasRegion = false;
+
+  const filtered: DailyHint[] = [];
+
+  for (const hint of hints) {
+    if (hint.id === 'element') {
+      hasElement = true;
+      filtered.push(hint);
+      continue;
+    }
+    if (hint.id === 'weapon') {
+      hasWeapon = true;
+      filtered.push(hint);
+      continue;
+    }
+    if (hint.id === 'region') {
+      hasRegion = true;
+      filtered.push(hint);
+      continue;
+    }
+
+    if (hint.id === 'not-pyro' && hasElement) continue;
+    if (hint.id === 'not-sword' && hasWeapon) continue;
+    if (hint.id === 'not-fontaine' && hasRegion) continue;
+
+    filtered.push(hint);
+  }
+
+  return filtered;
+};
+
 const elementThemes: Record<Character['element'], ElementTheme> = {
   Pyro: {
     gradient:
