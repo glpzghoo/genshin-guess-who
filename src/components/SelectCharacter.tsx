@@ -7,10 +7,12 @@ const SelectCharacter = ({
   selectedCharacter,
   handleMakeGuess,
   canGuess,
+  isSubmitting = false,
 }: {
   selectedCharacter: Character;
   handleMakeGuess: () => void;
   canGuess: boolean;
+  isSubmitting?: boolean;
 }) => {
   return (
     <Card className="backdrop-blur-sm">
@@ -28,7 +30,7 @@ const SelectCharacter = ({
           variant="default"
           size="sm"
           className="w-full shimmer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-          disabled={!canGuess || !selectedCharacter}
+          disabled={!canGuess || !selectedCharacter || isSubmitting}
         >
           <Check className="h-4 w-4 mr-2" />
           Final Guess

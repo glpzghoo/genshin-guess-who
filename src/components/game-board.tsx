@@ -15,10 +15,10 @@ import { DesktopQACollapsible } from './desktop-qa-collapsible';
 import SelectCharacter from './SelectCharacter';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import CharactersTable from './CharactersTable';
 import { ElimOrder, sortByEliminated } from '@/lib/sort-characters';
 import LeaveConfirm from './LeaveConfirm';
 import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
+import CharactersTable from './CharactersTable';
 
 const data = Object.values(c);
 type InGameCharacters = Character & { isEliminated: boolean };
@@ -35,6 +35,7 @@ export function GameBoard() {
   );
   const [selectedCharacter, setSelectedCharacter] =
     useState<InGameCharacters | null>(null);
+  const [isSubmittingGuess, setIsSubmittingGuess] = useState(false);
   const [mySecretCharacter, setMySecretCharacter] = useState<Character | null>(
     null
   );
@@ -188,22 +189,41 @@ export function GameBoard() {
     setSelectedCharacter(character);
   };
 
-  const handleMakeGuess = () => {
-    if (!selectedCharacter) return;
+  useEffect(() => {
+    if (!selectedCharacter) {
+      setIsSubmittingGuess(false);
+    }
+  }, [selectedCharacter]);
 
-    realtimeService.finalGuess(selectedCharacter.name, (ok) => {
-      if (!ok) {
-        // Log quick context so we know why server refused
-        const s = useGameStore.getState().gameState;
-        console.warn('[guess rejected]', {
-          phase: s.phase,
-          currentTurn: s.currentTurn,
-          myId: realtimeService.getSelfId?.(),
-          name: selectedCharacter.name,
-        });
-      }
-    });
-  };
+  const handleMakeGuess = useCallback(() => {
+    if (!selectedCharacter || isSubmittingGuess) return;
+
+    const guessName = selectedCharacter.name;
+    setIsSubmittingGuess(true);
+
+    try {
+      realtimeService.finalGuess(guessName, (ok) => {
+        if (ok === false) {
+          // Log quick context so we know why server refused
+          const s = useGameStore.getState().gameState;
+          console.warn('[guess rejected]', {
+            phase: s.phase,
+            currentTurn: s.currentTurn,
+            myId: realtimeService.getSelfId?.(),
+            name: guessName,
+          });
+          setIsSubmittingGuess(false);
+          return;
+        }
+
+        setSelectedCharacter(null);
+        setIsSubmittingGuess(false);
+      });
+    } catch (err) {
+      console.error('[guess failed]', err);
+      setIsSubmittingGuess(false);
+    }
+  }, [selectedCharacter, isSubmittingGuess]);
   const onGoHome = () => {
     (realtimeService as any).leaveRoom?.();
     (realtimeService as any).cancelMatch?.();
@@ -244,13 +264,13 @@ export function GameBoard() {
     gameState.phase === 'finalize' || gameState.currentTurn === myId;
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-white">
+    <div className="relative flex min-h-screen flex-col overflow-hidden text-white">
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.35),transparent_60%)] opacity-80" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(236,72,153,0.28),transparent_65%)] opacity-80" />
 
-      <div className="relative z-10 px-4 py-6">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+      <div className="relative z-10 px-4 py-4 flex-1 overflow-hidden">
+        <div className="flex w-full px-36 flex-col gap-4 h-full overflow-hidden">
           <FinalResultDialog />
 
           <section className="rounded-3xl border border-white/12 bg-black/35 px-6 py-8 shadow-2xl backdrop-blur-xl">
@@ -262,7 +282,9 @@ export function GameBoard() {
                   </h1>
                 </Link>
                 <p className="mt-2 max-w-2xl text-sm text-white/70">
-                  Deduce the opponent&apos;s hero faster than they can unveil yours. Ask smart questions, watch their eliminations, and lock in a final guess when you are sure.
+                  Deduce the opponent&apos;s hero faster than they can unveil
+                  yours. Ask smart questions, watch their eliminations, and lock
+                  in a final guess when you are sure.
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-end gap-3">
@@ -270,7 +292,9 @@ export function GameBoard() {
                   {gameState.phase}
                 </Badge>
                 <Badge className="bg-white/10 border border-white/20 text-white">
-                  {gameState.currentTurn === myId ? 'Your turn' : "Opponent's turn"}
+                  {gameState.currentTurn === myId
+                    ? 'Your turn'
+                    : "Opponent's turn"}
                 </Badge>
                 <LeaveConfirm onGoHome={onGoHome} />
               </div>
@@ -325,7 +349,8 @@ export function GameBoard() {
                 </div>
                 {gameState.phase === 'finalize' && (
                   <div className="rounded-xl border border-yellow-400/30 bg-yellow-500/20 px-3 py-2 text-xs text-yellow-100">
-                    Opponent has locked a final guess. Pick yours to wrap up the match.
+                    Opponent has locked a final guess. Pick yours to wrap up the
+                    match.
                   </div>
                 )}
               </div>
@@ -334,15 +359,16 @@ export function GameBoard() {
 
           <LiveNotifications />
 
-          <div className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)]">
-            <section className="rounded-3xl border border-white/12 bg-black/30 p-6 backdrop-blur">
+          <div className="flex gap-6 overflow-hidden">
+            <section className="flex-2 overflow-auto rounded-3xl border border-white/12 bg-black/30 p-6 backdrop-blur">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h2 className="text-xl font-semibold text-white">
                     Character board
                   </h2>
                   <p className="text-sm text-white/70">
-                    Left-click to eliminate or restore · Right-click to open guess panel
+                    Left-click to eliminate or restore · Right-click to open
+                    guess panel
                   </p>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white/70">
@@ -376,7 +402,7 @@ export function GameBoard() {
               </div>
             </section>
 
-            <aside className="space-y-6">
+            <section className="flex-1 gap-6 flex-row">
               {mySecretCharacter && (
                 <div className="rounded-3xl border border-white/12 bg-white/10 px-6 py-6 backdrop-blur">
                   <div className="text-xs uppercase tracking-wide text-white/60">
@@ -394,16 +420,15 @@ export function GameBoard() {
                       {mySecretCharacter.name}
                     </h3>
                     <div className="mt-2 text-xs uppercase tracking-wide text-white/60">
-                      {mySecretCharacter.element} • {mySecretCharacter.weaponType}
+                      {mySecretCharacter.element} •{' '}
+                      {mySecretCharacter.weaponType}
                     </div>
                   </div>
                 </div>
               )}
 
-              <div className="rounded-3xl border border-white/12 bg-black/30 p-4 backdrop-blur">
-                <DesktopQACollapsible />
-              </div>
-            </aside>
+              <DesktopQACollapsible />
+            </section>
           </div>
 
           {selectedCharacter && !selectedCharacter.isEliminated && (
@@ -420,10 +445,8 @@ export function GameBoard() {
                     key={selectedCharacter.id}
                     selectedCharacter={selectedCharacter}
                     canGuess={canGuess}
-                    handleMakeGuess={() => {
-                      handleMakeGuess();
-                      setSelectedCharacter(null);
-                    }}
+                    isSubmitting={isSubmittingGuess}
+                    handleMakeGuess={handleMakeGuess}
                   />
                 ) : null}
               </DialogContent>

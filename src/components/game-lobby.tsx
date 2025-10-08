@@ -6,15 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  Users,
-  Star,
-  Crown,
-  Loader2,
-  CalendarDays,
-  Infinity as InfinityIcon,
-  Sparkles,
-} from 'lucide-react';
+import { Users, Star, Crown, Loader2, Sparkles } from 'lucide-react';
 
 import { realtimeService } from '@/lib/realtime-service';
 import { useGameStore } from '@/lib/game-store';
@@ -287,20 +279,18 @@ export function GameLobby() {
                   <>
                     <Button
                       onClick={handleFindMatch}
-                      // disabled={connection !== 'connected'}
-                      disabled
+                      disabled={connection !== 'connected'}
                       className="h-12 sm:w-48 border-0 text-base font-semibold shadow-lg transition hover:scale-[1.02]"
                       style={{
                         backgroundImage:
                           'linear-gradient(120deg, rgba(59,130,246,0.95) 0%, rgba(236,72,153,0.92) 45%, rgba(79,70,229,0.95) 100%)',
                       }}
                     >
-                      {/* {connection === 'connecting'
+                      {connection === 'connecting'
                         ? 'Connecting…'
                         : connection === 'connected'
                           ? 'Find Match'
-                          : 'Disconnected'} */}
-                      In Development
+                          : 'Disconnected'}
                     </Button>
                   </>
                 ) : (

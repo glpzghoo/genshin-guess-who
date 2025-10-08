@@ -8,7 +8,6 @@ import {
   ChevronsUpDown,
   Check as CheckIcon,
   Trophy,
-  Lightbulb,
 } from 'lucide-react';
 import { elements, weapons } from '@/lib/helper';
 import {
@@ -20,7 +19,6 @@ import {
   findCharacterById,
   getAllCharacters,
   getDailyKey,
-  MAX_FAILED_ATTEMPTS,
   getDailyShowcaseCharacters,
   getDisplayName,
   getRandomTheme,
@@ -207,7 +205,9 @@ export function DailyGame() {
 
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? (JSON.parse(raw) as Record<string, DailyStoredEntry>) : {};
+      const parsed = raw
+        ? (JSON.parse(raw) as Record<string, DailyStoredEntry>)
+        : {};
       const entry = parsed?.[dailyKey];
 
       if (entry) {
@@ -500,8 +500,8 @@ export function DailyGame() {
                             {hint.id === 'element'
                               ? renderElementWithIcon(hint.value)
                               : hint.id === 'weapon'
-                              ? renderWeaponWithIcon(hint.value)
-                              : hint.value}
+                                ? renderWeaponWithIcon(hint.value)
+                                : hint.value}
                           </div>
                         </motion.div>
                       ))}

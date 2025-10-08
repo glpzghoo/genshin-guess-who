@@ -1,11 +1,19 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useGameStore } from '@/lib/game-store';
 import { realtimeService } from '@/lib/realtime-service';
-import { Send, Clock, MessageSquare } from 'lucide-react';
+import {
+  Send,
+  Clock,
+  MessageSquare,
+  CheckCircle2,
+  XCircle,
+  Sparkles,
+} from 'lucide-react';
 
 export function QuestionPanel({
   hideHeader = false,
@@ -18,6 +26,8 @@ export function QuestionPanel({
   const [pendingAsk, setPendingAsk] = useState(false);
   const [pendingAnswer, setPendingAnswer] = useState<null | 'yes' | 'no'>(null);
 
+  const listRef = useRef<HTMLDivElement | null>(null);
+
   const myId = realtimeService.getSelfId();
   const me = useMemo(
     () => gameState.players.find((p) => p.id === myId) ?? null,
@@ -29,11 +39,14 @@ export function QuestionPanel({
   );
   const isMyTurn = !!me && gameState.currentTurn === me.id;
 
-  const lastQuestion = useMemo(
-    () =>
-      [...gameState.gameHistory].reverse().find((a) => a.type === 'question'),
-    [gameState.gameHistory]
-  );
+  const questions = useMemo(() => {
+    return gameState.gameHistory
+      .filter((a) => a.type === 'question')
+      .slice(-12)
+      .reverse();
+  }, [gameState.gameHistory]);
+
+  const lastQuestion = questions[0];
   const waitingForAnswer =
     !!lastQuestion && typeof (lastQuestion as any).response === 'undefined';
 
@@ -45,7 +58,12 @@ export function QuestionPanel({
 
     setPendingAsk(true);
     setQuestion('');
-    realtimeService.askQuestion(text, () => setPendingAsk(false));
+    realtimeService.askQuestion(text, () => {
+      setPendingAsk(false);
+      if (listRef.current) {
+        listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
   };
 
   const handleAnswer = (answer: 'yes' | 'no') => {
@@ -57,191 +75,306 @@ export function QuestionPanel({
     });
   };
 
-  // Status line (always visible)
-  let statusIcon = <MessageSquare className="w-4 h-4" />;
-  let statusText = 'Ask a question';
-  let statusTone = 'text-white';
-
-  if (phase === 'character-select') {
-    statusIcon = <Clock className="w-4 h-4" />;
-    statusText = 'Lock your character to start asking';
-    statusTone = 'text-slate-300';
-  } else if (phase === 'finalize') {
-    statusIcon = <Clock className="w-4 h-4" />;
-    statusText = 'Final guesses in progress… Q&A paused';
-    statusTone = 'text-yellow-300';
-  } else if (phase === 'finished') {
-    statusIcon = <Clock className="w-4 h-4" />;
-    statusText = 'Match finished';
-    statusTone = 'text-slate-300';
-  } else if (phase === 'playing') {
-    if (waitingForAnswer && isMyTurn) {
-      statusIcon = <Clock className="w-4 h-4 animate-spin" />;
-      statusText = "Waiting for opponent's answer…";
-      statusTone = 'text-slate-300';
-    } else if (waitingForAnswer && !isMyTurn) {
-      statusIcon = <Clock className="w-4 h-4 animate-spin" />;
-      statusText = 'Answer opponent’s question';
-      statusTone = 'text-yellow-300';
-    } else if (!isMyTurn) {
-      statusIcon = <Clock className="w-4 h-4" />;
-      statusText = 'Waiting for opponent to ask…';
-      statusTone = 'text-slate-300';
-    } else {
-      statusIcon = <MessageSquare className="w-4 h-4" />;
-      statusText = 'Ask a question';
-      statusTone = 'text-white';
+  const renderStatus = () => {
+    if (phase === 'character-select') {
+      return {
+        tone: 'text-slate-300',
+        icon: Clock,
+        text: 'Lock your character to start asking',
+      };
     }
-  }
+    if (phase === 'finalize') {
+      return {
+        tone: 'text-yellow-200',
+        icon: Sparkles,
+        text: 'Final guesses in progress—Q&A paused',
+      };
+    }
+    if (phase === 'finished') {
+      return {
+        tone: 'text-slate-300',
+        icon: Sparkles,
+        text: 'Match finished',
+      };
+    }
+    if (phase === 'playing') {
+      if (waitingForAnswer && isMyTurn) {
+        return {
+          tone: 'text-slate-200',
+          icon: Clock,
+          text: "Waiting for opponent's answer…",
+        };
+      }
+      if (waitingForAnswer && !isMyTurn) {
+        return {
+          tone: 'text-amber-200',
+          icon: Clock,
+          text: 'Answer the incoming question',
+        };
+      }
+      if (!isMyTurn) {
+        return {
+          tone: 'text-slate-300',
+          icon: Clock,
+          text: 'Opponent thinking…',
+        };
+      }
+      return {
+        tone: 'text-sky-200',
+        icon: MessageSquare,
+        text: 'Your move—ask something clever',
+      };
+    }
+    return { tone: 'text-slate-300', icon: MessageSquare, text: 'Q&A console' };
+  };
+
+  const status = renderStatus();
+  const StatusIcon = status.icon;
 
   return (
-    <div className="backdrop-blur-sm border border-slate-700 rounded-lg p-4">
+    <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-inner shadow-black/30 backdrop-blur">
       {!hideHeader && (
-        <div className="flex items-center gap-2 mb-4">
-          <div className={`flex items-center gap-2 ${statusTone}`}>
-            {statusIcon}
-            <h3 className="font-semibold">{statusText}</h3>
+        <div className="mb-5 flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <StatusIcon className="h-4 w-4 text-sky-200" />
+            <h3 className={`text-sm font-semibold ${status.tone}`}>
+              {status.text}
+            </h3>
           </div>
           {waitingForAnswer && (
-            <div className="flex items-center gap-1 text-yellow-400 ml-2">
-              <Clock className="w-4 h-4 animate-spin" />
-              <span className="text-xs">Waiting…</span>
+            <div className="flex items-center gap-2 text-xs text-amber-200">
+              <Clock className="h-3.5 w-3.5 animate-spin" />
+              <span>Answer quickly to avoid giving up an advantage.</span>
             </div>
           )}
         </div>
       )}
 
-      {/* Recent questions — label with You/Opponent */}
-      <div className="space-y-3 mb-4 max-h-40 lg:max-h-64 overflow-y-auto">
-        {gameState.gameHistory
-          .filter((a) => a.type === 'question')
-          .slice(-3)
-          .map((action) => {
-            const label = action.playerId === myId ? 'You' : 'Opponent';
-            const answered = typeof (action as any).response !== 'undefined';
+      <div
+        ref={listRef}
+        className="flex max-h-72 flex-col gap-3 overflow-y-auto pr-1"
+      >
+        <AnimatePresence initial={false}>
+          {questions.map((action, index) => {
+            const mine = action.playerId === myId;
+            const answered =
+              typeof (action as any).response !== 'undefined' &&
+              (action as any).response !== null;
+            const response = (action as any).response;
+            const isLatest = index === 0;
+
             return (
-              <div key={action.id} className="bg-slate-700/50 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-blue-400 font-medium">{label}:</span>
+              <motion.div
+                key={action.id}
+                layout
+                initial={{ opacity: 0, y: mine ? 16 : -16, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: mine ? -20 : 20, scale: 0.9 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className={`flex flex-col gap-2 ${
+                  mine ? 'items-end' : 'items-start'
+                }`}
+              >
+                <div
+                  className={`flex items-center gap-2 text-xs uppercase tracking-wide ${
+                    mine ? 'text-sky-200' : 'text-purple-200'
+                  }`}
+                >
+                  <span>{mine ? 'You' : 'Opponent'}</span>
+                  {isLatest && (
+                    <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] text-white/80">
+                      Latest
+                    </span>
+                  )}
                 </div>
-                <p className="text-white text-sm mb-2">{action.content}</p>
-                {answered ? (
-                  <div className="flex items-center gap-2">
-                    <span className="text-slate-400 text-sm">Answer:</span>
-                    <span
-                      className={`text-sm font-medium ${
-                        (action as any).response === 'yes'
-                          ? 'text-green-400'
-                          : 'text-red-400'
+                <div
+                  className={`relative w-full max-w-[90%] rounded-2xl border px-4 py-3 text-sm shadow-md transition ${
+                    mine
+                      ? 'border-sky-500/30 bg-sky-500/20 text-white'
+                      : 'border-purple-500/30 bg-purple-500/15 text-white'
+                  }`}
+                >
+                  <span>{action.content}</span>
+                  {!answered && isLatest && !mine && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="absolute -top-3 left-4 rounded-full border border-amber-400/40 bg-amber-500/30 px-2 py-[1px] text-[10px] font-semibold uppercase tracking-wide text-amber-100"
+                    >
+                      Awaiting answer
+                    </motion.div>
+                  )}
+                </div>
+                <div className="w-full max-w-[90%]">
+                  {answered ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold uppercase tracking-wide ${
+                        response === 'yes'
+                          ? 'border-emerald-400/40 bg-emerald-500/20 text-emerald-100'
+                          : 'border-rose-400/40 bg-rose-500/20 text-rose-100'
                       }`}
                     >
-                      {String((action as any).response).toUpperCase()}
+                      {response === 'yes' ? (
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                      ) : (
+                        <XCircle className="h-3.5 w-3.5" />
+                      )}
+                      <span>{String(response).toUpperCase()}</span>
+                    </motion.div>
+                  ) : mine ? (
+                    <span className="text-xs text-slate-400">
+                      Waiting for answer…
                     </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                    <span className="text-yellow-400 text-sm">
-                      Waiting for answer...
-                    </span>
-                  </div>
-                )}
-              </div>
+                  ) : (
+                    isLatest && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 text-xs text-amber-200"
+                      >
+                        <Clock className="h-3.5 w-3.5 animate-spin" />
+                        <span>They&apos;re waiting on you.</span>
+                      </motion.div>
+                    )
+                  )}
+                </div>
+              </motion.div>
             );
           })}
+        </AnimatePresence>
+        {questions.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-white/10 bg-white/5 p-6 text-center text-sm text-slate-300">
+            No questions yet—open the conversation with a sharp yes/no prompt.
+          </div>
+        )}
       </div>
 
-      {/* Opponent answers */}
-      {phase === 'playing' && waitingForAnswer && !isMyTurn && lastQuestion && (
-        <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-          <p className="text-yellow-400 text-sm mb-3">
-            Answer opponent&apos;s question:
-          </p>
-          <p className="text-white mb-3">"{lastQuestion.content}"</p>
-          <div className="flex gap-2">
-            <Button
-              onClick={() => handleAnswer('yes')}
-              disabled={pendingAnswer !== null}
-              className="bg-green-600 hover:bg-green-700 text-white"
+      <div className="mt-6 space-y-3">
+        {phase === 'playing' && waitingForAnswer && !isMyTurn && lastQuestion && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-amber-400/40 bg-amber-500/10 p-4 text-sm text-amber-100"
+          >
+            <p className="text-xs uppercase tracking-wide text-amber-200">
+              Answer now
+            </p>
+            <p className="mt-1 text-white">{lastQuestion.content}</p>
+            <div className="mt-4 flex gap-2">
+              <Button
+                onClick={() => handleAnswer('yes')}
+                disabled={pendingAnswer !== null}
+                className="flex-1 rounded-full bg-emerald-500 text-white hover:bg-emerald-600"
+              >
+                <CheckCircle2 className="mr-2 h-4 w-4" />
+                Yes
+              </Button>
+              <Button
+                onClick={() => handleAnswer('no')}
+                disabled={pendingAnswer !== null}
+                className="flex-1 rounded-full bg-rose-500 text-white hover:bg-rose-600"
+              >
+                <XCircle className="mr-2 h-4 w-4" />
+                No
+              </Button>
+            </div>
+            <p className="mt-2 text-[11px] text-amber-200">
+              Respond before the timer ends to avoid granting an advantage.
+            </p>
+          </motion.div>
+        )}
+
+        {phase === 'playing' && isMyTurn && !waitingForAnswer && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-sky-500/30 bg-slate-900/60 p-4"
+          >
+            <label
+              htmlFor="question-input"
+              className="text-xs uppercase tracking-wide text-slate-300"
             >
-              Yes
-            </Button>
-            <Button
-              onClick={() => handleAnswer('no')}
-              disabled={pendingAnswer !== null}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            >
-              No
-            </Button>
-          </div>
+              Ask a yes/no question
+            </label>
+            <div className="mt-2 flex gap-2">
+              <Input
+                id="question-input"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Does your hero wield a polearm?"
+                className="flex-1 rounded-full border-slate-600 bg-slate-800 text-white placeholder:text-slate-500"
+                onKeyDown={(e) => e.key === 'Enter' && handleAskQuestion()}
+                disabled={pendingAsk}
+              />
+              <Button
+                onClick={handleAskQuestion}
+                disabled={!question.trim() || pendingAsk}
+                className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-4 text-white hover:bg-sky-600"
+              >
+                <Send className="h-4 w-4" />
+                Send
+              </Button>
+            </div>
+            <p className="mt-2 text-[11px] text-slate-400">
+              Smart questions narrow the board faster—make it count.
+            </p>
+          </motion.div>
+        )}
 
-          {/* ⬇️ New hint */}
-          <p className="text-xs text-yellow-300 mt-2">
-            If you don&apos;t answer before time runs out, your opponent may
-            receive an advantage.
-          </p>
-        </div>
-      )}
+        {phase === 'playing' && waitingForAnswer && isMyTurn && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200"
+          >
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 animate-spin text-slate-200" />
+              <span>Waiting for opponent&apos;s answer…</span>
+            </div>
+          </motion.div>
+        )}
 
-      {/* I ask */}
-      {phase === 'playing' && isMyTurn && !waitingForAnswer && (
-        <div className="space-y-3">
-          <div className="flex gap-2">
-            <Input
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Ask a yes/no question…"
-              className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
-              onKeyDown={(e) => e.key === 'Enter' && handleAskQuestion()}
-              disabled={pendingAsk}
-            />
-            <Button
-              onClick={handleAskQuestion}
-              disabled={!question.trim() || pendingAsk}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
-          <p className="text-slate-400 text-xs">
-            Ask yes/no questions to narrow down your opponent&apos;s character
-          </p>
-        </div>
-      )}
+        {phase === 'playing' && !isMyTurn && !waitingForAnswer && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200"
+          >
+            Waiting for opponent to ask…
+          </motion.div>
+        )}
 
-      {/* My waiting indicator */}
-      {phase === 'playing' && waitingForAnswer && isMyTurn && (
-        <div className="text-center py-4">
-          <div className="flex items-center justify-center gap-2 text-slate-400">
-            <Clock className="w-4 h-4 animate-spin" />
-            <p>Waiting for opponent&apos;s answer...</p>
-          </div>
-        </div>
-      )}
-
-      {/* Neutral idle message */}
-      {phase === 'playing' && !isMyTurn && !waitingForAnswer && (
-        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
-          Waiting for opponent to ask…
-        </div>
-      )}
-
-      {/* Pre-/post-game messages */}
-      {phase === 'character-select' && (
-        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
-          Lock in your character to start Q&amp;A.
-        </div>
-      )}
-      {phase === 'finalize' && (
-        <div className="mt-3 p-3 border border-yellow-600/40 rounded-lg bg-yellow-500/10 text-yellow-300 text-sm">
-          Final guesses are being made—questions are disabled.
-        </div>
-      )}
-      {phase === 'finished' && (
-        <div className="mt-3 p-3 border border-slate-700 rounded-lg bg-slate-700/30 text-slate-300 text-sm">
-          Match finished.
-        </div>
-      )}
+        {phase === 'character-select' && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200"
+          >
+            Lock in your character to start Q&amp;A.
+          </motion.div>
+        )}
+        {phase === 'finalize' && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200"
+          >
+            Final guesses are being made—questions are disabled.
+          </motion.div>
+        )}
+        {phase === 'finished' && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200"
+          >
+            Match finished—review the history with your team.
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }

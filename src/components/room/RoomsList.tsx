@@ -124,10 +124,8 @@ const RoomsList = () => {
                   'linear-gradient(120deg, rgba(56,189,248,0.95) 0%, rgba(236,72,153,0.9) 50%, rgba(79,70,229,0.95) 100%)',
               }}
               onClick={joinByCode}
-              disabled
             >
-              {/* Join */}
-              In Development
+              Join
             </Button>
           </div>
         </CardContent>
@@ -154,12 +152,10 @@ const RoomsList = () => {
                 </div>
                 <Button
                   onClick={() => joinRoom(r.roomId)}
-                  // disabled={joining === r.roomId}
-                  disabled
+                  disabled={joining === r.roomId}
                   className="shrink-0 border border-white/20 bg-white/10 text-white hover:bg-white/20"
                 >
-                  {/* {joining === r.roomId ? 'Joining…' : 'Join'} */}
-                  In Development
+                  {joining === r.roomId ? 'Joining…' : 'Join'}
                 </Button>
               </CardContent>
             </Card>
