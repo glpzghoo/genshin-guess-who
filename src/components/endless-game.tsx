@@ -42,7 +42,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const STATS_KEY = 'endless-mode-stats';
-const MAX_ATTEMPTS = 5;
+const MAX_ATTEMPTS = 7;
 
 type EndlessGuess = {
   character: Character;

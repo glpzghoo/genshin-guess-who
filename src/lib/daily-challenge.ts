@@ -20,7 +20,7 @@ export type DailyStoredEntry = {
   guesses: DailyStoredGuess[];
 };
 
-export const MAX_FAILED_ATTEMPTS = 4;
+export const MAX_FAILED_ATTEMPTS = 7;
 
 export type ElementTheme = {
   gradient: string;
@@ -225,6 +225,31 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
       value: voiceLine.text,
     });
   }
+
+  const vagueHints: DailyHint[] = [];
+  if (character.region !== 'FONTAINE') {
+    vagueHints.push({
+      id: 'not-fontaine',
+      label: 'Vague Hint',
+      value: 'this character is not from fontaine',
+    });
+  }
+  if (character.element !== 'Pyro') {
+    vagueHints.push({
+      id: 'not-pyro',
+      label: 'Vague Hint',
+      value: 'this character is not pyro',
+    });
+  }
+  if (character.weaponType !== 'Sword') {
+    vagueHints.push({
+      id: 'not-sword',
+      label: 'Vague Hint',
+      value: 'this character is not sword',
+    });
+  }
+
+  hints.push(...vagueHints);
 
   if (hints.length > 1) {
     let seed = stringHash(`hints-${character.id}`);
