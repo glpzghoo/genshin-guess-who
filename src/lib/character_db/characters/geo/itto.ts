@@ -14,6 +14,7 @@ const itto: Character = {
   release: 1639497600,
   route: 'Arataki Itto',
   EN_VA: 'Max Mittelman',
+   JP_VA: 'Nishikawa Takanori',
   VL: ittoVL,
 };
 

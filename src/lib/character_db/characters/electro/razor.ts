@@ -14,6 +14,7 @@ const razor: Character = {
   release: 1601244000,
   route: 'Razor',
   EN_VA: 'Todd Haberkorn',
+   JP_VA: 'Uchiyama Kouki',
   VL: razorVL,
 };
 

@@ -14,6 +14,7 @@ const furina: Character = {
   release: 1699308000,
   route: 'Furina',
   EN_VA: 'Amber Lee Connors',
+   JP_VA: 'Minase Inori',
   VL: furinaVL,
 };
 

@@ -14,6 +14,7 @@ const flins: Character = {
   release: 1759244400,
   route: 'Flins',
   EN_VA: 'Nic Olsen',
+   JP_VA: 'Nakamura Yuichi',
   VL: flinsVL,
 };
 

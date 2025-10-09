@@ -14,6 +14,7 @@ const mualani: Character = {
   release: 1724706000,
   route: 'Mualani',
   EN_VA: 'Cassandra Lee Morris',
+   JP_VA: 'Toyama Nao',
   VL: mualaniVL,
 };
 

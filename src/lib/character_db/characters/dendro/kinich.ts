@@ -14,6 +14,7 @@ const kinich: Character = {
   release: 1726585200,
   route: 'Kinich',
   EN_VA: 'Jacob Takanashi',
+   JP_VA: 'Sugiyama Noriaki',
   VL: kinichVL,
 };
 

@@ -14,6 +14,7 @@ const noelle: Character = {
   release: 1601244000,
   route: 'Noelle',
   EN_VA: 'Laura Faye Smith',
+   JP_VA: 'Takao Kanon',
   VL: noelleVL,
 };
 

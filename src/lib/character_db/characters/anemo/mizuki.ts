@@ -14,6 +14,7 @@ const mizuki: Character = {
   release: 1739224800,
   route: 'Yumemizuki Mizuki',
   EN_VA: 'Naomi McDonald',
+   JP_VA: 'Aizawa Saya',
   VL: mizukiVL,
 };
 

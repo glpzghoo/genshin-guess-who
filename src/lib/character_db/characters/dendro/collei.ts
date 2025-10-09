@@ -14,6 +14,7 @@ const collei: Character = {
   release: 1661288400,
   route: 'Collei',
   EN_VA: 'Christina Costello',
+   JP_VA: 'Maekawa Ryoko',
   VL: collieVL,
 };
 

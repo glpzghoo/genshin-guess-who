@@ -60,6 +60,7 @@ export function GameBoard() {
     setCharacters(sorted);
 
     // only save small fields
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const lightData = sorted.map(({ VL, ...rest }) => rest);
     localStorage.setItem(LS_KEY, JSON.stringify(lightData));
   };
@@ -90,7 +91,6 @@ export function GameBoard() {
     const storedSecret = localStorage.getItem(SECRET_KEY);
     if (storedSecret) setMySecretCharacter(JSON.parse(storedSecret));
     // re-seed again whenever matchId changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [LS_KEY, SECRET_KEY]);
 
   useEffect(() => {

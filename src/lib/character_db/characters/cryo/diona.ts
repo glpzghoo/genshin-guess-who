@@ -14,6 +14,7 @@ const diona: Character = {
   release: 1605060000,
   route: 'Diona',
   EN_VA: 'Dina Sherman',
+   JP_VA: 'Izawa Shiori',
   VL: dionaVL,
 };
 

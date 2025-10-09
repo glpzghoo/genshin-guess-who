@@ -14,6 +14,7 @@ const klee: Character = {
   release: 1601244000,
   route: 'Klee',
   EN_VA: 'Poonam Basu',
+   JP_VA: 'Kuno Misaki',
   VL: kleeVL,
 };
 

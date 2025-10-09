@@ -14,6 +14,7 @@ const chevreuse: Character = {
   release: 1704816000,
   route: 'Chevreuse',
   EN_VA: 'Erica Lindbeck',
+   JP_VA: 'Shimoji Shino',
   VL: chevreuseVL,
 };
 

@@ -14,6 +14,7 @@ const sara: Character = {
   release: 1630443600,
   route: 'Kujou Sara',
   EN_VA: 'Jeannie Tirado',
+   JP_VA: 'Seto Asami',
   VL: saraVL,
 };
 

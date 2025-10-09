@@ -14,6 +14,7 @@ const lyney: Character = {
   release: 1692046800,
   route: 'Lyney',
   EN_VA: 'Daman Mills',
+   JP_VA: 'Shimono Hiro',
   VL: lyneyVL,
 };
 

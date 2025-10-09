@@ -14,6 +14,7 @@ const emilie: Character = {
   release: 1722956400,
   route: 'Emilie',
   EN_VA: 'Amber Aviles',
+   JP_VA: 'Hikasa Yoko',
   VL: emilieVL,
 };
 

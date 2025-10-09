@@ -14,6 +14,7 @@ const kachina: Character = {
   release: 1724706000,
   route: 'Kachina',
   EN_VA: 'Kristen McGuire',
+   JP_VA: 'Kubo Yurika',
   VL: kachinaVL,
 };
 

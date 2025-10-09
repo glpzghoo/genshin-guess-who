@@ -14,6 +14,7 @@ const faruzan: Character = {
   release: 1670277600,
   route: 'Faruzan',
   EN_VA: 'Chandni Parekh',
+   JP_VA: 'Horie Yui',
   VL: faruzanVL,
 };
 

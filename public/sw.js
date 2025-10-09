@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   const roomId = event.notification.data?.roomId;

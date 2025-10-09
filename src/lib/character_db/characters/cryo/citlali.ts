@@ -14,6 +14,7 @@ const citlali: Character = {
   release: 1735596000,
   route: 'Citlali',
   EN_VA: 'Skyler Davenport',
+   JP_VA: 'Tano Asami',
   VL: citlaliVL,
 };
 

@@ -14,6 +14,7 @@ const mona: Character = {
   release: 1601244000,
   route: 'Mona',
   EN_VA: 'Felecia Angelle',
+   JP_VA: 'Kohara Konomi',
   VL: monaVL,
 };
 

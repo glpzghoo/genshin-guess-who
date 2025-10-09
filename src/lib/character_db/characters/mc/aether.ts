@@ -14,6 +14,7 @@ const aether_pyro: Character = {
   route: 'Pyro Traveler Boy',
   release: 1735758000,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 
@@ -31,6 +32,7 @@ const aether_hydro: Character = {
   route: 'Hydro Traveler Boy',
   release: 1690146000,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 
@@ -48,6 +50,7 @@ const aether_geo: Character = {
   route: 'Geo Traveler Boy',
   release: 1601244000,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 
@@ -65,6 +68,7 @@ const aether_dendro: Character = {
   route: 'Dendro Traveler Boy',
   release: 1657659600,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 
@@ -82,6 +86,7 @@ const aether_electro: Character = {
   route: 'Electro Traveler Boy',
   release: 1626814800,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 
@@ -99,6 +104,7 @@ const aether_anemo: Character = {
   route: 'Anemo Traveler Boy',
   release: 1601244000,
   EN_VA: 'Zach Aguilar',
+  JP_VA: 'Horie Shun',
   VL: aetherVL,
 };
 

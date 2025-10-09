@@ -14,6 +14,7 @@ const nilou: Character = {
   release: 1665759600,
   route: 'Nilou',
   EN_VA: 'Dani Chambers',
+  JP_VA: 'Kanemoto Hisako',
   VL: nilouVL,
 };
 

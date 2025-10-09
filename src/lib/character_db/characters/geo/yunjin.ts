@@ -14,6 +14,7 @@ const yunjin: Character = {
   release: 1641333600,
   route: 'Yun Jin',
   EN_VA: 'Judy Alice Lee',
+   JP_VA: 'Koiwai Kotori',
   VL: yunjinVL,
 };
 

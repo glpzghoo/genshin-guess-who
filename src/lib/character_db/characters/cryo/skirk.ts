@@ -14,6 +14,7 @@ const skirk: Character = {
   release: 1750107600,
   route: 'Skirk',
   EN_VA: 'Cat Protano',
+   JP_VA: 'Noto Mamiko',
   VL: skirkVL,
 };
 

@@ -14,6 +14,7 @@ const shenhe: Character = {
   release: 1641333600,
   route: 'Shenhe',
   EN_VA: 'Chelsea Kwoka',
+   JP_VA: 'Kawasumi Ayako',
   VL: shenheVL,
 };
 

@@ -16,7 +16,7 @@ import { Profile } from '@/lib/types';
 import CustomLobby from './room/CustomLobby';
 import RoomsList from './room/RoomsList';
 import Leaderboard from './leaderboard';
-import { getDailyKey, getDailyShowcaseCharacters } from '@/lib/daily-challenge';
+import { getDailyKey } from '@/lib/daily-challenge';
 
 export function GameLobby() {
   const router = useRouter();
@@ -27,15 +27,12 @@ export function GameLobby() {
   const [queueTime, setQueueTime] = useState(0);
   const [profile, setProfile] = useState<Profile | null>(null);
   const dailyKey = useMemo(() => getDailyKey(), []);
-  const dailyShowcase = useMemo(
-    () => getDailyShowcaseCharacters(new Date(), 3),
-    []
-  );
 
   // queue timer
   const queueTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let cancelled = false;
 
     (async () => {

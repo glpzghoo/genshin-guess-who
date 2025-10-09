@@ -14,6 +14,7 @@ const sethos: Character = {
   release: 1717448400,
   route: 'Sethos',
   EN_VA: 'Zeno Robinson',
+   JP_VA: 'Chiba Shoya',
   VL: sethosVL,
 };
 

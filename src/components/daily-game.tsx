@@ -19,7 +19,6 @@ import {
   findCharacterById,
   getAllCharacters,
   getDailyKey,
-  getDailyShowcaseCharacters,
   getDisplayName,
   getRandomTheme,
   pickDailyCharacter,
@@ -198,7 +197,6 @@ export function DailyGame() {
     () => getRandomTheme(dailyKey),
     [dailyKey]
   );
-  const showcase = useMemo(() => getDailyShowcaseCharacters(new Date(), 3), []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;

@@ -14,6 +14,7 @@ const chongyun: Character = {
   release: 1601244000,
   route: 'Chongyun',
   EN_VA: 'Beau Bridgland',
+   JP_VA: 'Saito Soma',
   VL: chongyunVL,
 };
 

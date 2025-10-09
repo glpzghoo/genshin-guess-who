@@ -13,7 +13,8 @@ const kokomi: Character = {
   birthday: [2, 22],
   release: 1632236400,
   route: 'Sangonomiya Kokomi',
-  EN_VA: 'LilyPichu',
+  EN_VA: 'Risa Mei',
+  JP_VA: 'Mimori Suzuko',
   VL: kokomiVL,
 };
 

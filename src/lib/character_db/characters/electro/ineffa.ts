@@ -14,6 +14,7 @@ const ineffa: Character = {
   release: 1753736400,
   route: 'Ineffa',
   EN_VA: 'Angelina Danielle Cama',
+   JP_VA: 'Nakajima Megumi',
   VL: ineffaVL,
 };
 

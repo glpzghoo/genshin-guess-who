@@ -14,6 +14,7 @@ const iansan: Character = {
   release: 1742853600,
   route: 'Iansan',
   EN_VA: 'Katrina Salisbury',
+   JP_VA: 'Ohashi Ayaka',
   VL: iansanVL,
 };
 

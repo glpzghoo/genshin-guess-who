@@ -14,6 +14,7 @@ const zhongli: Character = {
   release: 1606874400,
   route: 'Zhongli',
   EN_VA: 'Keith Silverstein',
+   JP_VA: 'Maeno Tomoaki',
   VL: zhongliVL,
 };
 

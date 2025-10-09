@@ -14,6 +14,7 @@ const ningguang: Character = {
   release: 1601244000,
   route: 'Ningguang',
   EN_VA: 'Erin E. Roberts',
+   JP_VA: 'Ohara Sayaka',
   VL: ningguangVL,
 };
 

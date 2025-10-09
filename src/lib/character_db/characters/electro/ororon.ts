@@ -14,6 +14,7 @@ const ororon: Character = {
   release: 1731967200,
   route: 'Ororon',
   EN_VA: 'Nathan Nokes',
+   JP_VA: 'Kondo Takashi',
   VL: ororonVL,
 };
 

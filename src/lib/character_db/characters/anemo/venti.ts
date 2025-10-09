@@ -14,6 +14,7 @@ const venti: Character = {
   release: 1601244000,
   route: 'Venti',
   EN_VA: 'Erika Harlacher',
+   JP_VA: 'Murase Ayumu',
   VL: ventiVL,
 };
 

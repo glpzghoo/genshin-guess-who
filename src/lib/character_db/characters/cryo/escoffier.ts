@@ -14,6 +14,7 @@ const escoffier: Character = {
   release: 1746478800,
   route: 'Escoffier',
   EN_VA: 'Emily Cass',
+   JP_VA: 'Sato Satomi',
   VL: escoffierVL,
 };
 

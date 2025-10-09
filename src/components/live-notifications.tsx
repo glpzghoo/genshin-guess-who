@@ -74,7 +74,8 @@ export function LiveNotifications() {
   useEffect(() => () => clearAll(), []);
 
   // OS-level notification (optional)
-  const maybeNotifyOS = useCallback(async (event: RealtimeEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const maybeNotifyOS = useCallback(async (_event: RealtimeEvent) => {
     if (typeof document !== 'undefined' && !document.hidden) return;
     // If you want OS push while tab is hidden, uncomment & use your notify helper:
     // const title = getNotificationTitle(event);
@@ -96,8 +97,6 @@ export function LiveNotifications() {
     ].join('|');
     return base;
   };
-
-  const isSticky = (t: RealtimeEvent['type']) => EVENT_DURATION[t] === Infinity;
 
   const scheduleAutoHide = (id: string, ms: number) => {
     clearTimer(id);

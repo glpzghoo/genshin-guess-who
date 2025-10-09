@@ -14,6 +14,7 @@ const rosaria: Character = {
   release: 1617721200,
   route: 'Rosaria',
   EN_VA: 'Elizabeth Maxwell',
+   JP_VA: 'Kakuma Ai',
   VL: rosariaVL,
 };
 

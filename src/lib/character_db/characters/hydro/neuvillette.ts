@@ -14,6 +14,7 @@ const neuvillette: Character = {
   release: 1695675600,
   route: 'Neuvillette',
   EN_VA: 'Ray Chase',
+   JP_VA: 'Kamiya Hiroshi',
   VL: neuvilletteVL,
 };
 

@@ -207,6 +207,14 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
     });
   }
 
+  if (character.JP_VA) {
+    hints.push({
+      id: 'japanese-va',
+      label: 'JP VA',
+      value: character.JP_VA,
+    });
+  }
+
   const birthday = formatBirthday(character.birthday ?? []);
   if (birthday) {
     hints.push({

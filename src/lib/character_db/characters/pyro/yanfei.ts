@@ -14,6 +14,7 @@ const yanfei: Character = {
   release: 1619470800,
   route: 'Yanfei',
   EN_VA: 'Lizzie Freeman',
+   JP_VA: 'Hanamori Yumiri',
   VL: yanfeiVL,
 };
 

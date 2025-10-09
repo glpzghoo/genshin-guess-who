@@ -14,6 +14,7 @@ const yoimiya: Character = {
   release: 1628607600,
   route: 'Yoimiya',
   EN_VA: 'Jenny Yokobori',
+   JP_VA: 'Ueda Kana',
   VL: yoimiyaVL,
 };
 

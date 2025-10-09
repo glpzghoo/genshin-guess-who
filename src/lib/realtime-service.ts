@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import { io, Socket } from 'socket.io-client';

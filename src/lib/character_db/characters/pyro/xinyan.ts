@@ -14,6 +14,7 @@ const xinyan: Character = {
   release: 1606874400,
   route: 'Xinyan',
   EN_VA: 'Laura Stahl',
+   JP_VA: 'Takahashi Chiaki',
   VL: xinyanVL,
 };
 

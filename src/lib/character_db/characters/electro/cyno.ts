@@ -14,6 +14,7 @@ const cyno: Character = {
   release: 1664226000,
   route: 'Cyno',
   EN_VA: 'Alejandro Saab',
+   JP_VA: 'Irino Miyu',
   VL: cynoVL,
 };
 

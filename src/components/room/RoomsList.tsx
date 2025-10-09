@@ -66,7 +66,6 @@ const RoomsList = () => {
     // Optional: auto-refresh every 10s
     const id = setInterval(refresh, 10000);
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

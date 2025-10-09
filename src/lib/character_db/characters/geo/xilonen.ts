@@ -14,6 +14,7 @@ const xilonen: Character = {
   release: 1728334800,
   route: 'Xilonen',
   EN_VA: 'Elizabeth Dean',
+   JP_VA: 'Fairouz Ai',
   VL: xilonenVL,
 };
 

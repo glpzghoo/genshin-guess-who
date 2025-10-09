@@ -14,6 +14,7 @@ const ayato: Character = {
   release: 1648587600,
   route: 'Kamisato Ayato',
   EN_VA: 'Chris Hackney',
+   JP_VA: 'Ishida Akira',
   VL: ayatoVL,
 };
 

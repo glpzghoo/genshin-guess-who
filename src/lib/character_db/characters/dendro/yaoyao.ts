@@ -14,6 +14,7 @@ const yaoyao: Character = {
   release: 1673906400,
   route: 'Yaoyao',
   EN_VA: 'Kelsey Jaffer',
+   JP_VA: 'Kadowaki Mai',
   VL: yaoyaoVL,
 };
 

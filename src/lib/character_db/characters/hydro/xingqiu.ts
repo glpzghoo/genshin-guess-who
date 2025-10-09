@@ -14,6 +14,7 @@ const xingqiu: Character = {
   release: 1601244000,
   route: 'Xingqiu',
   EN_VA: 'Cristina Vee Valenzuela',
+   JP_VA: 'Minagawa Junko',
   VL: xingquiVL,
 };
 

@@ -14,6 +14,7 @@ const mavuika: Character = {
   release: 1735596000,
   route: 'Mavuika',
   EN_VA: 'Katiana Sarkissian',
+   JP_VA: 'Komatsu Mikako',
   VL: mavuikaVL,
 };
 

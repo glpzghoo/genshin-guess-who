@@ -14,6 +14,7 @@ const kaeya: Character = {
   release: 1601244000,
   route: 'Kaeya',
   EN_VA: 'Josey Montana McCoy',
+   JP_VA: 'Toriumi Kousuke',
   VL: kaeyaVL,
 };
 

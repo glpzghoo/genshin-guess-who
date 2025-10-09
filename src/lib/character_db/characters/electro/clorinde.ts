@@ -14,6 +14,7 @@ const clorinde: Character = {
   release: 1717448400,
   route: 'Clorinde',
   EN_VA: 'Crystal Lee',
+   JP_VA: 'Ishikawa Yui',
   VL: clorindeVL,
 };
 

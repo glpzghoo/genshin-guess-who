@@ -14,6 +14,7 @@ const yelan: Character = {
   release: 1653944400,
   route: 'Yelan',
   EN_VA: 'Laura Post',
+   JP_VA: 'Endo Aya',
   VL: yelanVL,
 };
 

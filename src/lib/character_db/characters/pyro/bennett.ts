@@ -14,6 +14,7 @@ const bennett: Character = {
   release: 1601244000,
   route: 'Bennett',
   EN_VA: 'Cristina Vee',
+   JP_VA: 'Ousaka Ryouta',
   VL: bennettVL,
 };
 

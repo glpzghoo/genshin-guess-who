@@ -14,6 +14,7 @@ const diluc: Character = {
   release: 1601244000,
   route: 'Diluc',
   EN_VA: 'Sean Chiplock',
+   JP_VA: 'Ono Kensho',
   VL: dilucVL,
 };
 

@@ -14,6 +14,7 @@ const tighnari: Character = {
   release: 1661288400,
   route: 'Tighnari',
   EN_VA: 'Zachary Gordon',
+   JP_VA: 'Kobayashi Sanae',
   VL: tighnariVL,
 };
 

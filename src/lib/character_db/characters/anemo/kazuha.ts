@@ -14,6 +14,7 @@ const kazuha: Character = {
   release: 1624978800,
   route: 'Kaedehara Kazuha',
   EN_VA: 'Mark Whitten',
+   JP_VA: 'Shimazaki Nobunaga',
   VL: kazuhaVL,
 };
 

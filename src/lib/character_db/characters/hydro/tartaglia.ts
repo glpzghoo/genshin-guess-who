@@ -14,6 +14,7 @@ const tartaglia: Character = {
   release: 1605060000,
   route: 'Tartaglia',
   EN_VA: 'Griffin Burns',
+   JP_VA: 'Kimura Ryohei',
   VL: tartagliaVL,
 };
 

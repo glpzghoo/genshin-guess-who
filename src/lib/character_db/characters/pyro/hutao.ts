@@ -14,6 +14,7 @@ const hutao: Character = {
   release: 1614700800,
   route: 'Hu Tao',
   EN_VA: 'Brianna Knickerbocker',
+   JP_VA: 'Takahashi Rie',
   VL: hutaoVL,
 };
 

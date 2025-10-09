@@ -14,6 +14,7 @@ const arleccino: Character = {
   release: 1713819600,
   route: 'Arlecchino',
   EN_VA: 'Erin Yvette',
+   JP_VA: 'Mori Nanako',
   VL: arlecchinoVL,
 };
 

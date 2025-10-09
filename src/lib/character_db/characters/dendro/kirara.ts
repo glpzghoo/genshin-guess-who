@@ -14,6 +14,7 @@ const kirara: Character = {
   release: 1684789200,
   route: 'Kirara',
   EN_VA: 'Julia Gu',
+   JP_VA: 'Suzushiro Sayumi',
   VL: kiraraVL,
 };
 

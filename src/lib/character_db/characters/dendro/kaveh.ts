@@ -14,6 +14,7 @@ const kaveh: Character = {
   release: 1683039600,
   route: 'Kaveh',
   EN_VA: 'Ben Balmaceda',
+   JP_VA: 'Uchida Yuma',
   VL: kavehVL,
 };
 

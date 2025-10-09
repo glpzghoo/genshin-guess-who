@@ -14,6 +14,7 @@ const lauma: Character = {
   release: 1757365200,
   route: 'Lauma',
   EN_VA: 'Alexandra Guelff',
+   JP_VA: 'Kuwashima Houko',
   VL: laumaVL,
 };
 

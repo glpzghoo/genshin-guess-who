@@ -14,6 +14,7 @@ const barbara: Character = {
   release: 1601244000,
   route: 'Barbara',
   EN_VA: 'Laura Stahl',
+   JP_VA: 'Kito Akari',
   VL: barbaraVL,
 };
 

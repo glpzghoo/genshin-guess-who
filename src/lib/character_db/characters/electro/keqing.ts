@@ -14,6 +14,7 @@ const keqing: Character = {
   release: 1601244000,
   route: 'Keqing',
   EN_VA: 'Kayli Mills',
+   JP_VA: 'Kitamura Eri',
   VL: keqingVL,
 };
 

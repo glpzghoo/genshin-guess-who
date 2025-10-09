@@ -14,6 +14,7 @@ const dori: Character = {
   release: 1662735600,
   route: 'Dori',
   EN_VA: 'Anjali Kunapaneni',
+   JP_VA: 'Kaneda Tomoko',
   VL: doriVL,
 };
 

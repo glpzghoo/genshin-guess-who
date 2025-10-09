@@ -14,6 +14,7 @@ const chiori: Character = {
   release: 1710194400,
   route: 'Chiori',
   EN_VA: 'Brittany Lauda',
+   JP_VA: 'Taketatsu Ayana',
   VL: chioriVL,
 };
 

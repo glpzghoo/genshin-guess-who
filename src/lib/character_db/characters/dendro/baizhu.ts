@@ -14,6 +14,7 @@ const baizhu: Character = {
   release: 1683039600,
   route: 'Baizhu',
   EN_VA: 'Sean Durrie',
+   JP_VA: 'Yusa Koji',
   VL: baizhuVL,
 };
 

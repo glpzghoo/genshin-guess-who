@@ -14,6 +14,7 @@ const dahlia: Character = {
   release: 1750107600,
   route: 'Dahlia',
   EN_VA: 'Aileen Mythen',
+   JP_VA: 'Yamamoto Kazutomi',
   VL: dahliaVL,
 };
 

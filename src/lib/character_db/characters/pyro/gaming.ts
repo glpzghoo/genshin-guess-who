@@ -14,6 +14,7 @@ const gaming: Character = {
   release: 1706565600,
   route: 'Gaming',
   EN_VA: 'Caleb Yen',
+   JP_VA: 'Komatsu Shouhei',
   VL: gamingVL,
 };
 

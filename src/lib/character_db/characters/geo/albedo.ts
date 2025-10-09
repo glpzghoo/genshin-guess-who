@@ -14,6 +14,7 @@ const albedo: Character = {
   release: 1608588000,
   route: 'Albedo',
   EN_VA: 'Khoi Dao',
+   JP_VA: 'Nojima Kenji',
   VL: albedoVL,
 };
 

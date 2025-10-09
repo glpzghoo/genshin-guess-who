@@ -14,6 +14,7 @@ const kuki: Character = {
   release: 1655823600,
   route: 'Kuki Shinobu',
   EN_VA: 'Kira Buckland',
+   JP_VA: 'Mizuhashi Kaori',
   VL: kukiVL,
 };
 

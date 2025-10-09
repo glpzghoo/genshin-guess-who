@@ -14,6 +14,7 @@ const ayaka: Character = {
   release: 1626814800,
   route: 'Kamisato Ayaka',
   EN_VA: 'Erica Mendez',
+   JP_VA: 'Hayami Saori',
   VL: ayakaVL,
 };
 

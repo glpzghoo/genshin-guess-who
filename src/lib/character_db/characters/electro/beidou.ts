@@ -14,6 +14,7 @@ const beidou: Character = {
   release: 1601244000,
   route: 'Beidou',
   EN_VA: 'Allegra Clark',
+   JP_VA: 'Koshimizu Ami',
   VL: beidouVL,
 };
 export { beidou };

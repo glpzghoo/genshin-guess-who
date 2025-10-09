@@ -14,6 +14,7 @@ const wanderer: Character = {
   release: 1670277600,
   route: 'Wanderer',
   EN_VA: 'Patrick Pedraza',
+   JP_VA: 'Kakihara Tetsuya',
   VL: wandererVL,
 };
 

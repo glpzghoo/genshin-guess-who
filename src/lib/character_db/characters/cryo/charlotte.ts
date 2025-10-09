@@ -14,6 +14,7 @@ const charlotte: Character = {
   release: 1699308000,
   route: 'Charlotte',
   EN_VA: 'Erin Yvette',
+   JP_VA: 'Waki Azumi',
   VL: charlotteVL,
 };
 

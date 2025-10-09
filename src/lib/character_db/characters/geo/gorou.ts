@@ -14,6 +14,7 @@ const gorou: Character = {
   release: 1639497600,
   route: 'Gorou',
   EN_VA: 'Cory Yee',
+   JP_VA: 'Hatanaka Tasuku',
   VL: gorouVL,
 };
 

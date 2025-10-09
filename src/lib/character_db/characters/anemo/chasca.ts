@@ -14,6 +14,7 @@ const chasca: Character = {
   release: 1731967200,
   route: 'Chasca',
   EN_VA: 'Laura Post',
+   JP_VA: 'Kaida Yuuko',
   VL: chascaVL,
 };
 

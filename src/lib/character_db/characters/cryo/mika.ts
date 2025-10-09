@@ -14,6 +14,7 @@ const mika: Character = {
   release: 1679414400,
   route: 'Mika',
   EN_VA: 'Robb Moreira',
+   JP_VA: 'Sanpei Yuuko',
   VL: mikaVL,
 };
 

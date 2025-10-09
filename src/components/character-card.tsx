@@ -3,8 +3,6 @@ import { cn } from '@/lib/utils';
 
 type Props = {
   character: Character;
-  // optional: render extra small badges on the top-right (e.g., weapon, trait)
-  rightBadges?: React.ReactNode;
 };
 
 const ELEMENT = {
@@ -18,10 +16,7 @@ const ELEMENT = {
   default: { color: 'from-[#5d4cae] to-[#3f356f]' },
 } as const;
 
-const CharacterCard = memo(function CharacterCard({
-  character,
-  rightBadges,
-}: Props) {
+const CharacterCard = memo(function CharacterCard({ character }: Props) {
   const { name, element, icon, rank } = character;
   const palette = ELEMENT[element as keyof typeof ELEMENT] ?? ELEMENT.default;
   const stars = Math.max(0, Math.min(5, Number(rank) || 0));

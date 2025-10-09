@@ -13,7 +13,8 @@ const navia: Character = {
   birthday: [8, 16],
   release: 1702936800,
   route: 'Navia',
-  EN_VA: 'Bekka Prewitt',
+  EN_VA: 'Brenna Larsen',
+  JP_VA: 'Toyosaki Aki',
   VL: naviaVL,
 };
 

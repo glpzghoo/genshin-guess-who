@@ -14,6 +14,7 @@ const nahida: Character = {
   release: 1667253600,
   route: 'Nahida',
   EN_VA: 'Kimberly Anne Campbell',
+   JP_VA: 'Tamura Yukari',
   VL: nahidaVl,
 };
 

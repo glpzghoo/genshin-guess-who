@@ -14,6 +14,7 @@ const qiqi: Character = {
   release: 1601244000,
   route: 'Qiqi',
   EN_VA: 'Christie Cate',
+   JP_VA: 'Tamura Yukari',
   VL: qiqiVL,
 };
 

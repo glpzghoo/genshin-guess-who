@@ -14,6 +14,7 @@ const ifa: Character = {
   release: 1746478800,
   route: 'Ifa',
   EN_VA: 'Jonny Loquasto',
+   JP_VA: 'Terashima Junta',
   VL: ifaVL,
 };
 

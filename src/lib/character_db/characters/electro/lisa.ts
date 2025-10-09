@@ -14,6 +14,7 @@ const lisa: Character = {
   release: 1601244000,
   route: 'Lisa',
   EN_VA: 'Mara Junot',
+   JP_VA: 'Tanaka Rie',
   VL: lisaVL,
 };
 

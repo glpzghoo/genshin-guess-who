@@ -14,6 +14,7 @@ const wriothesley: Character = {
   release: 1697554800,
   route: 'Wriothesley',
   EN_VA: 'Joe Zieja',
+   JP_VA: 'Ono Daisuke',
   VL: wriotheslayVL,
 };
 

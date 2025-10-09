@@ -14,6 +14,7 @@ const raiden: Character = {
   release: 1630443600,
   route: 'Raiden Shogun',
   EN_VA: 'Anne Yatco',
+   JP_VA: 'Sawashiro Miyuki',
   VL: raidenVL,
 };
 

@@ -14,6 +14,7 @@ const dehya: Character = {
   release: 1677535200,
   route: 'Dehya',
   EN_VA: 'Amber May',
+   JP_VA: 'Fukuhara Ayaka',
   VL: dehyaVL,
 };
 

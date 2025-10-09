@@ -14,6 +14,7 @@ const varesa: Character = {
   release: 1742853600,
   route: 'Varesa',
   EN_VA: 'Jane Jackson',
+   JP_VA: 'M.A.O (Ichimichi Mao)',
   VL: varesaVL,
 };
 

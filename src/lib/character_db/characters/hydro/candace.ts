@@ -14,6 +14,7 @@ const candace: Character = {
   release: 1664226000,
   route: 'Candace',
   EN_VA: 'Allegra Clark',
+   JP_VA: 'Yuzuki Ryoka',
   VL: candaceVL,
 };
 

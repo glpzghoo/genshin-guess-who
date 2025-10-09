@@ -14,6 +14,7 @@ const fischl: Character = {
   release: 1601244000,
   route: 'Fischl',
   EN_VA: 'Brittany Cox',
+   JP_VA: 'Uchida Maaya',
   VL: fischlVL,
 };
 

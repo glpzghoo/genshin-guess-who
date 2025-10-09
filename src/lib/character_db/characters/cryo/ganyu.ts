@@ -14,6 +14,7 @@ const ganyu: Character = {
   release: 1610467200,
   route: 'Ganyu',
   EN_VA: 'Jennifer Losi',
+   JP_VA: 'Ueda Reina',
   VL: ganyuVL,
 };
 

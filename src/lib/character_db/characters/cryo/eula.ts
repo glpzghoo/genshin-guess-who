@@ -14,6 +14,7 @@ const eula: Character = {
   release: 1621350000,
   route: 'Eula',
   EN_VA: 'Suzie Yeung',
+   JP_VA: 'Satou Rina',
   VL: eulaVL,
 };
 

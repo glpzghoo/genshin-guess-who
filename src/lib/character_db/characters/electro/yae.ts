@@ -14,6 +14,7 @@ const yae: Character = {
   release: 1644962400,
   route: 'Yae Miko',
   EN_VA: 'Ratana',
+   JP_VA: 'Sakura Ayane',
   VL: yaeVL,
 };
 

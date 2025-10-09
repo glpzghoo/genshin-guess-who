@@ -14,6 +14,7 @@ const lynette: Character = {
   release: 1692046800,
   route: 'Lynette',
   EN_VA: 'Anairis Quiñones',
+   JP_VA: 'Sasahara Yu',
   VL: lynetteVL,
 };
 

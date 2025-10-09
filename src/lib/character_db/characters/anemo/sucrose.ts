@@ -14,6 +14,7 @@ const sucrose: Character = {
   release: 1601244000,
   route: 'Sucrose',
   EN_VA: 'Valeria Rodriguez',
+   JP_VA: 'Fujita Akane',
   VL: sucroseVL,
 };
 

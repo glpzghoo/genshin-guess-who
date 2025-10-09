@@ -14,6 +14,7 @@ const alhaitham: Character = {
   release: 1673906400,
   route: 'Alhaitham',
   EN_VA: 'Nazeeh Tarsha',
+   JP_VA: 'Umehara Yuichiro',
   VL: alhaithamVL,
 };
 

@@ -12,6 +12,7 @@ export type Character = {
   release: number;
   route: string;
   EN_VA: string;
+  JP_VA: string;
   VL: VoiceLine;
 };
 

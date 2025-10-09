@@ -14,6 +14,7 @@ const lanyan: Character = {
   release: 1737475200,
   route: 'Lan Yan',
   EN_VA: 'Anna Devlin',
+   JP_VA: 'Wakayama Shion',
   VL: lanyanVL,
 };
 

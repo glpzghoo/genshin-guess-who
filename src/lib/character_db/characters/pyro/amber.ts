@@ -14,6 +14,7 @@ const amber: Character = {
   release: 1601244000,
   route: 'Amber',
   EN_VA: 'Kelly Baskin',
+   JP_VA: 'Iwami Manaka',
   VL: amberVL,
 };
 export { amber };

@@ -14,6 +14,7 @@ const freminet: Character = {
   release: 1693926000,
   route: 'Freminet',
   EN_VA: 'Paul Castro Jr.',
+   JP_VA: 'Toki Shunichi',
   VL: freminetVL,
 };
 

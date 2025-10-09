@@ -14,6 +14,7 @@ const aino: Character = {
   release: 1757365200,
   route: 'Aino',
   EN_VA: 'Annabel Brook',
+   JP_VA: 'Takamori Natsumi',
   VL: ainoVL,
 };
 

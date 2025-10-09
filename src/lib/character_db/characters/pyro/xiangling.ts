@@ -14,6 +14,7 @@ const xiangling: Character = {
   release: 1601244000,
   route: 'Xiangling',
   EN_VA: 'Jackie Lastra',
+   JP_VA: 'Ozawa Ari',
   VL: xianglingVL,
 };
 

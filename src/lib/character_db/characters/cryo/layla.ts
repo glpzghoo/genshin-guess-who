@@ -14,6 +14,7 @@ const layla: Character = {
   release: 1668787200,
   route: 'Layla',
   EN_VA: 'Ashely Biski',
+   JP_VA: 'Tomita Miyu',
   VL: laylaVL,
 };
 

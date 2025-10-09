@@ -14,6 +14,7 @@ const thoma: Character = {
   release: 1635868800,
   route: 'Thoma',
   EN_VA: 'Christian Banas',
+   JP_VA: 'Morita Masakazu',
   VL: thomaVL,
 };
 export { thoma };

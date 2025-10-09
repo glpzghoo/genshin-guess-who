@@ -13,7 +13,8 @@ const aloy: Character = {
   birthday: [4, 4],
   release: 1630443600,
   route: 'Aloy',
-  EN_VA: 'Skyler Davenport',
+  EN_VA: 'Giselle Fernandez',
+  JP_VA: 'Takagaki Ayahi',
   VL: aloyVL,
 };
 
