@@ -13,6 +13,7 @@ const dahlia: Character = {
   birthday: [5, 25],
   release: 1750107600,
   route: 'Dahlia',
+  EN_VA: 'Aileen Mythen',
   VL: dahliaVL,
 };
 

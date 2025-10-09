@@ -13,6 +13,7 @@ const ningguang: Character = {
   birthday: [8, 26],
   release: 1601244000,
   route: 'Ningguang',
+  EN_VA: 'Erin E. Roberts',
   VL: ningguangVL,
 };
 

@@ -13,6 +13,7 @@ const sethos: Character = {
   birthday: [5, 31],
   release: 1717448400,
   route: 'Sethos',
+  EN_VA: 'Zeno Robinson',
   VL: sethosVL,
 };
 

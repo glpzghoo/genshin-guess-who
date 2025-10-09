@@ -13,6 +13,7 @@ const thoma: Character = {
   birthday: [1, 9],
   release: 1635868800,
   route: 'Thoma',
+  EN_VA: 'Christian Banas',
   VL: thomaVL,
 };
 export { thoma };

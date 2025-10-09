@@ -13,6 +13,7 @@ const citlali: Character = {
   birthday: [1, 20],
   release: 1735596000,
   route: 'Citlali',
+  EN_VA: 'Skyler Davenport',
   VL: citlaliVL,
 };
 

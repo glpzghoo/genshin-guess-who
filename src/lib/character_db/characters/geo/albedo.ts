@@ -13,6 +13,7 @@ const albedo: Character = {
   birthday: [9, 13],
   release: 1608588000,
   route: 'Albedo',
+  EN_VA: 'Khoi Dao',
   VL: albedoVL,
 };
 

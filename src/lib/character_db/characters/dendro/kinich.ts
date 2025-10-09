@@ -13,6 +13,7 @@ const kinich: Character = {
   birthday: [11, 11],
   release: 1726585200,
   route: 'Kinich',
+  EN_VA: 'Jacob Takanashi',
   VL: kinichVL,
 };
 

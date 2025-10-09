@@ -13,6 +13,7 @@ const yaoyao: Character = {
   birthday: [3, 6],
   release: 1673906400,
   route: 'Yaoyao',
+  EN_VA: 'Kelsey Jaffer',
   VL: yaoyaoVL,
 };
 

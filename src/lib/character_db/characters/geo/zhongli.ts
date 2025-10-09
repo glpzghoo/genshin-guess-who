@@ -13,6 +13,7 @@ const zhongli: Character = {
   birthday: [12, 31],
   release: 1606874400,
   route: 'Zhongli',
+  EN_VA: 'Keith Silverstein',
   VL: zhongliVL,
 };
 

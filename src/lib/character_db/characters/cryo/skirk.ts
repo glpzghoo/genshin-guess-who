@@ -13,6 +13,7 @@ const skirk: Character = {
   birthday: [11, 5],
   release: 1750107600,
   route: 'Skirk',
+  EN_VA: 'Cat Protano',
   VL: skirkVL,
 };
 

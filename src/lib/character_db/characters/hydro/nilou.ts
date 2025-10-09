@@ -13,6 +13,7 @@ const nilou: Character = {
   birthday: [12, 3],
   release: 1665759600,
   route: 'Nilou',
+  EN_VA: 'Dani Chambers',
   VL: nilouVL,
 };
 

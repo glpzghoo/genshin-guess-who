@@ -13,6 +13,7 @@ const gaming: Character = {
   birthday: [12, 22],
   release: 1706565600,
   route: 'Gaming',
+  EN_VA: 'Caleb Yen',
   VL: gamingVL,
 };
 

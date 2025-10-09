@@ -13,6 +13,7 @@ const ayato: Character = {
   birthday: [3, 26],
   release: 1648587600,
   route: 'Kamisato Ayato',
+  EN_VA: 'Chris Hackney',
   VL: ayatoVL,
 };
 

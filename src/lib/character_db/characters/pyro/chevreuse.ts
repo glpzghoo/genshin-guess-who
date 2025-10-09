@@ -13,6 +13,7 @@ const chevreuse: Character = {
   birthday: [1, 10],
   release: 1704816000,
   route: 'Chevreuse',
+  EN_VA: 'Erica Lindbeck',
   VL: chevreuseVL,
 };
 

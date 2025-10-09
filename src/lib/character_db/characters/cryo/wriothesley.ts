@@ -13,6 +13,7 @@ const wriothesley: Character = {
   birthday: [11, 23],
   release: 1697554800,
   route: 'Wriothesley',
+  EN_VA: 'Joe Zieja',
   VL: wriotheslayVL,
 };
 

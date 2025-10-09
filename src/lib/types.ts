@@ -11,6 +11,7 @@ export type Character = {
   birthday: number[];
   release: number;
   route: string;
+  EN_VA: string;
   VL: VoiceLine;
 };
 

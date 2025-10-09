@@ -13,6 +13,7 @@ const diluc: Character = {
   birthday: [4, 30],
   release: 1601244000,
   route: 'Diluc',
+  EN_VA: 'Sean Chiplock',
   VL: dilucVL,
 };
 

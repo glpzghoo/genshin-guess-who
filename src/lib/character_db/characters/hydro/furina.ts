@@ -13,6 +13,7 @@ const furina: Character = {
   birthday: [10, 13],
   release: 1699308000,
   route: 'Furina',
+  EN_VA: 'Amber Lee Connors',
   VL: furinaVL,
 };
 

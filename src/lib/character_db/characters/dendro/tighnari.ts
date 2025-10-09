@@ -13,6 +13,7 @@ const tighnari: Character = {
   birthday: [12, 29],
   release: 1661288400,
   route: 'Tighnari',
+  EN_VA: 'Zachary Gordon',
   VL: tighnariVL,
 };
 

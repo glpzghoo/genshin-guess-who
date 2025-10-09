@@ -13,6 +13,7 @@ const kaveh: Character = {
   birthday: [7, 9],
   release: 1683039600,
   route: 'Kaveh',
+  EN_VA: 'Ben Balmaceda',
   VL: kavehVL,
 };
 

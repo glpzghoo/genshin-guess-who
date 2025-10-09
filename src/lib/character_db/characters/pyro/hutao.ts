@@ -13,6 +13,7 @@ const hutao: Character = {
   birthday: [7, 15],
   release: 1614700800,
   route: 'Hu Tao',
+  EN_VA: 'Brianna Knickerbocker',
   VL: hutaoVL,
 };
 

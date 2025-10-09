@@ -13,6 +13,7 @@ const lauma: Character = {
   birthday: [3, 1],
   release: 1757365200,
   route: 'Lauma',
+  EN_VA: 'Alexandra Guelff',
   VL: laumaVL,
 };
 

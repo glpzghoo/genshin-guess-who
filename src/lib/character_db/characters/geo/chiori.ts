@@ -13,6 +13,7 @@ const chiori: Character = {
   birthday: [8, 17],
   release: 1710194400,
   route: 'Chiori',
+  EN_VA: 'Brittany Lauda',
   VL: chioriVL,
 };
 

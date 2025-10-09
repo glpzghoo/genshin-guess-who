@@ -13,6 +13,7 @@ const mualani: Character = {
   birthday: [8, 3],
   release: 1724706000,
   route: 'Mualani',
+  EN_VA: 'Cassandra Lee Morris',
   VL: mualaniVL,
 };
 

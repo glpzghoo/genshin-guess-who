@@ -13,6 +13,7 @@ const kaeya: Character = {
   birthday: [11, 30],
   release: 1601244000,
   route: 'Kaeya',
+  EN_VA: 'Josey Montana McCoy',
   VL: kaeyaVL,
 };
 

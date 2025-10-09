@@ -13,6 +13,7 @@ const heizou: Character = {
   birthday: [7, 24],
   release: 1657659600,
   route: 'Shikanoin Heizou',
+  EN_VA: 'Kieran Regan',
   VL: heizouVL,
 };
 

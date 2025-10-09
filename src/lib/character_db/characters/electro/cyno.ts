@@ -13,6 +13,7 @@ const cyno: Character = {
   birthday: [6, 23],
   release: 1664226000,
   route: 'Cyno',
+  EN_VA: 'Alejandro Saab',
   VL: cynoVL,
 };
 

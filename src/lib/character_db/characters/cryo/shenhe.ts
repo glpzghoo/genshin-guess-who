@@ -13,6 +13,7 @@ const shenhe: Character = {
   birthday: [3, 10],
   release: 1641333600,
   route: 'Shenhe',
+  EN_VA: 'Chelsea Kwoka',
   VL: shenheVL,
 };
 

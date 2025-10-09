@@ -13,6 +13,7 @@ const qiqi: Character = {
   birthday: [3, 3],
   release: 1601244000,
   route: 'Qiqi',
+  EN_VA: 'Christie Cate',
   VL: qiqiVL,
 };
 

@@ -13,6 +13,7 @@ const baizhu: Character = {
   birthday: [4, 25],
   release: 1683039600,
   route: 'Baizhu',
+  EN_VA: 'Sean Durrie',
   VL: baizhuVL,
 };
 

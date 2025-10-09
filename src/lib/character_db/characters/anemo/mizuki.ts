@@ -13,6 +13,7 @@ const mizuki: Character = {
   birthday: [3, 16],
   release: 1739224800,
   route: 'Yumemizuki Mizuki',
+  EN_VA: 'Naomi McDonald',
   VL: mizukiVL,
 };
 

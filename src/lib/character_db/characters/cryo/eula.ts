@@ -13,6 +13,7 @@ const eula: Character = {
   birthday: [10, 25],
   release: 1621350000,
   route: 'Eula',
+  EN_VA: 'Suzie Yeung',
   VL: eulaVL,
 };
 

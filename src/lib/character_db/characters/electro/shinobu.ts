@@ -13,6 +13,7 @@ const kuki: Character = {
   birthday: [7, 27],
   release: 1655823600,
   route: 'Kuki Shinobu',
+  EN_VA: 'Kira Buckland',
   VL: kukiVL,
 };
 

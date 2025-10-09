@@ -13,6 +13,7 @@ const klee: Character = {
   birthday: [7, 27],
   release: 1601244000,
   route: 'Klee',
+  EN_VA: 'Poonam Basu',
   VL: kleeVL,
 };
 

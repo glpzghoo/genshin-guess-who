@@ -13,6 +13,7 @@ const neuvillette: Character = {
   birthday: [12, 18],
   release: 1695675600,
   route: 'Neuvillette',
+  EN_VA: 'Ray Chase',
   VL: neuvilletteVL,
 };
 

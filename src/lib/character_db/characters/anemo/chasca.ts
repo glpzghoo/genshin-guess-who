@@ -13,6 +13,7 @@ const chasca: Character = {
   birthday: [12, 10],
   release: 1731967200,
   route: 'Chasca',
+  EN_VA: 'Laura Post',
   VL: chascaVL,
 };
 

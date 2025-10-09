@@ -13,6 +13,7 @@ const ayaka: Character = {
   birthday: [9, 28],
   release: 1626814800,
   route: 'Kamisato Ayaka',
+  EN_VA: 'Erica Mendez',
   VL: ayakaVL,
 };
 

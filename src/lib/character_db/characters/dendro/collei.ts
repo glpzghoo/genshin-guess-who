@@ -13,6 +13,7 @@ const collei: Character = {
   birthday: [5, 8],
   release: 1661288400,
   route: 'Collei',
+  EN_VA: 'Christina Costello',
   VL: collieVL,
 };
 

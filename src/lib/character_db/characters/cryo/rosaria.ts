@@ -13,6 +13,7 @@ const rosaria: Character = {
   birthday: [1, 24],
   release: 1617721200,
   route: 'Rosaria',
+  EN_VA: 'Elizabeth Maxwell',
   VL: rosariaVL,
 };
 

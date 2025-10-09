@@ -13,6 +13,7 @@ const sigewinne: Character = {
   birthday: [3, 30],
   release: 1719414000,
   route: 'Sigewinne',
+  EN_VA: 'Sarah Williams',
   VL: sigewinneVL,
 };
 

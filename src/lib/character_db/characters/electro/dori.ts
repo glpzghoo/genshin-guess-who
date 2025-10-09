@@ -13,6 +13,7 @@ const dori: Character = {
   birthday: [12, 21],
   release: 1662735600,
   route: 'Dori',
+  EN_VA: 'Anjali Kunapaneni',
   VL: doriVL,
 };
 

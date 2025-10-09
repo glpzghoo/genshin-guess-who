@@ -13,6 +13,7 @@ const flins: Character = {
   birthday: [10, 31],
   release: 1759244400,
   route: 'Flins',
+  EN_VA: 'Nic Olsen',
   VL: flinsVL,
 };
 

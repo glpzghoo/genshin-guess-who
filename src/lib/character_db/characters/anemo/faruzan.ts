@@ -13,6 +13,7 @@ const faruzan: Character = {
   birthday: [8, 20],
   release: 1670277600,
   route: 'Faruzan',
+  EN_VA: 'Chandni Parekh',
   VL: faruzanVL,
 };
 

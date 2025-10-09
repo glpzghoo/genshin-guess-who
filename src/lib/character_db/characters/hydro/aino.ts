@@ -13,6 +13,7 @@ const aino: Character = {
   birthday: [9, 21],
   release: 1757365200,
   route: 'Aino',
+  EN_VA: 'Annabel Brook',
   VL: ainoVL,
 };
 

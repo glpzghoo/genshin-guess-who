@@ -13,6 +13,7 @@ const fischl: Character = {
   birthday: [5, 27],
   release: 1601244000,
   route: 'Fischl',
+  EN_VA: 'Brittany Cox',
   VL: fischlVL,
 };
 

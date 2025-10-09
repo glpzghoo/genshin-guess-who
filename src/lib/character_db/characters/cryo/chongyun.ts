@@ -13,6 +13,7 @@ const chongyun: Character = {
   birthday: [9, 7],
   release: 1601244000,
   route: 'Chongyun',
+  EN_VA: 'Beau Bridgland',
   VL: chongyunVL,
 };
 

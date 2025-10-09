@@ -13,6 +13,7 @@ const itto: Character = {
   birthday: [6, 1],
   release: 1639497600,
   route: 'Arataki Itto',
+  EN_VA: 'Max Mittelman',
   VL: ittoVL,
 };
 

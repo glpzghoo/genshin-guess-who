@@ -13,6 +13,7 @@ const kirara: Character = {
   birthday: [1, 22],
   release: 1684789200,
   route: 'Kirara',
+  EN_VA: 'Julia Gu',
   VL: kiraraVL,
 };
 

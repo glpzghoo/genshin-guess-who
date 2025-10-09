@@ -13,6 +13,7 @@ const xilonen: Character = {
   birthday: [3, 13],
   release: 1728334800,
   route: 'Xilonen',
+  EN_VA: 'Elizabeth Dean',
   VL: xilonenVL,
 };
 

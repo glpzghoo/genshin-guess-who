@@ -13,6 +13,7 @@ const tartaglia: Character = {
   birthday: [7, 20],
   release: 1605060000,
   route: 'Tartaglia',
+  EN_VA: 'Griffin Burns',
   VL: tartagliaVL,
 };
 

@@ -13,6 +13,7 @@ const iansan: Character = {
   birthday: [8, 8],
   release: 1742853600,
   route: 'Iansan',
+  EN_VA: 'Katrina Salisbury',
   VL: iansanVL,
 };
 

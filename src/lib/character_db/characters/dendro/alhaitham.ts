@@ -13,6 +13,7 @@ const alhaitham: Character = {
   birthday: [2, 11],
   release: 1673906400,
   route: 'Alhaitham',
+  EN_VA: 'Nazeeh Tarsha',
   VL: alhaithamVL,
 };
 

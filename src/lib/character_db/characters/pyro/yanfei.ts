@@ -13,6 +13,7 @@ const yanfei: Character = {
   birthday: [7, 28],
   release: 1619470800,
   route: 'Yanfei',
+  EN_VA: 'Lizzie Freeman',
   VL: yanfeiVL,
 };
 

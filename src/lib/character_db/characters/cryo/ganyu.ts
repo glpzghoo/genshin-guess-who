@@ -13,6 +13,7 @@ const ganyu: Character = {
   birthday: [12, 2],
   release: 1610467200,
   route: 'Ganyu',
+  EN_VA: 'Jennifer Losi',
   VL: ganyuVL,
 };
 

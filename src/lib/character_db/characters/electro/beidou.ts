@@ -13,6 +13,7 @@ const beidou: Character = {
   birthday: [2, 14],
   release: 1601244000,
   route: 'Beidou',
+  EN_VA: 'Allegra Clark',
   VL: beidouVL,
 };
 export { beidou };

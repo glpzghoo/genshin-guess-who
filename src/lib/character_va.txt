@@ -1,0 +1,106 @@
+Aino: Annabel Brook
+Albedo: "Khoi Dao"
+Alhaitham: "Nazeeh Tarsha"
+Aloy: "Skyler Davenport"
+Amber: "Kelly Baskin"
+Arlecchino: Erin Yvette
+Kamisato Ayaka: Erica Mendez
+Kamisato Ayato: Chris Hackney
+Baizhu: Sean Durrie
+Barbara: "Laura Stahl"
+Beidou: "Allegra Clark"
+Bennett: Cristina Vee
+Candace: Allegra Clark
+Charlotte: Erin Yvette
+Chasca: Laura Post
+Chevreuse: Erica Lindbeck
+Chiori: Brittany Lauda
+Chongyun: Beau Bridgland
+Citlali: Skyler Davenport
+Clorinde: Crystal Lee
+Collei: Christina Costello
+Cyno: "Alejandro Saab"
+Dahlia: Aileen Mythen
+Dehya: Amber May
+Diluc: "Sean Chiplock"
+Diona: Dina Sherman
+Dori: Anjali Kunapaneni
+Emilie: Amber Aviles
+Escoffier: Emily Cass
+Eula: Suzie Yeung
+Faruzan: Chandni Parekh
+Fischl: "Brittany Cox"
+Flins: Nic Olsen
+Freminet: "Paul Castro Jr."
+Furina: "Amber Lee Connors"
+Gaming: Caleb Yen
+Ganyu: "Jennifer Losi"
+Gorou: "Cory Yee"
+Shikanoin Heizou: Kieran Regan
+Hu Tao: "Brianna Knickerbocker"
+Iansan: Katrina Salisbury
+Ifa: Jonny Loquasto
+Ineffa: Angelina Danielle Cama
+Arataki Itto: Max Mittelman
+Jean: "Stephanie Southerland"
+Kachina: Kristen McGuire
+Kaeya: "Josey Montana McCoy"
+Kaveh: "Ben Balmaceda"
+Kaedehara Kazuha: "Mark Whitten"
+Keqing: "Kayli Mills"
+Kinich: Jacob Takanashi
+Kirara: Julia Gu
+Klee: "Poonam Basu"
+Sangonomiya Kokomi: "LilyPichu"
+Kuki Shinobu: "Kira Buckland"
+Lan Yan: Anna Devlin
+Lauma: Alexandra Guelff
+Layla: Ashely Biski
+Lisa: Mara Junot
+Lynette: "Anairis Quiñones"
+Lyney: "Daman Mills"
+Mavuika: Katiana Sarkissian
+Mika: Robb Moreira
+Yumemizuki Mizuki: Naomi McDonald
+Mona: "Felecia Angelle"
+Mualani: Cassandra Lee Morris
+Nahida: "Kimberly Anne Campbell"
+Navia: "Bekka Prewitt"
+Neuvillette: "Ray Chase"
+Nilou: "Dani Chambers"
+Ningguang: "Erin E. Roberts"
+Noelle: "Laura Faye Smith"
+Ororon: Nathan Nokes
+Qiqi: "Christie Cate"
+Raiden Shogun: "Anne Yatco"
+Razor: "Todd Haberkorn"
+Rosaria: "Elizabeth Maxwell"
+Kujou Sara: "Jeannie Tirado"
+Sayu: "Lily Ki"
+Sethos: Zeno Robinson
+Shenhe: "Chelsea Kwoka"
+Sigewinne: Sarah Williams
+Skirk: Cat Protano
+Sucrose: "Valeria Rodriguez"
+Tartaglia: "Griffin Burns"
+Thoma: "Christian Banas"
+Tighnari: "Zachary Gordon"
+Varesa: Jane Jackson
+Venti: "Erika Harlacher"
+Wanderer: "Patrick Pedraza"
+Wriothesley: "Joe Zieja"
+Xiangling: "Jackie Lastra"
+Xianyun: Stephanie Panisello
+Xiao: "Laila Berzins"
+Xilonen: Elizabeth Dean
+Xingqiu: Cristina Vee Valenzuela
+Xinyan: "Laura Stahl"
+Yae Miko: "Ratana"
+Yanfei: "Lizzie Freeman"
+Yaoyao: "Kelsey Jaffer"
+Yelan: "Laura Post"
+Yoimiya: "Jenny Yokobori"
+Yun Jin: "Judy Alice Lee"
+Zhongli: "Keith Silverstein"
+Aether (Traveler, male): Zach Aguilar
+Lumine (Traveler, female): Sarah Miller-Crews

@@ -13,6 +13,7 @@ const xingqiu: Character = {
   birthday: [10, 9],
   release: 1601244000,
   route: 'Xingqiu',
+  EN_VA: 'Cristina Vee Valenzuela',
   VL: xingquiVL,
 };
 

@@ -13,6 +13,7 @@ const gorou: Character = {
   birthday: [5, 18],
   release: 1639497600,
   route: 'Gorou',
+  EN_VA: 'Cory Yee',
   VL: gorouVL,
 };
 

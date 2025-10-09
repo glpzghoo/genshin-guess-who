@@ -13,6 +13,7 @@ const wanderer: Character = {
   birthday: [1, 3],
   release: 1670277600,
   route: 'Wanderer',
+  EN_VA: 'Patrick Pedraza',
   VL: wandererVL,
 };
 

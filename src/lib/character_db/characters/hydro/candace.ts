@@ -13,6 +13,7 @@ const candace: Character = {
   birthday: [5, 3],
   release: 1664226000,
   route: 'Candace',
+  EN_VA: 'Allegra Clark',
   VL: candaceVL,
 };
 

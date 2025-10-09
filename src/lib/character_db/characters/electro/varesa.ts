@@ -13,6 +13,7 @@ const varesa: Character = {
   birthday: [11, 15],
   release: 1742853600,
   route: 'Varesa',
+  EN_VA: 'Jane Jackson',
   VL: varesaVL,
 };
 

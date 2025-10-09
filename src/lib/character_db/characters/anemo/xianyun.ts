@@ -13,6 +13,7 @@ const xianyun: Character = {
   birthday: [4, 11],
   release: 1706565600,
   route: 'Xianyun',
+  EN_VA: 'Stephanie Panisello',
   VL: xianyunVL,
 };
 

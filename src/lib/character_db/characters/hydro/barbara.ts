@@ -13,6 +13,7 @@ const barbara: Character = {
   birthday: [7, 5],
   release: 1601244000,
   route: 'Barbara',
+  EN_VA: 'Laura Stahl',
   VL: barbaraVL,
 };
 

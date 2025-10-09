@@ -13,6 +13,7 @@ const xinyan: Character = {
   birthday: [10, 16],
   release: 1606874400,
   route: 'Xinyan',
+  EN_VA: 'Laura Stahl',
   VL: xinyanVL,
 };
 

@@ -13,6 +13,7 @@ const freminet: Character = {
   birthday: [9, 24],
   release: 1693926000,
   route: 'Freminet',
+  EN_VA: 'Paul Castro Jr.',
   VL: freminetVL,
 };
 

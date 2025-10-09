@@ -13,6 +13,7 @@ const raiden: Character = {
   birthday: [6, 26],
   release: 1630443600,
   route: 'Raiden Shogun',
+  EN_VA: 'Anne Yatco',
   VL: raidenVL,
 };
 

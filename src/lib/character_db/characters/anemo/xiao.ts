@@ -13,6 +13,7 @@ const xiao: Character = {
   birthday: [4, 17],
   release: 1612216800,
   route: 'Xiao',
+  EN_VA: 'Laila Berzins',
   VL: xiaoVL,
 };
 

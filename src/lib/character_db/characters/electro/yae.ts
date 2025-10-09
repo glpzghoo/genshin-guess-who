@@ -13,6 +13,7 @@ const yae: Character = {
   birthday: [6, 27],
   release: 1644962400,
   route: 'Yae Miko',
+  EN_VA: 'Ratana',
   VL: yaeVL,
 };
 

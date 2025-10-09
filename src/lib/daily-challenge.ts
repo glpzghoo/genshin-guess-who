@@ -199,6 +199,14 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
     value: `${character.rank}-Star`,
   });
 
+  if (character.EN_VA) {
+    hints.push({
+      id: 'english-va',
+      label: 'English VA',
+      value: character.EN_VA,
+    });
+  }
+
   const birthday = formatBirthday(character.birthday ?? []);
   if (birthday) {
     hints.push({

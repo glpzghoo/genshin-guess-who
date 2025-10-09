@@ -13,6 +13,7 @@ const ineffa: Character = {
   birthday: [4, 2],
   release: 1753736400,
   route: 'Ineffa',
+  EN_VA: 'Angelina Danielle Cama',
   VL: ineffaVL,
 };
 

@@ -13,6 +13,7 @@ const sara: Character = {
   birthday: [7, 14],
   release: 1630443600,
   route: 'Kujou Sara',
+  EN_VA: 'Jeannie Tirado',
   VL: saraVL,
 };
 

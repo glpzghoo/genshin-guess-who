@@ -13,6 +13,7 @@ const lynette: Character = {
   birthday: [2, 2],
   release: 1692046800,
   route: 'Lynette',
+  EN_VA: 'Anairis Quiñones',
   VL: lynetteVL,
 };
 

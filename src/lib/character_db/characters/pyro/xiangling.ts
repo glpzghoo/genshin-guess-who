@@ -13,6 +13,7 @@ const xiangling: Character = {
   birthday: [11, 2],
   release: 1601244000,
   route: 'Xiangling',
+  EN_VA: 'Jackie Lastra',
   VL: xianglingVL,
 };
 

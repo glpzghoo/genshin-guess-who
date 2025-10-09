@@ -13,6 +13,7 @@ const ifa: Character = {
   birthday: [3, 23],
   release: 1746478800,
   route: 'Ifa',
+  EN_VA: 'Jonny Loquasto',
   VL: ifaVL,
 };
 

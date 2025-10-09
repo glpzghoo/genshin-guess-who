@@ -13,6 +13,7 @@ const venti: Character = {
   birthday: [6, 16],
   release: 1601244000,
   route: 'Venti',
+  EN_VA: 'Erika Harlacher',
   VL: ventiVL,
 };
 

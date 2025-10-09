@@ -13,6 +13,7 @@ const razor: Character = {
   birthday: [9, 9],
   release: 1601244000,
   route: 'Razor',
+  EN_VA: 'Todd Haberkorn',
   VL: razorVL,
 };
 

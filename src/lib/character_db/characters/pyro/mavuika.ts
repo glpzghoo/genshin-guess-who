@@ -13,6 +13,7 @@ const mavuika: Character = {
   birthday: [8, 28],
   release: 1735596000,
   route: 'Mavuika',
+  EN_VA: 'Katiana Sarkissian',
   VL: mavuikaVL,
 };
 

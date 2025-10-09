@@ -13,6 +13,7 @@ const ororon: Character = {
   birthday: [10, 14],
   release: 1731967200,
   route: 'Ororon',
+  EN_VA: 'Nathan Nokes',
   VL: ororonVL,
 };
 

@@ -13,6 +13,7 @@ const amber: Character = {
   birthday: [8, 10],
   release: 1601244000,
   route: 'Amber',
+  EN_VA: 'Kelly Baskin',
   VL: amberVL,
 };
 export { amber };

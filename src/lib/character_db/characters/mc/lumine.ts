@@ -13,6 +13,7 @@ const lumine_anemo: Character = {
   birthday: [0, 0],
   route: 'Anemo Traveler Girl',
   release: 1601244000,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 
@@ -29,6 +30,7 @@ const lumine_geo: Character = {
   birthday: [0, 0],
   route: 'Geo Traveler Girl',
   release: 1601244000,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 
@@ -45,6 +47,7 @@ const lumine_electro: Character = {
   birthday: [0, 0],
   route: 'Electro Traveler Girl',
   release: 1626814800,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 
@@ -61,6 +64,7 @@ const lumine_dendro: Character = {
   birthday: [0, 0],
   route: 'Dendro Traveler Girl',
   release: 1657659600,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 
@@ -77,6 +81,7 @@ const lumine_hydro: Character = {
   birthday: [0, 0],
   route: 'Hydro Traveler Girl',
   release: 1690146000,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 
@@ -93,6 +98,7 @@ const lumine_pyro: Character = {
   birthday: [0, 0],
   route: 'Pyro Traveler Girl',
   release: 1735758000,
+  EN_VA: 'Sarah Miller-Crews',
   VL: lumineVL,
 };
 

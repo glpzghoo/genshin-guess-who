@@ -13,6 +13,7 @@ const clorinde: Character = {
   birthday: [9, 20],
   release: 1717448400,
   route: 'Clorinde',
+  EN_VA: 'Crystal Lee',
   VL: clorindeVL,
 };
 

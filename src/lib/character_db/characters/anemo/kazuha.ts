@@ -13,6 +13,7 @@ const kazuha: Character = {
   birthday: [10, 29],
   release: 1624978800,
   route: 'Kaedehara Kazuha',
+  EN_VA: 'Mark Whitten',
   VL: kazuhaVL,
 };
 

@@ -13,6 +13,7 @@ const keqing: Character = {
   birthday: [11, 20],
   release: 1601244000,
   route: 'Keqing',
+  EN_VA: 'Kayli Mills',
   VL: keqingVL,
 };
 

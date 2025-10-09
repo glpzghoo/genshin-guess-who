@@ -13,6 +13,7 @@ const sayu: Character = {
   birthday: [10, 19],
   release: 1628607600,
   route: 'Sayu',
+  EN_VA: 'Lily Ki',
   VL: sayuVL,
 };
 

@@ -13,6 +13,7 @@ const mona: Character = {
   birthday: [8, 31],
   release: 1601244000,
   route: 'Mona',
+  EN_VA: 'Felecia Angelle',
   VL: monaVL,
 };
 

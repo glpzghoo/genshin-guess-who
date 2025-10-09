@@ -13,6 +13,7 @@ const yunjin: Character = {
   birthday: [5, 21],
   release: 1641333600,
   route: 'Yun Jin',
+  EN_VA: 'Judy Alice Lee',
   VL: yunjinVL,
 };
 

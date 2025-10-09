@@ -13,6 +13,7 @@ const yelan: Character = {
   birthday: [4, 20],
   release: 1653944400,
   route: 'Yelan',
+  EN_VA: 'Laura Post',
   VL: yelanVL,
 };
 

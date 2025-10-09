@@ -13,6 +13,7 @@ const lanyan: Character = {
   birthday: [1, 6],
   release: 1737475200,
   route: 'Lan Yan',
+  EN_VA: 'Anna Devlin',
   VL: lanyanVL,
 };
 

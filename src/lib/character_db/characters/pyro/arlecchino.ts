@@ -13,6 +13,7 @@ const arleccino: Character = {
   birthday: [8, 22],
   release: 1713819600,
   route: 'Arlecchino',
+  EN_VA: 'Erin Yvette',
   VL: arlecchinoVL,
 };
 

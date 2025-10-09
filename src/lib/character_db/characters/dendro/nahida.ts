@@ -13,6 +13,7 @@ const nahida: Character = {
   birthday: [10, 27],
   release: 1667253600,
   route: 'Nahida',
+  EN_VA: 'Kimberly Anne Campbell',
   VL: nahidaVl,
 };
 

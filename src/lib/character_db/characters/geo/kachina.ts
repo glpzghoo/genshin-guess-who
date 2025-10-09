@@ -13,6 +13,7 @@ const kachina: Character = {
   birthday: [4, 22],
   release: 1724706000,
   route: 'Kachina',
+  EN_VA: 'Kristen McGuire',
   VL: kachinaVL,
 };
 

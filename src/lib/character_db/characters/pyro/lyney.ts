@@ -13,6 +13,7 @@ const lyney: Character = {
   birthday: [2, 2],
   release: 1692046800,
   route: 'Lyney',
+  EN_VA: 'Daman Mills',
   VL: lyneyVL,
 };
 

@@ -13,6 +13,7 @@ const diona: Character = {
   birthday: [1, 18],
   release: 1605060000,
   route: 'Diona',
+  EN_VA: 'Dina Sherman',
   VL: dionaVL,
 };
 

@@ -13,6 +13,7 @@ const yoimiya: Character = {
   birthday: [6, 21],
   release: 1628607600,
   route: 'Yoimiya',
+  EN_VA: 'Jenny Yokobori',
   VL: yoimiyaVL,
 };
 
