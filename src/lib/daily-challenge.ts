@@ -119,24 +119,27 @@ const pickVoiceLine = (
   if (!quotes) return null;
 
   const sortedKeys = Object.keys(quotes).sort();
-  const validQuotes: { title: string; text: string }[] = [];
+  const valid: { title: string; text: string }[] = [];
+
+  const hasRedaction = (s?: string) => !!s && /_{3,}/.test(s); // 3+ underscores
 
   for (const key of sortedKeys) {
     const q = quotes[key];
-    if (q?.text) {
-      const cleanText = q.text.replace(/\\n/g, '\n').trim();
-      if (cleanText.length === 0) continue;
-      validQuotes.push({
-        title: q.title || 'Voice Line',
-        text: cleanText,
-      });
-    }
+    if (!q?.text) continue;
+
+    const cleanText = q.text.replace(/\\n/g, '\n').trim();
+    const title = (q.title ?? 'Voice Line').trim();
+
+    if (!cleanText) continue;
+    if (hasRedaction(cleanText)) continue;
+
+    valid.push({ title, text: cleanText });
   }
 
-  if (validQuotes.length === 0) return null;
+  if (valid.length === 0) return null;
 
-  const randomIndex = Math.floor(Math.random() * validQuotes.length);
-  return validQuotes[randomIndex];
+  const randomIndex = Math.floor(Math.random() * valid.length);
+  return valid[randomIndex];
 };
 
 const dailyCharacters = allCharacters.filter((character) => character?.name);
