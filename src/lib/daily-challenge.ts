@@ -50,13 +50,13 @@ const characterMap = new Map<string, Character>(
 
 const genderByBodyType: Record<string, string> = {
   MALE: 'Male',
-  BOY: 'Male',
-  MAN: 'Male',
-  LADY: 'Female',
-  GIRL: 'Female',
+  BOY: 'Boy',
+  MAN: 'Man',
+  LADY: 'Lady',
+  GIRL: 'Girl',
   FEMALE: 'Female',
-  WOMAN: 'Female',
-  LOLI: 'Female',
+  WOMAN: 'Woman',
+  LOLI: 'Kid (female)',
 };
 
 const regionLabels: Record<string, string> = {
@@ -70,6 +70,7 @@ const regionLabels: Record<string, string> = {
   'NOD-KRAI': 'Nod-Krai',
   RANGER: 'Outlander',
   OMNI_SCOURGE: 'Omni Scourge',
+  OTHER: 'Other',
   MAINACTOR: 'Traveler',
 };
 
@@ -117,18 +118,24 @@ const pickVoiceLine = (
   if (!quotes) return null;
 
   const sortedKeys = Object.keys(quotes).sort();
+  const validQuotes: { title: string; text: string }[] = [];
+
   for (const key of sortedKeys) {
     const q = quotes[key];
     if (q?.text) {
       const cleanText = q.text.replace(/\\n/g, '\n').trim();
       if (cleanText.length === 0) continue;
-      return {
+      validQuotes.push({
         title: q.title || 'Voice Line',
         text: cleanText,
-      };
+      });
     }
   }
-  return null;
+
+  if (validQuotes.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * validQuotes.length);
+  return validQuotes[randomIndex];
 };
 
 const dailyCharacters = allCharacters.filter((character) => character?.name);
@@ -188,8 +195,8 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
 
   const gender = genderByBodyType[character.bodyType] ?? 'Unknown';
   hints.push({
-    id: 'gender',
-    label: 'Gender',
+    id: 'body-type',
+    label: 'Body Type',
     value: gender,
   });
 
