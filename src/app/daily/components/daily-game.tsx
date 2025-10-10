@@ -3,129 +3,38 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  ChevronsUpDown,
-  Check as CheckIcon,
-  Trophy,
-} from 'lucide-react';
-import { elements, weapons } from '@/lib/helper';
+import { Check as CheckIcon, Trophy } from 'lucide-react';
 import {
   buildDailyHints,
-  DailyStoredEntry,
-  DailyStoredGuess,
   ElementTheme,
   filterDependentHints,
-  findCharacterById,
   getAllCharacters,
   getDailyKey,
   getDisplayName,
   getRandomTheme,
   pickDailyCharacter,
 } from '@/lib/daily-challenge';
+import type { DailyStoredEntry } from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+
+import { elements, weapons } from '@/lib/helper';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Badge } from './ui/badge';
-
-const STORAGE_KEY = 'daily-mode-progress';
-const STATS_KEY = 'daily-mode-streaks';
-
-type DailyGuess = {
-  character: Character;
-  correct: boolean;
-  timestamp: number;
-};
-
-type GuessState = {
-  history: DailyGuess[];
-  solved: boolean;
-  solvedAt: number | null;
-};
-
-const initialGuessState: GuessState = {
-  history: [],
-  solved: false,
-  solvedAt: null,
-};
-
-type DailyStreakStats = {
-  currentStreak: number;
-  bestStreak: number;
-  lastSolvedKey: string | null;
-};
-
-const DEFAULT_STREAK_STATS: DailyStreakStats = {
-  currentStreak: 0,
-  bestStreak: 0,
-  lastSolvedKey: null,
-};
-
-const MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-
-const getUtcTimestampForKey = (key: string): number | null => {
-  const [year, month, day] = key.split('-').map((part) => Number(part));
-  if (
-    Number.isNaN(year) ||
-    Number.isNaN(month) ||
-    Number.isNaN(day) ||
-    month < 1 ||
-    month > 12 ||
-    day < 1 ||
-    day > 31
-  ) {
-    return null;
-  }
-  return Date.UTC(year, month - 1, day);
-};
-
-const isNextDay = (previousKey: string, currentKey: string): boolean => {
-  const previous = getUtcTimestampForKey(previousKey);
-  const current = getUtcTimestampForKey(currentKey);
-  if (previous === null || current === null) return false;
-  const diff = (current - previous) / MILLIS_IN_DAY;
-  return Math.round(diff) === 1;
-};
-
-const applySolvedStreak = (
-  stats: DailyStreakStats,
-  solvedKey: string
-): DailyStreakStats => {
-  if (stats.lastSolvedKey === solvedKey) return stats;
-  const consecutive =
-    stats.lastSolvedKey !== null && isNextDay(stats.lastSolvedKey, solvedKey);
-  const currentStreak = consecutive ? stats.currentStreak + 1 : 1;
-  const bestStreak = Math.max(stats.bestStreak, currentStreak);
-  return {
-    currentStreak,
-    bestStreak,
-    lastSolvedKey: solvedKey,
-  };
-};
-
-const guessVariant = {
-  hidden: { opacity: 0, x: 12 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -12 },
-};
-
-const hintVariant = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
-};
+  applySolvedStreak,
+  createStoredEntry,
+  DailyStreakStats,
+  DEFAULT_STREAK_STATS,
+  guessVariant,
+  GuessState,
+  hintVariant,
+  initialGuessState,
+  parseDailyEntry,
+  parseDailyStats,
+  STATS_KEY,
+  STORAGE_KEY,
+} from '../lib/helpers';
+import { CharacterCombobox } from './character-combobox';
 
 const renderElementWithIcon = (
   element: string,
@@ -200,68 +109,29 @@ export function DailyGame() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      const parsed = raw
+      const parsedEntries = raw
         ? (JSON.parse(raw) as Record<string, DailyStoredEntry>)
-        : {};
-      const entry = parsed?.[dailyKey];
-
-      if (entry) {
-        const history: DailyGuess[] = [];
-        for (const guess of entry.guesses ?? []) {
-          const character = findCharacterById(guess.characterId);
-          if (!character) continue;
-          history.push({
-            character,
-            correct: guess.correct,
-            timestamp: guess.timestamp,
-          });
-        }
-
-        setGuessState({
-          history,
-          solved: !!entry.solved,
-          solvedAt: entry.solvedAt ?? null,
-        });
-      }
+        : undefined;
+      const entry = parsedEntries?.[dailyKey];
+      const hydrated = parseDailyEntry(entry, hints);
+      setGuessState(hydrated);
 
       const rawStats = window.localStorage.getItem(STATS_KEY);
-      let stats = DEFAULT_STREAK_STATS;
-      if (rawStats) {
-        try {
-          const parsedStats = JSON.parse(rawStats) as Partial<DailyStreakStats>;
-          stats = {
-            currentStreak: Number(parsedStats?.currentStreak) || 0,
-            bestStreak: Number(parsedStats?.bestStreak) || 0,
-            lastSolvedKey:
-              typeof parsedStats?.lastSolvedKey === 'string'
-                ? parsedStats.lastSolvedKey
-                : null,
-          };
-        } catch {
-          stats = DEFAULT_STREAK_STATS;
-        }
-      }
-
+      let stats = parseDailyStats(rawStats);
       if (entry?.solved) {
         const updated = applySolvedStreak(stats, dailyKey);
         if (updated !== stats) {
           stats = updated;
-          try {
-            window.localStorage.setItem(STATS_KEY, JSON.stringify(updated));
-          } catch {
-            // ignore storage failures
-          }
+          window.localStorage.setItem(STATS_KEY, JSON.stringify(updated));
         }
       }
-
       setStreakStats(stats);
     } catch (error) {
       console.warn('Failed to hydrate daily progress', error);
     }
-  }, [dailyKey]);
+  }, [dailyKey, hints]);
 
   const persist = useCallback(
     (next: GuessState) => {
@@ -269,18 +139,9 @@ export function DailyGame() {
       try {
         const raw = window.localStorage.getItem(STORAGE_KEY);
         const parsed: Record<string, DailyStoredEntry> = raw
-          ? JSON.parse(raw)
+          ? (JSON.parse(raw) as Record<string, DailyStoredEntry>)
           : {};
-        const stored: DailyStoredEntry = {
-          solved: next.solved,
-          solvedAt: next.solved ? (next.solvedAt ?? Date.now()) : undefined,
-          guesses: next.history.map<DailyStoredGuess>((guess) => ({
-            characterId: String(guess.character.id),
-            correct: guess.correct,
-            timestamp: guess.timestamp,
-          })),
-        };
-        parsed[dailyKey] = stored;
+        parsed[dailyKey] = createStoredEntry(next);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
       } catch (error) {
         console.warn('Failed to persist daily progress', error);
@@ -321,10 +182,15 @@ export function DailyGame() {
         const solvedAt = solved
           ? (prev.solvedAt ?? (correct ? timestamp : null))
           : null;
+        const failed = history.filter((entry) => !entry.correct).length;
+        const revealedHints = failed
+          ? filterDependentHints(hints.slice(0, failed))
+          : [];
         const nextState: GuessState = {
           history,
           solved,
           solvedAt,
+          revealedHints,
         };
         persist(nextState);
         return nextState;
@@ -337,7 +203,7 @@ export function DailyGame() {
       }
       setPickerOpen(false);
     },
-    [applySolvedForToday, guessState.solved, persist, solution.id]
+    [applySolvedForToday, guessState.solved, hints, persist, solution.id]
   );
 
   const failedAttempts = useMemo(
@@ -345,14 +211,15 @@ export function DailyGame() {
     [guessState.history]
   );
 
-  const unlockedHints = useMemo(
-    () => hints.slice(0, failedAttempts),
-    [hints, failedAttempts]
-  );
-  const revealedHints = useMemo(
-    () => filterDependentHints(unlockedHints),
-    [unlockedHints]
-  );
+  const revealedHints = useMemo(() => {
+    if (guessState.revealedHints.length > 0) {
+      return guessState.revealedHints;
+    }
+    if (failedAttempts === 0) {
+      return [];
+    }
+    return filterDependentHints(hints.slice(0, failedAttempts));
+  }, [failedAttempts, guessState.revealedHints, hints]);
   const stillGuessing = !guessState.solved;
 
   return (
@@ -373,16 +240,6 @@ export function DailyGame() {
       <div className="relative z-10">
         <div className="container mx-auto max-w-6xl px-4 py-8 space-y-8">
           <div className="flex items-center justify-between">
-            <Button
-              asChild
-              variant="ghost"
-              className="gap-2 text-white/80 hover:text-white"
-            >
-              <Link href="/">
-                <ArrowLeft className="h-4 w-4" />
-                Back to lobby
-              </Link>
-            </Button>
             <Badge className="bg-white/10 border border-white/20 text-white uppercase tracking-wide">
               Daily #{dailyKey.replace(/-/g, '')}
             </Badge>
@@ -423,6 +280,16 @@ export function DailyGame() {
                   </span>
                   <span>• Best {streakStats.bestStreak}</span>
                 </Badge>
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem(STATS_KEY);
+                    localStorage.removeItem(STORAGE_KEY);
+                    window.location.reload();
+                  }}
+                  variant={`ghost`}
+                >
+                  Reset Progress
+                </Button>
               </div>
             </div>
 
@@ -526,7 +393,7 @@ export function DailyGame() {
                     </motion.div>
                   ) : (
                     <div className="space-y-3">
-                      {guessState.history.map((guess, index) => (
+                      {[...guessState.history].reverse().map((guess, index) => (
                         <motion.div
                           key={`${guess.character.id}-${guess.timestamp}-${index}`}
                           variants={guessVariant}
@@ -596,96 +463,5 @@ export function DailyGame() {
         </div>
       </div>
     </div>
-  );
-}
-
-function CharacterCombobox({
-  characters,
-  selection,
-  onSelect,
-  onSubmitGuess,
-  open,
-  onOpenChange,
-  disabled,
-}: {
-  characters: Character[];
-  selection: Character | null;
-  onSelect: (character: Character | null) => void;
-  onSubmitGuess: (character: Character) => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  disabled?: boolean;
-}) {
-  const displayValue = selection
-    ? getDisplayName(selection)
-    : 'Search by name, element or region';
-
-  return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="h-12 w-full justify-between rounded-2xl border border-white/20 bg-white/10 text-left text-sm text-white/90 shadow-lg transition hover:bg-white/20 "
-          disabled={disabled}
-        >
-          <span className="truncate">{displayValue}</span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-60" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 rounded-2xl border border-white/10 bg-slate-950/95 p-0 text-white shadow-xl">
-        <Command>
-          <CommandInput
-            placeholder="Type to search..."
-            className="border-b border-white/10 bg-transparent text-sm placeholder:text-white/50"
-          />
-          <CommandList>
-            <CommandEmpty>No characters found.</CommandEmpty>
-            <CommandGroup>
-              {characters.map((character) => (
-                <CommandItem
-                  key={character.id}
-                  value={String(character.id)}
-                  keywords={[
-                    character.name,
-                    character.element,
-                    character.weaponType,
-                    character.region,
-                  ]}
-                  onSelect={() => {
-                    if (disabled) return;
-                    onSelect(character);
-                    onOpenChange(false);
-                    onSubmitGuess(character);
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-white/10 bg-white/10">
-                      <img
-                        src={`/assets/ui/${character.icon}.png`}
-                        alt={character.name}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium">
-                        {getDisplayName(character)}
-                      </span>
-                      <span className="text-xs text-white/60">
-                        {character.element} • {character.weaponType}
-                      </span>
-                    </div>
-                    {selection?.id === character.id ? (
-                      <CheckIcon className="ml-auto h-4 w-4 text-emerald-400" />
-                    ) : null}
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
   );
 }

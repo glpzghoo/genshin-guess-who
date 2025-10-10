@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import RealtimeAutoConnect from './realtime-auto-connect';
 import { Analytics } from '@vercel/analytics/next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
     template: '%s | Genshin Guess Who',
   },
   description:
-    'Play the fan-made Genshin Impact Guess Who game with daily puzzles, endless mode, and searchable voice lines to sharpen your Teyvat knowledge.',
+    'Play the fan-made Genshin Impact Guess Who game with a single daily puzzle and searchable voice lines to sharpen your Teyvat knowledge.',
   keywords: [
     'Genshin Impact guess who',
     'Genshin character quiz',
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
     url: 'https://genshin-gw.com',
     title: 'Genshin Guess Who | Daily Character Challenge & Voice Line Quiz',
     description:
-      'Play a free browser-based Genshin Impact guessing game featuring a daily challenge, endless mode, and curated voice lines.',
+      'Play a free browser-based Genshin Impact guessing game featuring a daily challenge and curated voice lines.',
     siteName: 'Genshin Guess Who',
     images: [
       {
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Genshin Guess Who | Daily Character Challenge & Voice Line Quiz',
     description:
-      'Guess the Genshin Impact character from daily challenges, endless mode, and voice line clues.',
+      'Guess the Genshin Impact character from daily challenges and voice line clues.',
     images: ['/assets/ui/UI_AvatarIcon_Aino.png'],
   },
   robots: {
@@ -60,8 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${f.className} antialiased dark`}>
-        <RealtimeAutoConnect />
+      <body className={`${f.className} antialiased dark`}>
         {children}
         <Analytics />
       </body>

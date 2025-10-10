@@ -18,6 +18,7 @@ export type DailyStoredEntry = {
   solved: boolean;
   solvedAt?: number;
   guesses: DailyStoredGuess[];
+  revealedHints?: DailyHint[];
 };
 
 export const MAX_FAILED_ATTEMPTS = 7;

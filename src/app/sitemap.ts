@@ -6,8 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static pages like home, about, etc.
   const staticPages = [{ url: baseUrl, lastModified: new Date() }];
 
-  // Dynamic game mode pages
-  const gameModes = [
+  const gamePages = [
     {
       url: `${baseUrl}/daily`,
       lastModified: new Date(),
@@ -17,10 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/endless`,
       lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1.0,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
   ];
 
-  return [...staticPages, ...gameModes];
+  return [...staticPages, ...gamePages];
 }

@@ -1,9 +1,5 @@
-import { GameLobby } from '@/components/game-lobby';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-background">
-      <GameLobby />
-    </main>
-  );
+  redirect('/daily');
 }

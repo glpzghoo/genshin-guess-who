@@ -1,19 +1,9 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  ChevronsUpDown,
-  Check as CheckIcon,
-  Infinity as InfinityIcon,
-  Sparkles,
-  Target,
-  Flame,
-  Crown,
-} from 'lucide-react';
+import { Infinity as InfinityIcon, Sparkles, Target, Crown } from 'lucide-react';
 
 import {
   buildDailyHints,
@@ -26,68 +16,22 @@ import {
 } from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { elements, weapons } from '@/lib/helper';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Badge } from '@/components/ui/badge';
-
-const STATS_KEY = 'endless-mode-stats';
-const MAX_ATTEMPTS = 7;
-
-type EndlessGuess = {
-  character: Character;
-  correct: boolean;
-  timestamp: number;
-};
-
-type EndlessStats = {
-  totalSolved: number;
-  totalGuesses: number;
-  currentStreak: number;
-  bestStreak: number;
-};
+  DEFAULT_STATS,
+  type EndlessGuess,
+  type EndlessStats,
+  guessVariant,
+  hintVariant,
+  MAX_ATTEMPTS,
+  parseEndlessStats,
+  STATS_KEY,
+} from '../lib/helpers';
+import { CharacterCombobox } from './character-combobox';
+import { BadgePill } from './badge-pill';
 
 type RoundStatus = 'playing' | 'solved' | 'revealed';
-
-type ComboboxProps = {
-  characters: Character[];
-  selection: Character | null;
-  onSelect: (character: Character | null) => void;
-  onSubmitGuess: (character: Character) => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  disabled?: boolean;
-};
-
-const DEFAULT_STATS: EndlessStats = {
-  totalSolved: 0,
-  totalGuesses: 0,
-  currentStreak: 0,
-  bestStreak: 0,
-};
-
-const guessVariant = {
-  hidden: { opacity: 0, x: 12 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -12 },
-};
-
-const hintVariant = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
-};
 
 const renderElementWithIcon = (
   element: string,
@@ -153,7 +97,12 @@ export function EndlessGame() {
   const [roundNumber, setRoundNumber] = useState(1);
   const [stats, setStats] = useState<EndlessStats>(DEFAULT_STATS);
   const [recentReveals, setRecentReveals] = useState<number>(0);
-  const [theme, setTheme] = useState<ElementTheme>(() => getRandomTheme());
+  const themeSeed = currentCharacter
+    ? `character-${currentCharacter.id}`
+    : `round-${roundNumber}`;
+  const [theme, setTheme] = useState<ElementTheme>(() =>
+    getRandomTheme(themeSeed)
+  );
 
   useEffect(() => {
     setDeck(shuffleCharacters(allCharacters));
@@ -162,27 +111,16 @@ export function EndlessGame() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    try {
-      const stored = window.localStorage.getItem(STATS_KEY);
-      if (!stored) return;
-      const parsed = JSON.parse(stored) as EndlessStats;
-      setStats({
-        totalSolved: Number(parsed?.totalSolved) || 0,
-        totalGuesses: Number(parsed?.totalGuesses) || 0,
-        currentStreak: Number(parsed?.currentStreak) || 0,
-        bestStreak: Number(parsed?.bestStreak) || 0,
-      });
-    } catch {
-      // ignore malformed stats
-    }
+    const stored = window.localStorage.getItem(STATS_KEY);
+    setStats(parseEndlessStats(stored));
   }, []);
 
   const persistStats = useCallback((next: EndlessStats) => {
     if (typeof window === 'undefined') return;
     try {
       window.localStorage.setItem(STATS_KEY, JSON.stringify(next));
-    } catch {
-      // ignore
+    } catch (error) {
+      console.warn('Failed to persist endless stats', error);
     }
   }, []);
 
@@ -214,8 +152,8 @@ export function EndlessGame() {
   }, [deckIndex]);
 
   useEffect(() => {
-    setTheme(getRandomTheme());
-  }, [deckIndex]);
+    setTheme(getRandomTheme(themeSeed));
+  }, [themeSeed]);
 
   const hints = useMemo(
     () => (currentCharacter ? buildDailyHints(currentCharacter) : []),
@@ -269,8 +207,7 @@ export function EndlessGame() {
       } else {
         setSelection(null);
 
-        // NEW: if this miss hits the cap, auto-lose and reset streak
-        const nextFailed = failedAttempts + 1; // failedAttempts is from current render
+        const nextFailed = failedAttempts + 1;
         if (nextFailed >= MAX_ATTEMPTS) {
           setRoundStatus('revealed');
           setRecentReveals((c) => c + 1);
@@ -283,16 +220,6 @@ export function EndlessGame() {
     },
     [currentCharacter, stillGuessing, updateStats, failedAttempts]
   );
-
-  const handleGiveUp = useCallback(() => {
-    if (!currentCharacter || !stillGuessing) return;
-    setRoundStatus('revealed');
-    setRecentReveals((count) => count + 1);
-    updateStats((prev) => ({
-      ...prev,
-      currentStreak: 0,
-    }));
-  }, [currentCharacter, stillGuessing, updateStats]);
 
   const handleNextRound = useCallback(() => {
     advanceDeck();
@@ -334,12 +261,7 @@ export function EndlessGame() {
               asChild
               variant="ghost"
               className="gap-2 text-white/80 hover:text-white"
-            >
-              <Link href="/">
-                <ArrowLeft className="h-4 w-4" />
-                Back to lobby
-              </Link>
-            </Button>
+            ></Button>
           </div>
 
           <section className="grid gap-6 rounded-3xl border border-white/12 bg-black/35 px-6 py-8 shadow-2xl backdrop-blur-xl md:grid-cols-[1.15fr,0.85fr] md:items-start xl:grid-cols-[1.25fr,0.95fr]">
@@ -361,8 +283,8 @@ export function EndlessGame() {
                 Streak through Teyvat&apos;s roster
               </h1>
               <p className="text-white/75 text-sm md:text-base max-w-xl">
-                Each incorrect guess reveals more intel. Give up and your streak
-                resets. How many characters can you identify back-to-back?
+                Each incorrect guess reveals more intel. How many characters can
+                you identify back-to-back?
               </p>
               <div className="flex flex-wrap gap-2 text-xs">
                 <BadgePill
@@ -370,12 +292,6 @@ export function EndlessGame() {
                   icon={<Target className="h-3.5 w-3.5" />}
                 >
                   New character every round
-                </BadgePill>
-                <BadgePill
-                  theme={theme}
-                  icon={<Flame className="h-3.5 w-3.5" />}
-                >
-                  Streak resets on reveal
                 </BadgePill>
                 <BadgePill
                   theme={theme}
@@ -426,18 +342,10 @@ export function EndlessGame() {
                     onOpenChange={setPickerOpen}
                     disabled={!stillGuessing}
                   />
-                  <Button
-                    variant="outline"
-                    className="h-12 sm:w-32 border border-white/20 text-white/80 hover:text-white"
-                    onClick={handleGiveUp}
-                    disabled={!stillGuessing}
-                  >
-                    Reveal
-                  </Button>
                 </div>
 
                 {roundStatus === 'solved' && (
-                  <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100 flex items-center justify-between gap-3">
+                  <div className="flex items-center justify-between gap-3 rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100">
                     <div>
                       <div className="font-semibold">
                         Correct! {getDisplayName(currentCharacter)}
@@ -457,7 +365,7 @@ export function EndlessGame() {
                 )}
 
                 {roundStatus === 'revealed' && (
-                  <div className="rounded-xl border border-rose-400/40 bg-rose-500/15 px-4 py-3 text-sm text-rose-100 flex items-center justify-between gap-3">
+                  <div className="flex items-center justify-between gap-3 rounded-xl border border-rose-400/40 bg-rose-500/15 px-4 py-3 text-sm text-rose-100">
                     <div>
                       <div className="font-semibold">
                         Answer: {getDisplayName(currentCharacter)}
@@ -527,91 +435,79 @@ export function EndlessGame() {
 
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">Guess timeline</h2>
-                  <p className="text-xs text-white/60">
-                    Wrong guesses keep your streak alive
-                  </p>
+                  <h2 className="text-lg font-semibold">Guess log</h2>
+                  <BadgePill
+                    theme={theme}
+                    icon={<Sparkles className="h-3.5 w-3.5" />}
+                  >
+                    {guesses.length} attempts
+                  </BadgePill>
                 </div>
-                <AnimatePresence initial={false} mode="popLayout">
-                  {guesses.length === 0 ? (
-                    <motion.div
-                      className="rounded-xl border border-dashed border-white/15 bg-white/8 p-4 text-sm text-white/70"
-                      initial={{ opacity: 0.6 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      You haven&apos;t tried any names this round. Take a swing!
-                    </motion.div>
-                  ) : (
-                    <div className="space-y-3">
-                      {guesses.map((guess, index) => (
-                        <motion.div
-                          key={`${guess.character.id}-${guess.timestamp}-${index}`}
-                          variants={guessVariant}
-                          initial="hidden"
-                          animate="visible"
-                          exit="exit"
-                          className={`flex items-center justify-between rounded-xl border p-4 text-sm ${
-                            guess.correct
-                              ? 'border-emerald-400/60 bg-emerald-500/15 text-emerald-100'
-                              : 'border-white/12 bg-white/8 text-white'
-                          }`}
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="h-12 w-12 overflow-hidden rounded-xl border border-white/15 bg-black/30">
-                              <img
-                                src={`/assets/ui/${guess.character.icon}.png`}
-                                alt={guess.character.name}
-                                className="h-full w-full object-cover"
-                              />
-                            </div>
-                            <div>
-                              <div className="text-base font-semibold text-white">
-                                {getDisplayName(guess.character)}
-                              </div>
-                              <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-white/70">
-                                {renderElementWithIcon(
-                                  guess.character.element,
-                                  'h-3.5 w-3.5'
-                                )}
-                                {renderWeaponWithIcon(
-                                  guess.character.weaponType,
-                                  'h-3.5 w-3.5'
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                          <BadgePill
-                            theme={theme}
-                            icon={<CheckIcon className="h-3.5 w-3.5" />}
-                            highlight={guess.correct}
-                          >
-                            {guess.correct ? 'Correct' : 'Keep digging'}
-                          </BadgePill>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
-                </AnimatePresence>
 
-                {roundStatus !== 'playing' && (
-                  <div className="rounded-xl border border-white/12 bg-white/8 p-4 text-sm text-white/80">
-                    <div className="font-semibold text-white">
-                      Solution: {getDisplayName(currentCharacter)}
-                    </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-white/60">
-                      {renderElementWithIcon(
-                        currentCharacter.element,
-                        'h-3.5 w-3.5'
-                      )}
-                      {renderWeaponWithIcon(
-                        currentCharacter.weaponType,
-                        'h-3.5 w-3.5'
-                      )}
-                      <span>{currentCharacter.region}</span>
-                    </div>
+                {guesses.length === 0 ? (
+                  <div className="rounded-xl border border-white/10 bg-white/8 p-4 text-sm text-white/70">
+                    Your guesses will appear here.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <AnimatePresence initial={false}>
+                      {[...guesses]
+                        .reverse()
+                        .slice(0, 6)
+                        .map((guess, index) => (
+                          <motion.div
+                            key={`${guess.character.id}-${guess.timestamp}`}
+                            variants={guessVariant}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            transition={{ duration: 0.2 }}
+                            className="rounded-xl border border-white/12 bg-white/8 p-4"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+                                  <img
+                                    src={`/assets/ui/${guess.character.icon}.png`}
+                                    alt={guess.character.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="text-sm font-medium">
+                                    {getDisplayName(guess.character)}
+                                  </span>
+                                  <span className="text-xs text-white/60">
+                                    {guess.character.element} •{' '}
+                                    {guess.character.weaponType}
+                                  </span>
+                                </div>
+                              </div>
+                              <Badge
+                                className={`border ${
+                                  guess.correct
+                                    ? 'border-emerald-400/40 bg-emerald-500/15 text-emerald-100'
+                                    : 'border-rose-400/40 bg-rose-500/15 text-rose-100'
+                                }`}
+                              >
+                                {guess.correct ? 'Correct' : 'Incorrect'}
+                              </Badge>
+                            </div>
+                            {index === 0 && !guess.correct && (
+                              <div className="mt-3 text-xs text-white/60">
+                                Keep going — more clues unlock with each miss.
+                              </div>
+                            )}
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    {guesses.length > 6 && (
+                      <div className="text-center text-xs text-white/55">
+                        Showing recent attempts. Total guesses: {guesses.length}
+                      </div>
+                    )}
                   </div>
                 )}
-
                 {recentReveals >= 3 && (
                   <div className="rounded-xl border border-amber-400/40 bg-amber-500/15 px-4 py-3 text-xs text-amber-100">
                     Tip: Try filtering by element or weapon with the search box
@@ -624,118 +520,5 @@ export function EndlessGame() {
         </div>
       </div>
     </div>
-  );
-}
-
-function CharacterCombobox({
-  characters,
-  selection,
-  onSelect,
-  onSubmitGuess,
-  open,
-  onOpenChange,
-  disabled,
-}: ComboboxProps) {
-  const displayValue = selection
-    ? getDisplayName(selection)
-    : 'Search by name, element or region';
-
-  return (
-    <Popover open={open} onOpenChange={onOpenChange}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="h-12 w-full justify-between rounded-2xl border border-white/20 bg-white/10 text-left text-sm text-white/90 shadow-lg transition hover:bg-white/20 sm:w-80"
-          disabled={disabled}
-        >
-          <span className="truncate">{displayValue}</span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-60" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-80 rounded-2xl border border-white/10 bg-slate-950/95 p-0 text-white shadow-xl">
-        <Command>
-          <CommandInput
-            placeholder="Type to search..."
-            className="border-b border-white/10 bg-transparent text-sm placeholder:text-white/50"
-          />
-          <CommandList>
-            <CommandEmpty>No characters found.</CommandEmpty>
-            <CommandGroup>
-              {characters.map((character) => (
-                <CommandItem
-                  key={character.id}
-                  value={String(character.id)}
-                  keywords={[
-                    character.name,
-                    character.element,
-                    character.weaponType,
-                    character.region,
-                  ]}
-                  onSelect={() => {
-                    if (disabled) return;
-                    onSelect(character);
-                    onOpenChange(false);
-                    onSubmitGuess(character);
-                  }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-white/10 bg-white/10">
-                      <img
-                        src={`/assets/ui/${character.icon}.png`}
-                        alt={character.name}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium">
-                        {getDisplayName(character)}
-                      </span>
-                      <span className="text-xs text-white/60">
-                        {character.element} • {character.weaponType}
-                      </span>
-                    </div>
-                    {selection?.id === character.id ? (
-                      <CheckIcon className="ml-auto h-4 w-4 text-emerald-400" />
-                    ) : null}
-                  </div>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-function BadgePill({
-  theme,
-  icon,
-  highlight,
-  children,
-}: {
-  theme: ElementTheme;
-  icon: ReactNode;
-  highlight?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide ${
-        highlight
-          ? 'bg-emerald-500/25 text-emerald-100 border-emerald-400/50'
-          : ''
-      }`}
-      style={{
-        backgroundColor: highlight ? undefined : theme.badge,
-        color: highlight ? undefined : theme.badgeText,
-        borderColor: highlight ? undefined : theme.accent,
-      }}
-    >
-      {icon}
-      {children}
-    </span>
   );
 }

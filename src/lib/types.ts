@@ -16,18 +16,6 @@ export type Character = {
   VL: VoiceLine;
 };
 
-export type Profile = {
-  id: string;
-  nickname: string;
-  avatar_url: string | null;
-  adventure_rank: number | null;
-  wins: number | null;
-  losses: number | null;
-  exp: number;
-  mmr: number;
-  guest?: boolean;
-};
-
 // Voiceline types
 type VoiceLine = {
   quotes: Record<string, Quote>;
