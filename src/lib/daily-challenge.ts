@@ -21,7 +21,7 @@ export type DailyStoredEntry = {
   revealedHints?: DailyHint[];
 };
 
-export const MAX_FAILED_ATTEMPTS = 6;
+export const MAX_FAILED_ATTEMPTS = 5;
 export const MAX_DAILY_ATTEMPTS = 5;
 
 export type ElementTheme = {
