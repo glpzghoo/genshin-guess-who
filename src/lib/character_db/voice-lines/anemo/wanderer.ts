@@ -5,6 +5,7 @@ export const wandererVL = {
       audio: '1006',
       text: "You want me to introduce myself? I've gone by many names and titles during my journey. Although each one is more eminent than any ordinary mortal could imagine, they're all just water under the bridge to me now.\\nCall me whatever you like. Go ahead, let me see what you can come up with. Don't disappoint me.",
       tips: '',
+
       tasks: null,
     },
     '1': {
@@ -19,6 +20,7 @@ export const wandererVL = {
       audio: '1102',
       text: "You think I've got a sharp tongue? I just tell it like it is. If someone can't handle it, maybe that's their problem.",
       tips: '',
+
       tasks: null,
     },
     '3': {
@@ -26,6 +28,7 @@ export const wandererVL = {
       audio: '1103',
       text: "There's no need to exchange pleasantries. It's rather pathetic to force a conversation just to occupy silence.",
       tips: '',
+
       tasks: null,
     },
     '4': {
@@ -33,6 +36,7 @@ export const wandererVL = {
       audio: '1201',
       text: 'You want to use my hat as an umbrella? Hmph, the audacity to even make that request...',
       tips: '',
+
       tasks: null,
     },
     '5': {
@@ -40,6 +44,7 @@ export const wandererVL = {
       audio: '1202',
       text: "You're so happy just to see the sun again? How childish.",
       tips: '',
+
       tasks: null,
     },
     '6': {
@@ -54,6 +59,7 @@ export const wandererVL = {
       audio: '1204',
       text: "Fundamentally speaking, there's little difference between snow and rain, yet people lavish praise only upon the former... Fate can be truly arbitrary.",
       tips: '',
+
       tasks: null,
     },
     '8': {
@@ -61,6 +67,7 @@ export const wandererVL = {
       audio: '1205',
       text: 'A simple breeze like this... Even you can conjure it, right?',
       tips: '',
+
       tasks: null,
     },
     '9': {
@@ -68,6 +75,7 @@ export const wandererVL = {
       audio: '1001',
       text: "\"Rise and shine, sleepyhead, the sun's already in your eyes!\" ...Haha, don't tell me you actually thought I'd wake you up like that?",
       tips: '',
+
       tasks: null,
     },
     '10': {
@@ -75,6 +83,7 @@ export const wandererVL = {
       audio: '1002',
       text: 'I have no need for food. Save me the trouble and take care of yourself and that small thing floating next to you.',
       tips: '',
+
       tasks: null,
     },
     '11': {
@@ -82,6 +91,7 @@ export const wandererVL = {
       audio: '1003',
       text: 'Finally, another boring day is drawing to a close.',
       tips: '',
+
       tasks: null,
     },
     '12': {
@@ -89,20 +99,23 @@ export const wandererVL = {
       audio: '1004',
       text: "What, can't fall asleep with me around? Hehe.",
       tips: '',
+
       tasks: null,
     },
     '13': {
-      title: '#About {REALNAME[ID(1)]}: Puppet',
+      title: 'About ___: Puppet',
       audio: '2001',
       text: 'A puppet consumed by a raging fire will leave behind ashes. As for what will emerge from them...',
+
       tips: '',
       tasks: null,
     },
     '14': {
-      title: '#About {REALNAME[ID(1)]}: Heart',
+      title: 'About ___: Heart',
       audio: '2005',
       text: "I'll leave that kind of thing to fate. Obsessing over something that's destined to be ever out of one's reach is just a waste of time. I have more important things to attend to at the moment.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -121,6 +134,7 @@ export const wandererVL = {
       audio: '2003',
       text: "So, you're still stewing over our run-ins from before? Huh. Well, what are you going to do about it? Take your time. I'm in no hurry.",
       tips: '',
+
       tasks: null,
     },
     '16': {
@@ -128,6 +142,7 @@ export const wandererVL = {
       audio: '2002',
       text: "I'll never be one of the good guys. I'm just here to pay my dues after what you've done for me.\\nBut what about you? Shouldn't you come up with some excuse for our meetings? If one of your friends mistakes you for collaborating with the enemy, you're on your own.",
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -146,6 +161,7 @@ export const wandererVL = {
       audio: '3001',
       text: "Although the idea of \"divine favor\" makes me a little ill, I'm not going to be picky about a new source of power. You think there's some kind of meaning behind the element of Anemo? Hah, why did that thought even occur to you? The gods aren't guided by any kind of rationality or moral compass. Haven't I shown that to you already?",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -163,6 +179,7 @@ export const wandererVL = {
       title: 'Something to Share',
       audio: '3002',
       text: "I've got nothing. Ask me anything if you want. If a question is interesting enough, I may give you an answer.",
+
       tips: '',
       tasks: null,
     },
@@ -171,6 +188,7 @@ export const wandererVL = {
       audio: '3003',
       text: "Look. The birds are showing off their plumage, the squirrels are busy hoarding food, and humans are laboring for their livelihoods. Truly, simple animals don't need anything complicated to be fulfilled.",
       tips: '',
+
       tasks: null,
     },
     '20': {
@@ -178,6 +196,7 @@ export const wandererVL = {
       audio: '4001',
       text: "While I still had value as a pawn, she might have had other reasons to keep me alive. It's certainly possible that it was because she's wise or benevolent, or happened to see a hint of loneliness within me... You think I'm trying to think the worst of her? Hah, did you really expect anything else? In case you've forgotten, I'm no saint.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -196,6 +215,7 @@ export const wandererVL = {
       audio: '4002',
       text: 'She completely neglected her own creation, and to add insult to injury, she said it was because she "couldn\'t bring herself to intervene" in my fate...',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '22': {
@@ -203,6 +223,7 @@ export const wandererVL = {
       audio: '4003',
       text: "Everyone praises her for her kindness and benevolence, but they forget that love is also a form of sin. What if she's just trying to compensate for something?",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '23': {
@@ -210,10 +231,12 @@ export const wandererVL = {
       audio: '4004',
       text: "The Jester is a survivor of Khaenri'ah. Besides that singular fact, I know very little about him, and never had any kind of close association with him. He seems to want something from me, though. In the past, he assigned to me many important tasks, including a number of trips to the Abyss.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '24': {
       title: 'About The Captain',
+
       audio: '4005',
       text: '"The ever-righteous Captain," "the brave and fearless Captain," "the nigh-invincible Captain"... Even my mechanical ears demand maintenance after listening to so many compliments from the members of the Fatui. Don\'t you think that possessing absolute righteousness is actually a latent danger? And that\'s without taking his great personal strength into account.',
       tips: 'Unlocks at Friendship Lv. 4',
@@ -224,6 +247,7 @@ export const wandererVL = {
       audio: '4006',
       text: "It's a pity that Lesser Lord Kusanali already forced him to erase so many of his segments. The joy I would have derived from slicing them apart one by one...",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -239,6 +263,7 @@ export const wandererVL = {
     },
     '26': {
       title: 'About Damselette',
+
       audio: '4007',
       text: 'Let me ask: what should you do if you were to encounter a "damsel" who is oblivious and innocent at any given time, and unconcerned and unfeeling in any given situation? If it were me, I could at least challenge her to a fight. But if it were you... with your conscience, I would stay away from her.',
       tips: 'Unlocks at Friendship Lv. 4',
@@ -246,6 +271,7 @@ export const wandererVL = {
     },
     '27': {
       title: 'About The Knave',
+
       audio: '4008',
       text: "A wolf in sheep's clothing. To exert a higher level of control over people, she puts on a graceful and cordial front. Most of those who have seen her true, crazy self... have gone poof.",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -256,10 +282,12 @@ export const wandererVL = {
       audio: '4009',
       text: 'Only someone as dense as Childe would think The Rooster is looking after him and his family out of the goodness of his heart. Although the mayor has indeed done a number of things for their benefit, anyone with a brain would be able to tell that the underlying meaning is "your entire family is in my hands."',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '29': {
       title: 'About Marionette',
+
       audio: '4010',
       text: "She has a terrible personality and cares for nothing outside of her own research. But even with that amount of dedication, she still produced a copious amount of garbage, and could only secure a ranking that's still one whole place beneath my own. How pitiful.",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -267,6 +295,7 @@ export const wandererVL = {
     },
     '30': {
       title: 'About Regrator',
+
       audio: '4011',
       text: "Oh, the ninth-ranked guy. He's obsessed with the idea of \"fair exchange,\" to the point of wanting to overthrow the natural imbalance between gods and humans. But, I guess it's just how ordinary mortals are like — it's easy for them to come up with pointless delusions. Honestly, it's nothing worth writing home about, just like how there's also nothing impressive about his abilities or choice of partner. Hmph. Anyone who chooses to work closely with The Doctor is sure to meet a nasty end.",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -274,6 +303,7 @@ export const wandererVL = {
     },
     '31': {
       title: 'About Childe',
+
       audio: '4012',
       text: "He's simple of mind and not that strong of body. Naming him to the lowest-ranked seat lowered the Harbingers' collective prestige. Thankfully, I'm no longer part of that group.",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -281,6 +311,7 @@ export const wandererVL = {
     },
     '32': {
       title: 'About The Fair Lady',
+
       audio: '4013',
       text: 'Nothing remained in her ashes. I have no interest in those who have lost their future.',
       tips: 'Unlocks at Friendship Lv. 4',
@@ -299,6 +330,7 @@ export const wandererVL = {
     },
     '33': {
       title: 'About Yae Miko',
+
       audio: '4014',
       text: 'A smooth-talking youkai. Though she pretends to care about humans to gain the favor of her god, all she seeks are entertaining ways to pass her time.',
       tips: 'Unlocks at Friendship Lv. 4',
@@ -317,6 +349,7 @@ export const wandererVL = {
     },
     '34': {
       title: 'About Kaedehara Kazuha',
+
       audio: '4015',
       text: "You speak of the descendant of the Kaedehara clan? Then isn't he... Wait, he also possesses an Anemo Vision? ...And even managed to take on the Raiden Shogun's Musou no Hitotachi? Hehe... Ahahahaha!",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -335,27 +368,31 @@ export const wandererVL = {
     },
     '35': {
       title: 'About Sethos',
+
       audio: '4016',
       text: 'What makes you think I know him? The fact that he\'s always following me around and asking for a closer look at my hat? We\'ve barely spoken before. The first time we met, he came up and asked me if I was Hat Guy... Last time I checked, judging someone by their appearance is superficial. Hmph, somehow, everyone knows the name "Hat Guy" now...',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '36': {
-      title: '#More About {REALNAME[ID(1)]}: I',
+      title: 'More About ___: I',
       audio: '5001',
       text: "You want to learn more about me? How ridiculous. Don't you know that's only asking for trouble?",
       tips: '',
+
       tasks: null,
     },
     '37': {
-      title: '#More About {REALNAME[ID(1)]}: II',
+      title: 'More About ___: II',
       audio: '5002',
       text: "Oh, I'm well aware that many, many people will want to seek me out and settle the grudges they've built against me in my past life. Fine by me — come one, come all, I say. As a matter of fact, I'm somewhat looking forward to it.",
       tips: 'Unlocks at Friendship Lv. 3',
+
       tasks: null,
     },
     '38': {
-      title: '#More About {REALNAME[ID(1)]}: III',
+      title: 'More About ___: III',
+
       audio: '5003',
       text: "I once thought that deification would allow me to get rid of all of my pointless emotions, but I've since abandoned that view. Anger, whether it be from others or myself, is too convenient and useful as a tool.\\nHow can some people just never become angry? I find that impossible to even imagine. Do they just not have a single mean bone in their bodies?",
       tips: 'Unlocks at Friendship Lv. 4',
@@ -373,7 +410,8 @@ export const wandererVL = {
       ],
     },
     '39': {
-      title: '#More About {REALNAME[ID(1)]}: IV',
+      title: 'More About ___: IV',
+
       audio: '5004',
       text: "When I entered Irminsul, there was only one thought in my mind: I wish I'd never been born at all.\\nIrminsul responded to my wish, but didn't bring me the outcome I desired. The fate of this world hasn't changed a single bit when it comes to playing cruel tricks on its prisoners.",
       tips: 'Unlocks at Friendship Lv. 5',
@@ -391,7 +429,8 @@ export const wandererVL = {
       ],
     },
     '40': {
-      title: '#More About {REALNAME[ID(1)]}: V',
+      title: 'More About ___: V',
+
       audio: '5005',
       text: "You and I have crossed paths in the past, but our journeys will eventually diverge. Who knows what will happen next? Let's just wait and see.",
       tips: 'Unlocks at Friendship Lv. 6',
@@ -409,17 +448,19 @@ export const wandererVL = {
       ],
     },
     '41': {
-      title: "#{REALNAME[ID(1)]}'s Hobbies",
+      title: "___'s Hobbies",
       audio: '6001',
       text: 'Hobbies? Those are for idle bodies who have the free time to think about such things. Do I look like I have any interest in distractions?',
       tips: '',
+
       tasks: null,
     },
     '42': {
-      title: "#{REALNAME[ID(1)]}'s Troubles",
+      title: "___'s Troubles",
       audio: '6002',
       text: "I'm trying to figure out a way to get rid of you so I can go commit atrocities. ...Wait, did you think I was being serious?",
       tips: '',
+
       tasks: null,
     },
     '43': {
@@ -427,6 +468,7 @@ export const wandererVL = {
       audio: '6005',
       text: 'Do you have some tea? The more bitter, the better. It leaves the most fascinating aftertaste.',
       tips: '',
+
       tasks: null,
     },
     '44': {
@@ -434,6 +476,7 @@ export const wandererVL = {
       audio: '6004',
       text: "I'm no fan of Dango, or any other sticky sweets that make me feel like my teeth are fusing together. Keep them to yourself.",
       tips: '',
+
       tasks: null,
     },
     '45': {
@@ -441,6 +484,7 @@ export const wandererVL = {
       audio: '6007',
       text: "It's okay. Guess this is one of the few things you're good at.",
       tips: '',
+
       tasks: null,
     },
     '46': {
@@ -448,6 +492,7 @@ export const wandererVL = {
       audio: '6008',
       text: 'Not bad. You actually made something edible.',
       tips: '',
+
       tasks: null,
     },
     '47': {
@@ -462,6 +507,7 @@ export const wandererVL = {
       audio: '7001',
       text: "Give me your hand. Heh, there's no need to be nervous. I'm just taking you to a vantage point.\\nHow is it? The scenery here should be quite breathtaking. There's no need to thank me — I see little point in it.",
       tips: '',
+
       tasks: null,
     },
     '49': {
@@ -469,6 +515,7 @@ export const wandererVL = {
       audio: '8001',
       text: '...I can see the great deal of effort you put forth.',
       tips: 'Unlocks at Ascension Phase 1',
+
       tasks: null,
     },
     '50': {
@@ -476,6 +523,7 @@ export const wandererVL = {
       audio: '8002',
       text: 'The wind is blowing this way... What did you do?',
       tips: 'Unlocks at Ascension Phase 2',
+
       tasks: null,
     },
     '51': {
@@ -483,6 +531,7 @@ export const wandererVL = {
       audio: '8003',
       text: "You aren't worried about making me more powerful? ...Alright.",
       tips: 'Unlocks at Ascension Phase 4',
+
       tasks: null,
     },
     '52': {
@@ -490,223 +539,7 @@ export const wandererVL = {
       audio: '8004',
       text: "Although I can be of help to you, seeing me as an ally is still a dangerous endeavor. I hope you understand what you're doing. If you still insist on continuing down this path, then let me lead the way.",
       tips: 'Unlocks at Ascension Phase 6',
-      tasks: null,
-    },
-    '53': {
-      title: 'Elemental Skill: I',
-      audio: '100001',
-      text: 'The wind rises!',
-      tips: '',
-      tasks: null,
-    },
-    '54': {
-      title: 'Elemental Skill: II',
-      audio: '100002',
-      text: 'Behold!',
-      tips: '',
-      tasks: null,
-    },
-    '55': {
-      title: 'Elemental Skill: III',
-      audio: '100003',
-      text: 'Squall and fury!',
-      tips: '',
-      tasks: null,
-    },
-    '56': {
-      title: 'Elemental Burst: I',
-      audio: '200001',
-      text: 'Unsightly insects!',
-      tips: '',
-      tasks: null,
-    },
-    '57': {
-      title: 'Elemental Burst: II',
-      audio: '200002',
-      text: 'Wretched vermin!',
-      tips: '',
-      tasks: null,
-    },
-    '58': {
-      title: 'Elemental Burst: III',
-      audio: '200003',
-      text: 'Cry louder!',
-      tips: '',
-      tasks: null,
-    },
-    '59': {
-      title: 'Elemental Burst: IV',
-      audio: '200004',
-      text: 'Bow your head!',
-      tips: '',
-      tasks: null,
-    },
-    '60': {
-      title: 'Elemental Burst: V',
-      audio: '200005',
-      text: 'Know your place!',
-      tips: '',
-      tasks: null,
-    },
-    '61': {
-      title: 'Elemental Burst: VI',
-      audio: '200006',
-      text: 'You dare to gaze upon me!?',
-      tips: '',
-      tasks: null,
-    },
-    '62': {
-      title: 'Sprint Start: I',
-      audio: '700001',
-      text: 'Surge forth!',
-      tips: '',
-      tasks: null,
-    },
-    '63': {
-      title: 'Sprint Start: II',
-      audio: '700002',
-      text: 'Upon the gale!',
-      tips: '',
-      tasks: null,
-    },
-    '64': {
-      title: 'Sprint Start: III',
-      audio: '700004',
-      text: '...Too slow.',
-      tips: '',
-      tasks: null,
-    },
-    '65': {
-      title: 'Sprint Start: IV',
-      audio: '700005',
-      text: 'Quit following me!',
-      tips: '',
-      tasks: null,
-    },
-    '66': {
-      title: 'Opening Treasure Chest: I',
-      audio: '300001',
-      text: 'Unnecessary.',
-      tips: '',
-      tasks: null,
-    },
-    '67': {
-      title: 'Opening Treasure Chest: II',
-      audio: '300002',
-      text: 'Hah, you even want this?',
-      tips: '',
-      tasks: null,
-    },
-    '68': {
-      title: 'Opening Treasure Chest: III',
-      audio: '300003',
-      text: 'Take it and have fun.',
-      tips: '',
-      tasks: null,
-    },
-    '69': {
-      title: 'Low HP: I',
-      audio: '410001',
-      text: "I'm used to this.",
-      tips: '',
-      tasks: null,
-    },
-    '70': {
-      title: 'Low HP: II',
-      audio: '410002',
-      text: 'Nothing worth mentioning.',
-      tips: '',
-      tasks: null,
-    },
-    '71': {
-      title: 'Ally at Low HP: I',
-      audio: '400001',
-      text: 'Why are you even here?',
-      tips: '',
-      tasks: null,
-    },
-    '72': {
-      title: 'Ally at Low HP: II',
-      audio: '400002',
-      text: 'Worthless as expected.',
-      tips: '',
-      tasks: null,
-    },
-    '73': {
-      title: 'Fallen: I',
-      audio: '500001',
-      text: 'Falling... into the abyss...',
-      tips: '',
-      tasks: null,
-    },
-    '74': {
-      title: 'Fallen: II',
-      audio: '500002',
-      text: 'Everything... was futile...',
-      tips: '',
-      tasks: null,
-    },
-    '75': {
-      title: 'Fallen: III',
-      audio: '500003',
-      text: 'The price... for my sins...',
-      tips: '',
-      tasks: null,
-    },
-    '76': {
-      title: 'Heavy Hit Taken: I',
-      audio: '910001',
-      text: "That's far enough.",
-      tips: '',
-      tasks: null,
-    },
-    '77': {
-      title: 'Heavy Hit Taken: II',
-      audio: '910002',
-      text: '...How amusing.',
-      tips: '',
-      tasks: null,
-    },
-    '78': {
-      title: 'Heavy Hit Taken: III',
-      audio: '910003',
-      text: "...You're dead.",
-      tips: '',
-      tasks: null,
-    },
-    '79': {
-      title: 'Heavy Hit Taken: IV',
-      audio: '910004',
-      text: "I'll have you beg for mercy.",
-      tips: '',
-      tasks: null,
-    },
-    '80': {
-      title: 'Heavy Hit Taken: V',
-      audio: '910005',
-      text: 'Prepare yourself for punishment.',
-      tips: '',
-      tasks: null,
-    },
-    '81': {
-      title: 'Joining Party: I',
-      audio: '600001',
-      text: 'Huh... What do you want from me?',
-      tips: '',
-      tasks: null,
-    },
-    '82': {
-      title: 'Joining Party: II',
-      audio: '600002',
-      text: 'This had better be important.',
-      tips: '',
-      tasks: null,
-    },
-    '83': {
-      title: 'Joining Party: III',
-      audio: '600003',
-      text: "Are you sure it has to be me? ...Fine, let's get this over with.",
-      tips: '',
+
       tasks: null,
     },
   },

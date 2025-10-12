@@ -313,7 +313,7 @@ export const ningguangVL = {
     '34': {
       title: 'About Xianyun',
       audio: '4014',
-      text: '#I plan to have Lady Xianyun over for a casual conversation over tea in a few days. I happen to have in my possession a number of mechanical devices, and I would be most interested to hear her insights on their design and use. It would also be a fine opportunity to hear about her experiences as an adeptus adapting to a new life in Liyue Harbor. All I require now is a suitable candidate to deliver the invitation to her on my behalf... Would you be interested, {NICKNAME}?',
+      text: '#I plan to have Lady Xianyun over for a casual conversation over tea in a few days. I happen to have in my possession a number of mechanical devices, and I would be most interested to hear her insights on their design and use. It would also be a fine opportunity to hear about her experiences as an adeptus adapting to a new life in Liyue Harbor. All I require now is a suitable candidate to deliver the invitation to her on my behalf... Would you be interested, Traveler?',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
         {

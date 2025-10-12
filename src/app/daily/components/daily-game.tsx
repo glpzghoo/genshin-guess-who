@@ -11,6 +11,7 @@ import {
   getAllCharacters,
   getDailyKey,
   getDisplayName,
+  MAX_DAILY_ATTEMPTS,
   getRandomTheme,
   pickDailyCharacter,
 } from '@/lib/daily-challenge';
@@ -173,7 +174,12 @@ export function DailyGame() {
       if (guessState.solved) return;
       const timestamp = Date.now();
       const correct = guess.id === solution.id;
+      let accepted = false;
+      let solvedNow = false;
       setGuessState((prev) => {
+        if (prev.solved || prev.history.length >= MAX_DAILY_ATTEMPTS) {
+          return prev;
+        }
         const history = [
           ...prev.history,
           { character: guess, correct, timestamp },
@@ -193,17 +199,28 @@ export function DailyGame() {
           revealedHints,
         };
         persist(nextState);
+        accepted = true;
+        solvedNow = solved && !prev.solved;
         return nextState;
       });
+      if (!accepted) return;
       if (!correct) {
         setSelection(null);
       } else {
         setSelection(guess);
-        applySolvedForToday();
+        if (solvedNow) {
+          applySolvedForToday();
+        }
       }
       setPickerOpen(false);
     },
-    [applySolvedForToday, guessState.solved, hints, persist, solution.id]
+    [
+      applySolvedForToday,
+      guessState.solved,
+      hints,
+      persist,
+      solution.id,
+    ]
   );
 
   const failedAttempts = useMemo(
@@ -220,7 +237,10 @@ export function DailyGame() {
     }
     return filterDependentHints(hints.slice(0, failedAttempts));
   }, [failedAttempts, guessState.revealedHints, hints]);
-  const stillGuessing = !guessState.solved;
+  const attemptsUsed = guessState.history.length;
+  const isOutOfAttempts =
+    !guessState.solved && attemptsUsed >= MAX_DAILY_ATTEMPTS;
+  const stillGuessing = !guessState.solved && !isOutOfAttempts;
 
   return (
     <div
@@ -299,7 +319,9 @@ export function DailyGame() {
                   <span>
                     {guessState.solved ? 'Solved' : 'Make your guess'}
                   </span>
-                  <span>{guessState.history.length} attempts</span>
+                  <span>
+                    {attemptsUsed} / {MAX_DAILY_ATTEMPTS} attempts
+                  </span>
                 </div>
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -314,11 +336,18 @@ export function DailyGame() {
                   />
                 </div>
 
-                {!stillGuessing && (
+                {guessState.solved && (
                   <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100">
                     Solved in {guessState.history.length} attempt
                     {guessState.history.length === 1 ? '' : 's'}. Come back
                     tomorrow for a new challenge.
+                  </div>
+                )}
+                {isOutOfAttempts && !guessState.solved && (
+                  <div className="rounded-xl border border-rose-400/30 bg-rose-500/15 px-4 py-3 text-sm text-rose-100">
+                    No attempts left. The correct answer was{' '}
+                    {getDisplayName(solution)}. Come back tomorrow for a new
+                    challenge.
                   </div>
                 )}
               </div>
@@ -446,7 +475,8 @@ export function DailyGame() {
                   )}
                 </AnimatePresence>
 
-                {guessState.history.some((g) => g.correct) && (
+                {(guessState.history.some((g) => g.correct) ||
+                  isOutOfAttempts) && (
                   <div className="rounded-xl border border-white/12 bg-white/8 p-4 text-sm text-white/80">
                     <div className="font-semibold text-white">
                       Solution revealed: {getDisplayName(solution)}

@@ -472,7 +472,7 @@ export const mavuikaVL = {
     '45': {
       title: 'Birthday',
       audio: '7001',
-      text: "#Starting from today, you should write down all your accomplishments on a piece of paper. Then, when you take it out on your next birthday, you'll have a gift from yourself! That way, you'll never forget how amazing you are. Happy Birthday, {NICKNAME}.",
+      text: "#Starting from today, you should write down all your accomplishments on a piece of paper. Then, when you take it out on your next birthday, you'll have a gift from yourself! That way, you'll never forget how amazing you are. Happy Birthday, Traveler.",
       tips: '',
       tasks: null,
     },

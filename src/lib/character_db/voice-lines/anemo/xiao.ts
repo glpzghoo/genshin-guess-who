@@ -5,12 +5,14 @@ export const xiaoVL = {
       audio: '1000',
       text: 'If you awake to a knife at your throat, if monsters dig their claws into you, if death comes knocking at your door... Call out my name. Adeptus ___. I will be here when you call.',
       tips: '',
+
       tasks: null,
     },
     '1': {
       title: 'Chat: Idleness',
       audio: '1101',
       text: 'Reduced to just standing around... How absurd.',
+
       tips: '',
       tasks: null,
     },
@@ -19,12 +21,14 @@ export const xiaoVL = {
       audio: '1102',
       text: 'The damned will sooner die again than lay a hand on me.',
       tips: '',
+
       tasks: null,
     },
     '3': {
       title: 'Chat: Corruption',
       audio: '1103',
       text: 'Grrgh... Those memories, so dark...',
+
       tips: '',
       tasks: null,
     },
@@ -32,6 +36,7 @@ export const xiaoVL = {
       title: 'When It Rains',
       audio: '1201',
       text: 'Demons do not stop for the rain. Move.',
+
       tips: '',
       tasks: null,
     },
@@ -39,6 +44,7 @@ export const xiaoVL = {
       title: 'After the Rain',
       audio: '1202',
       text: "The rain stopped? I don't concern myself with the weather.",
+
       tips: '',
       tasks: null,
     },
@@ -46,6 +52,7 @@ export const xiaoVL = {
       title: 'When Thunder Strikes',
       audio: '1203',
       text: 'Many mortals fear lightning... Incomprehensible. Fear of something so common.',
+
       tips: '',
       tasks: null,
     },
@@ -53,6 +60,7 @@ export const xiaoVL = {
       title: 'When It Snows',
       audio: '1204',
       text: 'Once the snow is thick enough, we can eat it...',
+
       tips: '',
       tasks: null,
     },
@@ -60,6 +68,7 @@ export const xiaoVL = {
       title: 'Good Morning',
       audio: '1001',
       text: "We're wasting time. Let's go.",
+
       tips: '',
       tasks: null,
     },
@@ -67,12 +76,14 @@ export const xiaoVL = {
       title: 'Good Afternoon',
       audio: '1002',
       text: "Lunch... We'll go back to Wangshu Inn.",
+
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Evening',
       audio: '1003',
+
       text: "Night... When the darkness comes to envelop you. Don't stay outside.",
       tips: '',
       tasks: null,
@@ -81,6 +92,7 @@ export const xiaoVL = {
       title: 'Good Night',
       audio: '1004',
       text: "Go. I'll be here.",
+
       tips: '',
       tasks: null,
     },
@@ -88,6 +100,7 @@ export const xiaoVL = {
       title: 'About ___: Inhuman',
       audio: '2001',
       text: "I'm far from human. I can't make much of human emotions.",
+
       tips: '',
       tasks: null,
     },
@@ -95,6 +108,7 @@ export const xiaoVL = {
       title: 'About ___: Liyue',
       audio: '2006',
       text: 'Liyue is changing. Rapidly... Forget it. It means nothing to me.',
+
       tips: '',
       tasks: null,
     },
@@ -102,6 +116,7 @@ export const xiaoVL = {
       title: 'About Us: Warnings',
       audio: '2002',
       text: 'If a day comes where even you are taken by the darkness, it will be up to me...',
+
       tips: '',
       tasks: null,
     },
@@ -110,6 +125,7 @@ export const xiaoVL = {
       audio: '2003',
       text: 'Do not fall prey to the darkness. I have no mercy.\\nThough, perhaps you can stand your ground alone.',
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: null,
     },
     '16': {
@@ -117,6 +133,7 @@ export const xiaoVL = {
       audio: '2004',
       text: "Who's there? Oh... You think I sleep? You have no respect for the ways of the adepti.",
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: null,
     },
     '17': {
@@ -124,6 +141,7 @@ export const xiaoVL = {
       audio: '2005',
       text: 'The Lantern Rite? The time for humans to discard their glowing trash into the sea has returned... How childish...\\nThough, if you insist... I will go with you.',
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: null,
     },
     '18': {
@@ -131,6 +149,7 @@ export const xiaoVL = {
       audio: '3001',
       text: 'Visions? Desire? Ha. Do not judge adepti by your mortal ideals. I have no desire.',
       tips: 'Unlocks at Friendship Lv. 3',
+
       tasks: null,
     },
     '19': {
@@ -138,12 +157,14 @@ export const xiaoVL = {
       audio: '3004',
       text: "Hiding? I'm hiding nothing. I just won't speak of desire to others.\\nDo you mortals not have a rule about spoken wishes never coming true? Hm? What do you mean that's not the same?",
       tips: 'Unlocks at Friendship Lv. 5',
+
       tasks: null,
     },
     '20': {
       title: 'Something to Share',
       audio: '3002',
       text: 'I deal in death. If you cannot bring yourself to kill — speak my name.',
+
       tips: '',
       tasks: null,
     },
@@ -152,6 +173,7 @@ export const xiaoVL = {
       audio: '3003',
       text: 'Dihua Islet was once deserted.\\nThough that was many decades... no, centuries ago...',
       tips: '',
+
       tasks: null,
     },
     '22': {
@@ -159,6 +181,7 @@ export const xiaoVL = {
       audio: '4002',
       text: 'Can I ask... Zhongli — what does he do with his days? Huh? Birds, antiques, flowers...\\nHmm... What deeper meaning do they hold?',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishSubQuest',
@@ -178,6 +201,7 @@ export const xiaoVL = {
       audio: '4003',
       text: 'Beidou? I have nothing to do with her. Though there is such a thing as the leviathan. As a mere human, she has proven her power in defeating Haishan.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '24': {
@@ -185,6 +209,7 @@ export const xiaoVL = {
       audio: '4004',
       text: 'You want... Baizhu to make a medicine to take away my pain? I understand your intentions, but mortal medicine has no effect on adepti.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '25': {
@@ -192,6 +217,7 @@ export const xiaoVL = {
       audio: '4001',
       text: 'Hu Tao? Her liveliness is irritating. Fortunately, she is also humorous, so you need not worry about her growing into a boring human.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '26': {
@@ -199,6 +225,7 @@ export const xiaoVL = {
       audio: '4005',
       text: "Venti? So that's the name he goes by. His tunes are... forget it.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '27': {
@@ -206,6 +233,7 @@ export const xiaoVL = {
       audio: '4006',
       text: 'Ganyu is neither mortal nor illuminated beast. Wandering both the mortal and adepti realms with duty as her sole guide, it was inevitable that she would become perplexed... What? Me? You believe a yaksha who knows nothing more than how to massacre countless souls and emerge unscathed is a suitable mentor for such an individual? ...Your mind occupies a very different world from that which your body inhabits.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '28': {
@@ -213,6 +241,7 @@ export const xiaoVL = {
       audio: '4007',
       text: 'It seems Shenhe places a great deal of trust in you. Well, how could she not. There are few people in the world as kind and good-natured as you.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishSubQuest',
@@ -232,6 +261,7 @@ export const xiaoVL = {
       audio: '4008',
       text: "I've heard that she once investigated The Chasm, following the trail of the Millelith. If she can investigate mysteries like that on her own, she must be someone of rare skill.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '30': {
@@ -239,6 +269,7 @@ export const xiaoVL = {
       audio: '5001',
       text: "I'm willing to protect you.\\nBut don't think about getting close, and stay out of my way, or all that awaits you is regret.",
       tips: '',
+
       tasks: null,
     },
     '31': {
@@ -246,6 +277,7 @@ export const xiaoVL = {
       audio: '5002',
       text: 'In the thousands of years that have passed, I have taken countless wraiths. If you want no trouble, stay away from me. See me as a weapon, and nothing more.',
       tips: 'Unlocks at Friendship Lv. 3',
+
       tasks: null,
     },
     '32': {
@@ -253,6 +285,7 @@ export const xiaoVL = {
       audio: '5003',
       text: 'Their voices... I can always hear them. Their screams, their cries, demanding more death...\\nThis is my burden to carry. It has nothing to do with you.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '33': {
@@ -260,12 +293,14 @@ export const xiaoVL = {
       audio: '5004',
       text: 'Morax...? What do you know of this name!?\\nHe gave me the name ___, and released me from the endless pain I endured.\\nI will not forgive those that dare to speak against him, even you.',
       tips: 'Unlocks at Friendship Lv. 5',
+
       tasks: null,
     },
     '34': {
       title: 'More About ___: V',
       audio: '5005',
       text: "It's too late. The connection between us is too strong. Even if you wanted to, it's too late to sever it. Hm? You've never thought to sever it?\\n*sigh* This eternal dance of demon subjugation... My fight goes on.\\nBut, I would like to know more about you.",
+
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: null,
     },
@@ -274,12 +309,14 @@ export const xiaoVL = {
       audio: '6001',
       text: "There's nothing timid about you, having the courage to ask about my hobbies.\\nSo, fight me. How long do you think your body will last against my blows?",
       tips: '',
+
       tasks: null,
     },
     '36': {
       title: "___'s Troubles",
       audio: '6002',
       text: 'Trouble? Ha. Trouble means nothing to adepti. There is no trouble that can last for a thousand years.',
+
       tips: '',
       tasks: null,
     },
@@ -287,6 +324,7 @@ export const xiaoVL = {
       title: 'Favorite Food: Almond Tofu',
       audio: '6003',
       text: 'I have no interest in mortal food. Cooking is tedious and the wait is long. The one thing I can manage to stomach is almond tofu.',
+
       tips: '',
       tasks: null,
     },
@@ -294,6 +332,7 @@ export const xiaoVL = {
       title: 'Favorite Food: Memories',
       audio: '6004',
       text: 'The taste of Almond Tofu feels like a fond dream...',
+
       tips: '',
       tasks: null,
     },
@@ -302,12 +341,14 @@ export const xiaoVL = {
       audio: '6005',
       text: 'Wait. I am expected to place slices of meat in wrappings myself? And then... eat them? Together? Ugh, humans these days do not know what they are doing.',
       tips: '',
+
       tasks: null,
     },
     '40': {
       title: 'Receiving a Gift: I',
       audio: '6007',
       text: 'Mm... Not bad... Why are you staring at me?',
+
       tips: '',
       tasks: null,
     },
@@ -315,6 +356,7 @@ export const xiaoVL = {
       title: 'Receiving a Gift: II',
       audio: '6008',
       text: 'No need.',
+
       tips: '',
       tasks: null,
     },
@@ -322,6 +364,7 @@ export const xiaoVL = {
       title: 'Receiving a Gift: III',
       audio: '6009',
       text: 'Try something else next time.',
+
       tips: '',
       tasks: null,
     },
@@ -329,6 +372,7 @@ export const xiaoVL = {
       title: 'Birthday',
       audio: '7001',
       text: "This mortal concept of commemorating the day of your birth really is redundant. Ahem. Wait. Uhh, have this. It's a butterfly I made from leaves.\\nOkay. Take it. It's an adepti amulet — it staves off evil.",
+
       tips: '',
       tasks: null,
     },
@@ -337,6 +381,7 @@ export const xiaoVL = {
       audio: '8001',
       text: 'This is it? Nothing worth getting excited about.',
       tips: 'Unlocks at Ascension Phase 1',
+
       tasks: null,
     },
     '45': {
@@ -344,6 +389,7 @@ export const xiaoVL = {
       audio: '8002',
       text: 'New power? All it will be used for is death.',
       tips: 'Unlocks at Ascension Phase 2',
+
       tasks: null,
     },
     '46': {
@@ -351,6 +397,7 @@ export const xiaoVL = {
       audio: '8003',
       text: "The limit to one's power is self-destruction. Answer me. Why do you persist?",
       tips: 'Unlocks at Ascension Phase 4',
+
       tasks: null,
     },
     '47': {
@@ -358,174 +405,7 @@ export const xiaoVL = {
       audio: '8004',
       text: 'Countless souls have fallen prey to these hands. I too have been swallowed by the darkness — and yet you dare to drive me on. You may think of me as... your companion. You seek to find me salvation? \\n...You... really are a difficult being to comprehend.',
       tips: 'Unlocks at Ascension Phase 6',
-      tasks: null,
-    },
-    '48': {
-      title: 'Elemental Skill: I',
-      audio: '100001',
-      text: 'Hmph.',
-      tips: '',
-      tasks: null,
-    },
-    '49': {
-      title: 'Elemental Skill: II',
-      audio: '100002',
-      text: 'Boring.',
-      tips: '',
-      tasks: null,
-    },
-    '50': {
-      title: 'Elemental Skill: III',
-      audio: '100003',
-      text: 'Useless.',
-      tips: '',
-      tasks: null,
-    },
-    '51': {
-      title: 'Plunging Attacks: I',
-      audio: '110001',
-      text: 'Here!',
-      tips: '',
-      tasks: null,
-    },
-    '52': {
-      title: 'Plunging Attacks: II',
-      audio: '110002',
-      text: 'Worthless!',
-      tips: '',
-      tasks: null,
-    },
-    '53': {
-      title: 'Elemental Burst: I',
-      audio: '200001',
-      text: 'Disappear!',
-      tips: '',
-      tasks: null,
-    },
-    '54': {
-      title: 'Elemental Burst: II',
-      audio: '200002',
-      text: 'Evil conquering!',
-      tips: '',
-      tasks: null,
-    },
-    '55': {
-      title: 'Elemental Burst: III',
-      audio: '200003',
-      text: 'Lament!',
-      tips: '',
-      tasks: null,
-    },
-    '56': {
-      title: 'Opening Treasure Chest: I',
-      audio: '300001',
-      text: "If it's useful, I'll take it.",
-      tips: '',
-      tasks: null,
-    },
-    '57': {
-      title: 'Opening Treasure Chest: II',
-      audio: '300002',
-      text: "Why would anyone want... *sigh* Forget it, it's not my concern.",
-      tips: '',
-      tasks: null,
-    },
-    '58': {
-      title: 'Opening Treasure Chest: III',
-      audio: '300003',
-      text: "Hmph... there's quality here.",
-      tips: '',
-      tasks: null,
-    },
-    '59': {
-      title: 'Low HP: I',
-      audio: '410001',
-      text: 'Shut it.',
-      tips: '',
-      tasks: null,
-    },
-    '60': {
-      title: 'Low HP: II',
-      audio: '410002',
-      text: 'Prepare to die, fool!',
-      tips: '',
-      tasks: null,
-    },
-    '61': {
-      title: 'Low HP: III',
-      audio: '410003',
-      text: '*grunts* Good.',
-      tips: '',
-      tasks: null,
-    },
-    '62': {
-      title: 'Ally at Low HP: I',
-      audio: '400001',
-      text: '...Weak.',
-      tips: '',
-      tasks: null,
-    },
-    '63': {
-      title: 'Ally at Low HP: II',
-      audio: '400002',
-      text: 'Get back if you wanna survive.',
-      tips: '',
-      tasks: null,
-    },
-    '64': {
-      title: 'Fallen: I',
-      audio: '500001',
-      text: 'Is this... retribution?',
-      tips: '',
-      tasks: null,
-    },
-    '65': {
-      title: 'Fallen: II',
-      audio: '500002',
-      text: 'The day... has finally come.',
-      tips: '',
-      tasks: null,
-    },
-    '66': {
-      title: 'Fallen: III',
-      audio: '500003',
-      text: 'Impossible...',
-      tips: '',
-      tasks: null,
-    },
-    '67': {
-      title: 'Light Hit Taken: I',
-      audio: '900001',
-      text: "That's it?",
-      tips: '',
-      tasks: null,
-    },
-    '68': {
-      title: 'Heavy Hit Taken: I',
-      audio: '910001',
-      text: 'Ugh, get out of my way!',
-      tips: '',
-      tasks: null,
-    },
-    '69': {
-      title: 'Joining Party: I',
-      audio: '600001',
-      text: 'You called?',
-      tips: '',
-      tasks: null,
-    },
-    '70': {
-      title: 'Joining Party: II',
-      audio: '600002',
-      text: 'Evil shall be dispersed.',
-      tips: '',
-      tasks: null,
-    },
-    '71': {
-      title: 'Joining Party: III',
-      audio: '600003',
-      text: 'Conquering demons is what I do.',
-      tips: '',
+
       tasks: null,
     },
   },

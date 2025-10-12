@@ -115,7 +115,7 @@ export const ineffaVL = {
     '16': {
       title: 'About Us: Calculations',
       audio: '2002',
-      text: '#My cognition is unable to record details of everyone in the world, but it can at least form memories of significant people and events. Recently, my memory banks have recorded a high volume of data about you. This should make me a more companionable companion. Querying relevant data for "how to make {NICKNAME} smile"... I have now warmed up my body. Would you like a hug?',
+      text: '#My cognition is unable to record details of everyone in the world, but it can at least form memories of significant people and events. Recently, my memory banks have recorded a high volume of data about you. This should make me a more companionable companion. Querying relevant data for "how to make Traveler smile"... I have now warmed up my body. Would you like a hug?',
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: null,
     },

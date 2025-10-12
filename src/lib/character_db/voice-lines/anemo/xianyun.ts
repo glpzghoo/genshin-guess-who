@@ -12,6 +12,7 @@ export const xianyunVL = {
       audio: '1101',
       text: 'The secrets of the mechanical arts are too profound to convey in a few simple words... But why must the listener grow weary whenever I begin to divulge them?',
       tips: '',
+
       tasks: null,
     },
     '2': {
@@ -19,6 +20,7 @@ export const xianyunVL = {
       audio: '1102',
       text: 'Peace prevails throughout the land, and all things are made new, as buds in the Spring. This is an auspicious era for humanity.',
       tips: '',
+
       tasks: null,
     },
     '3': {
@@ -26,6 +28,7 @@ export const xianyunVL = {
       audio: '1103',
       text: "If you are presently unoccupied, perhaps we could stop awhile at one's abode for some repose and conversation?",
       tips: '',
+
       tasks: null,
     },
     '4': {
@@ -33,6 +36,7 @@ export const xianyunVL = {
       audio: '1201',
       text: 'In this era of fair winds and gentle rains, one needs not marshal the winds to deliver the rainclouds.',
       tips: '',
+
       tasks: null,
     },
     '5': {
@@ -47,6 +51,7 @@ export const xianyunVL = {
       audio: '1203',
       text: "On this fine day, the view from the heavens must be magnificent... Oh, don't fret, one has no intent to fly off and leave you on your own.",
       tips: '',
+
       tasks: null,
     },
     '7': {
@@ -54,6 +59,7 @@ export const xianyunVL = {
       audio: '1204',
       text: 'Oh, what a soothing wind. Shall one attach some adepti sigils to your person, so that you may join me for a flight in the firmament?',
       tips: '',
+
       tasks: null,
     },
     '8': {
@@ -75,12 +81,14 @@ export const xianyunVL = {
       audio: '1003',
       text: "You wish to attend the night market together? Hah, one shall engage in no such fool's errand. Whatever novelty or knick-knack you desire, one can simply make for you.",
       tips: '',
+
       tasks: null,
     },
     '11': {
       title: 'Good Night',
       audio: '1004',
       text: 'One is still wide awake... *yawn* But you look dead on your feet. Go on, off to bed with you.',
+
       tips: '',
       tasks: null,
     },
@@ -89,6 +97,7 @@ export const xianyunVL = {
       audio: '2001',
       text: "One has always been a staunch defier of convention and expectation, preferring instead the freedom to live life precisely how one pleases. It is only natural for disciples to follow in their master's footsteps. So focused are they on their individual endeavors that they are quite content to go weeks without writing... Lonely? One is most certainly not! Hm... Still, were one to find time to pay them a visit — you don't suppose they would be unduly inconvenienced by one's presence, do you...?",
       tips: '',
+
       tasks: null,
     },
     '13': {
@@ -96,6 +105,7 @@ export const xianyunVL = {
       audio: '2005',
       text: "To be sure, a Supreme Cuisine Machine is no substitute for a human touch if one wishes to prepare a truly magnificent meal. Nevertheless, using it frees up one's time to work on a new, improved model, which in turn saves more time, and so on and so forth... Hah, there will come a day, once this machine has been iterated to impeccability, that the power to cook all the delicacies known to humankind shall be within one's grasp.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '14': {
@@ -103,6 +113,7 @@ export const xianyunVL = {
       audio: '2003',
       text: "One took the liberty of surveying the land from the skies above so as to fashion this route-finding compass for your future traveling convenience. Heh, when have you ever met such a considerate companion as oneself, hmm? ... ...Already intimately acquainted with said terrain, you say? Hmph... Well, be that as it may, human memory is notoriously error-prone. One of these days, you'll get yourself hopelessly lost, and then you shall be thanking one profusely for one's foresight.",
       tips: '',
+
       tasks: null,
     },
     '15': {
@@ -110,12 +121,14 @@ export const xianyunVL = {
       audio: '2002',
       text: 'Despite one\'s lack of interest in worldly attachments, one is quite conscious indeed of the importance of "bonds." Such a simple word for a thing so profound that it all but defies articulation... Take oneself and those old fossils, for example. Ah, sometimes we go years without meeting, and even then we find no shortage of things to quarrel about at our next reunion. Yet so deep runs our bond that no matter the physical distance between us, one will never feel alone and adrift in this world... One holds you in high esteem, child, and is pleased to count you as a friend. Do you also treasure the bond we share?',
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: null,
     },
     '16': {
       title: 'About the Vision',
       audio: '3006',
       text: 'Rex Lapis once said that a Vision is a call to duty — to act as a guardian, watching over humankind, and that whether we choose to withdraw into the mountains or embrace the clamor of the city, we must never shirk that duty. Now, the age of humankind is upon us, but one will continue to cherish this duty long into the future.',
+
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
         {
@@ -136,6 +149,7 @@ export const xianyunVL = {
       audio: '3002',
       text: "That mechanical bird of mine is only a prototype. One had aspirations for a much larger model, hollow inside so that it could unfurl into a vehicle with which to embark on sight-seeing journeys with one's old friends... The challenges of powering and operating such a device, however, proved somewhat insurmountable. After all, it required pitch control, the ability to change form, not to mention the safety features... *sigh* If only Guizhong were still here. She, no doubt, would offer many baffling but ingenious solutions to this conundrum.",
       tips: '',
+
       tasks: null,
     },
     '18': {
@@ -143,6 +157,7 @@ export const xianyunVL = {
       audio: '3003',
       text: 'Mt. Aocang is an ideal place for spiritual cultivation. It possesses natural beauty beyond compare, and the pure, unalloyed essence of nature flows strong all around. Once upon a time, many curious birds and beasts would gather and watch as one meditated, and very soon the peace and tranquility would be replaced by a chaotic chorus of chirping and screeching... and yet, one never found it offended the ear.',
       tips: '',
+
       tasks: null,
     },
     '19': {
@@ -150,6 +165,7 @@ export const xianyunVL = {
       audio: '4001',
       text: 'One once asked Ganyu what she typically works on during her overtime hours. Her response was filled with hideous-sounding words, such as "meeting minutes," "summaries," "annual reports," "financial projections"... Hmph, were she not of qilin blood, and had one not taught to her the secrets of cultivating health, this avalanche of bureaucratic writ would have surely overwhelmed her... When you see her next, would you check that she\'s been drinking her Qingxin Infusion of Clear Sight on a daily basis?',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '20': {
@@ -157,6 +173,7 @@ export const xianyunVL = {
       audio: '4002',
       text: 'Shenhe told me that once, when she was delivering an order for Wanmin Restaurant, she ran across the rooftops to save time. Her customer was terrified when she jumped down onto their doorstep, and was about to call for the Millelith... Fortunately, Shenhe disappeared as quickly as she arrived, leaving the food delivery behind and making haste before the customer had time to react. It seems she is growing more proficient at handling crises all the time — one could not be more pleased.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishSubQuest',
@@ -176,6 +193,7 @@ export const xianyunVL = {
       audio: '4003',
       text: "When Rex Lapis first heard of one's plan to take up residence in Liyue Harbor, he recited a long and detailed list of considerations for the furnishing and adornment of a home. Natural lighting, ventilation, bespoke woodwork, procuring porcelain, placement of plants and flowers... One's mind felt ready to explode from the deluge of information. Do all facets of life in the human world take so much effort?",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -194,6 +212,7 @@ export const xianyunVL = {
       audio: '4004',
       text: 'The Conqueror of Demons is even more withdrawn than oneself — he has been sighted a mere handful of times at social gatherings over the centuries... One was interested to learn that you are on rather good terms with him — what sort of conversations do the two of you tend to have? Oh, and do let me know when you next plan to see him. Perhaps one could make some tofu pudding for you to pass on to him.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '23': {
@@ -201,6 +220,7 @@ export const xianyunVL = {
       audio: '4005',
       text: 'That young lady says the most bizarre-sounding things, yet she appears to be rather highly regarded by the staff of the Wangsheng Funeral Parlor — even Rex Lapis himself saw fit to serve under her in some sort of "consultancy" capacity... Allegedly, she is similarly peculiar when it comes to her taste in food. One must admit, one finds eccentrics like her rather intriguing.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '24': {
@@ -208,6 +228,7 @@ export const xianyunVL = {
       audio: '4006',
       text: "One happened to mention the Supreme Cuisine Machine in conversation with Xiangling once, but one was rather taken aback when she responded by saying that a dish is inauthentic unless it is prepared by hand... Hmph, are one's devices not also the work of one's hands? Inauthentic indeed... A contest is in order! ...Although, her mastery of Liyue cuisine is indeed impressive... Yes — the contest shall have to wait until one has made a few improvements to the device...",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '25': {
@@ -215,6 +236,7 @@ export const xianyunVL = {
       audio: '4007',
       text: 'The Tianquan conducts her business with great adroitness, and is meticulous in her speech. Hmph, one must admit that Liyue is thriving under the governance of the Qixing. One has been observing her closely in the hope of discovering her secret... Ahem, that was for your ears only — please do not relay it to her.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishSubQuest',
@@ -234,6 +256,7 @@ export const xianyunVL = {
       audio: '4008',
       text: "Keqing is a thoughtful child. She visits me on behalf of the Qixing every festival without fail, and always brings a gift. With such a capable and considerate colleague by her side, perhaps one needn't worry too much about Ganyu...",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '27': {
@@ -241,6 +264,7 @@ export const xianyunVL = {
       audio: '4009',
       text: "There are many Liyue operas adapted from stories about the adepti, including some based on one's own life and exploits... One has never watched those, of course — what could be more embarrassing than watching someone else play oneself on the stage? One would, however, be interested to evaluate how well Yun Jin did in her adaptation of Shenhe's story, when one has time to go and see it.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: [
         {
           type: 'finishSubQuest',
@@ -260,6 +284,7 @@ export const xianyunVL = {
       audio: '4010',
       text: "Yaoyao once pinched my glasses from my face and tried them on for herself — she found it terribly entertaining, and couldn't stop giggling... Ah, children are able to find all sorts of ways to amuse themselves.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '29': {
@@ -267,6 +292,7 @@ export const xianyunVL = {
       audio: '4011',
       text: 'One is very fond of Gaming. He is good-hearted and entertaining in conversation, but never grandiloquent. We first met when one was resting by a lake, and he very kindly shared some of his provisions with me. Later, he commented that one seemed to be a wise elder, worthier of respect than even the adepti themselves... Hehe, this wise elder will be sure to look out for him after that.',
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '30': {
@@ -274,6 +300,7 @@ export const xianyunVL = {
       audio: '5001',
       text: "You wish to know more about one's past? ...One doubts there would be much worth sharing — it's all ancient history by now. One is more interested to hear about your travels to the far-flung corners of the world... What forms do the gods and immortals of other nations take? Are there any of them as amenable to conversation as oneself? Let us brew some tea, and then you can tell me all about it.",
       tips: '',
+
       tasks: null,
     },
     '31': {
@@ -281,6 +308,7 @@ export const xianyunVL = {
       audio: '5002',
       text: "There was a time when many mortals longed to seek the guidance of the adepti. One knows not how they discovered the location of one's abode, but every other day or so, one would find people leaving offerings of food at the altar on Mt. Aocang... Hmph, why ever would mortals expect an adeptus to interrupt their meditation for the sake of ingesting a mortal meal? Most bemusing. Nevertheless, since their actions were heartfelt, one saw only fit to indulge in— Ahem, to embrace their offerings once they had departed.",
       tips: 'Unlocks at Friendship Lv. 3',
+
       tasks: null,
     },
     '32': {
@@ -288,6 +316,7 @@ export const xianyunVL = {
       audio: '5003',
       text: "Then there were those who came right to one's doorstep, requesting to be taken on as disciples. One refused to grant them an audience, but they simply would not leave, and before long, Mt. Aocang had become something of a pilgrims' campsite... One promptly posted a sign outside the abode, decreeing that all would-be disciples must first present ninety-nine dishes over a period of as many days, each dish unique in its recipe and featuring the Qingxin as the main ingredient... Naturally, the crowd soon dispersed. Hmph, to master the adepti arts and the mechanical arts requires supreme talent and the utmost stillness of mind. Training would be a futile endeavor for those who cannot even persevere for a mere three months.",
       tips: 'Unlocks at Friendship Lv. 4',
+
       tasks: null,
     },
     '33': {
@@ -302,6 +331,7 @@ export const xianyunVL = {
       audio: '5005',
       text: "One has read a great many works of popular literature since moving to Liyue Harbor. Those of the chivalric martial arts genre have proven the most entertaining, although the heroes within their pages are all works of the imagination. Would it not be even more compelling to tell the stories of the many such real-life figures with whom one is acquainted? It is a pity that one's disciples are so averse to one sharing the tales of their lives with other people... Perhaps you could relay more of the tales from your travels? One could adapt those into a novel instead.",
       tips: 'Unlocks at Friendship Lv. 6',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -320,6 +350,7 @@ export const xianyunVL = {
       audio: '6001',
       text: 'When idle and in need of diversion, basking in the winds that travel through the mountains always calms the mind.',
       tips: '',
+
       tasks: null,
     },
     '36': {
@@ -327,6 +358,7 @@ export const xianyunVL = {
       audio: '6012',
       text: "Since moving to Liyue Harbor, one has had an endless procession of old friends and new arriving at one's doorstep, either to visit or to invite one out for meals. If this continues, one may soon be running short on Mora...",
       tips: 'Complete "A Thousand Moonlit Miles"',
+
       tasks: [
         {
           type: 'finishMainQuest',
@@ -345,6 +377,7 @@ export const xianyunVL = {
       audio: '6003',
       text: 'Eating together with friends always leaves a pleasant taste in the mouth, regardless of what food was consumed.',
       tips: '',
+
       tasks: null,
     },
     '38': {
@@ -352,6 +385,7 @@ export const xianyunVL = {
       audio: '6004',
       text: 'An adeptus devotes themselves to spiritual cultivation, to which end the delicacies of the mortal realm are not necessary. When one eats such things, it is not for nourishment, but to enjoy the flavor... So, if you prepare a dish and it does not taste exquisite even to yourself, you may spare yourself the courtesy of offering to share it with me — in fact, you might find you are better off leaving the cooking to me to begin with...',
       tips: '',
+
       tasks: null,
     },
     '39': {
@@ -359,12 +393,14 @@ export const xianyunVL = {
       audio: '6007',
       text: "A paragon of both freshness and flavor... Tell me, for how long have you been surreptitiously studying one's culinary secrets?",
       tips: '',
+
       tasks: null,
     },
     '40': {
       title: 'Receiving a Gift: II',
       audio: '6008',
       text: 'The flavor is secondary — what matters is that you felt the inclination to cook for me at all. I commend your consideration.',
+
       tips: '',
       tasks: null,
     },
@@ -373,6 +409,7 @@ export const xianyunVL = {
       audio: '6009',
       text: "One's supreme cuisine machine has been lying idle as of late. You are welcome to borrow it.",
       tips: '',
+
       tasks: null,
     },
     '42': {
@@ -380,6 +417,7 @@ export const xianyunVL = {
       audio: '7001',
       text: "Here, open this wooden box. It's a miniature mechanical person for your recreational enjoyment. Try playing with it. Observe — if you clap the hands like this, the lotus petals open, the colored lights turn on one set at a time, and then a melody plays. It is that birthday tune that the young and hip of this generation enjoy so much. Certain to add a touch of merriment and levity to your birthday feast... Have a wonderful day.",
       tips: '',
+
       tasks: null,
     },
     '43': {
@@ -387,6 +425,7 @@ export const xianyunVL = {
       audio: '8001',
       text: 'Given that one spends so much time indoors, it is rather nice to perform a little exercise once in a while.',
       tips: 'Unlocks at Ascension Phase 1',
+
       tasks: null,
     },
     '44': {
@@ -394,6 +433,7 @@ export const xianyunVL = {
       audio: '8002',
       text: 'Some of these adeptal arts one has not employed in many years... Inevitably, one is a little unpracticed.',
       tips: 'Unlocks at Ascension Phase 2',
+
       tasks: null,
     },
     '45': {
@@ -401,6 +441,7 @@ export const xianyunVL = {
       audio: '8003',
       text: "Dear me, that expectant look on your face... *sigh* Very well. One shall have to employ one's abilities to a fuller extent from now on.",
       tips: 'Unlocks at Ascension Phase 4',
+
       tasks: null,
     },
     '46': {
@@ -408,160 +449,7 @@ export const xianyunVL = {
       audio: '8004',
       text: 'It is through our journey in this world that we gain experience. Power is not everything — the skills of communication are more important. If you have time, let us find a place with a pleasant view where we can admire the scenery, converse, slow down our pace, and simply enjoy being alive.',
       tips: 'Unlocks at Ascension Phase 6',
-      tasks: null,
-    },
-    '47': {
-      title: 'Elemental Skill: I',
-      audio: '100001',
-      text: 'Huh!',
-      tips: '',
-      tasks: null,
-    },
-    '48': {
-      title: 'Elemental Skill: II',
-      audio: '100002',
-      text: 'Skyward!',
-      tips: '',
-      tasks: null,
-    },
-    '49': {
-      title: 'Elemental Skill: III',
-      audio: '100003',
-      text: 'Scatter!',
-      tips: '',
-      tasks: null,
-    },
-    '50': {
-      title: 'Elemental Burst: I',
-      audio: '200001',
-      text: 'Seize the skies.',
-      tips: '',
-      tasks: null,
-    },
-    '51': {
-      title: 'Elemental Burst: II',
-      audio: '200002',
-      text: 'Make way for the adeptus!',
-      tips: '',
-      tasks: null,
-    },
-    '52': {
-      title: 'Elemental Burst: III',
-      audio: '200003',
-      text: 'Stray clouds, converge.',
-      tips: '',
-      tasks: null,
-    },
-    '53': {
-      title: 'Opening Treasure Chest: I',
-      audio: '300001',
-      text: 'These could be salvaged for parts.',
-      tips: '',
-      tasks: null,
-    },
-    '54': {
-      title: 'Opening Treasure Chest: II',
-      audio: '300002',
-      text: "What trinkets have we here? Present them for one's perusal.",
-      tips: '',
-      tasks: null,
-    },
-    '55': {
-      title: 'Opening Treasure Chest: III',
-      audio: '300003',
-      text: 'Perhaps one should invent some form of "Curio Discernment Mechanism."',
-      tips: '',
-      tasks: null,
-    },
-    '56': {
-      title: 'Low HP: I',
-      audio: '410001',
-      text: 'The audacity!',
-      tips: '',
-      tasks: null,
-    },
-    '57': {
-      title: 'Low HP: II',
-      audio: '410002',
-      text: 'This one is no weakling.',
-      tips: '',
-      tasks: null,
-    },
-    '58': {
-      title: 'Low HP: III',
-      audio: '410003',
-      text: 'One shall not back down!',
-      tips: '',
-      tasks: null,
-    },
-    '59': {
-      title: 'Ally at Low HP: I',
-      audio: '400001',
-      text: 'Be wise to your limits.',
-      tips: '',
-      tasks: null,
-    },
-    '60': {
-      title: 'Ally at Low HP: II',
-      audio: '400002',
-      text: "You should've called on one.",
-      tips: '',
-      tasks: null,
-    },
-    '61': {
-      title: 'Fallen: I',
-      audio: '500001',
-      text: "Doesn't count... I hadn't eaten...",
-      tips: '',
-      tasks: null,
-    },
-    '62': {
-      title: 'Fallen: II',
-      audio: '500002',
-      text: 'Fiddlesticks...',
-      tips: '',
-      tasks: null,
-    },
-    '63': {
-      title: 'Fallen: III',
-      audio: '500003',
-      text: 'Wait, my mechanical masterwork...',
-      tips: '',
-      tasks: null,
-    },
-    '64': {
-      title: 'Heavy Hit Taken: I',
-      audio: '910001',
-      text: 'Derivative.',
-      tips: '',
-      tasks: null,
-    },
-    '65': {
-      title: 'Heavy Hit Taken: II',
-      audio: '910002',
-      text: 'Inconsequential.',
-      tips: '',
-      tasks: null,
-    },
-    '66': {
-      title: 'Joining Party: I',
-      audio: '600001',
-      text: 'My contraptions are calibrated. We may now depart.',
-      tips: '',
-      tasks: null,
-    },
-    '67': {
-      title: 'Joining Party: II',
-      audio: '600002',
-      text: 'I trust you have packed ample foodstuffs?',
-      tips: '',
-      tasks: null,
-    },
-    '68': {
-      title: 'Joining Party: III',
-      audio: '600003',
-      text: "One is fast on one's feet — try to keep pace.",
-      tips: '',
+
       tasks: null,
     },
   },
