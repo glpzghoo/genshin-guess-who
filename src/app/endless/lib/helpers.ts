@@ -1,7 +1,7 @@
 import type { Character } from '@/lib/types';
 
 export const STATS_KEY = 'endless-mode-stats';
-export const MAX_ATTEMPTS = 7;
+export const MAX_ATTEMPTS = 5;
 
 export type EndlessGuess = {
   character: Character;

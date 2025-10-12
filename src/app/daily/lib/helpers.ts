@@ -110,9 +110,7 @@ export const parseDailyStats = (raw: string | null): DailyStreakStats => {
       currentStreak: Number(parsed?.currentStreak) || 0,
       bestStreak: Number(parsed?.bestStreak) || 0,
       lastSolvedKey:
-        typeof parsed?.lastSolvedKey === 'string'
-          ? parsed.lastSolvedKey
-          : null,
+        typeof parsed?.lastSolvedKey === 'string' ? parsed.lastSolvedKey : null,
     };
   } catch {
     return DEFAULT_STREAK_STATS;
@@ -165,14 +163,16 @@ export const parseDailyEntry = (
     history,
     solved: Boolean(entry.solved),
     solvedAt:
-      typeof entry.solvedAt === 'number' ? entry.solvedAt : entry.solvedAt ?? null,
+      typeof entry.solvedAt === 'number'
+        ? entry.solvedAt
+        : (entry.solvedAt ?? null),
     revealedHints,
   };
 };
 
 export const createStoredEntry = (state: GuessState): DailyStoredEntry => ({
   solved: state.solved,
-  solvedAt: state.solved ? state.solvedAt ?? Date.now() : undefined,
+  solvedAt: state.solved ? (state.solvedAt ?? Date.now()) : undefined,
   guesses: state.history.map<DailyStoredGuess>((guess) => ({
     characterId: String(guess.character.id),
     correct: guess.correct,

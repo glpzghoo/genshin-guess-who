@@ -19,8 +19,6 @@ import type { DailyStoredEntry } from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-
-import { elements, weapons } from '@/lib/helper';
 import {
   applySolvedStreak,
   createStoredEntry,
@@ -36,57 +34,8 @@ import {
   STORAGE_KEY,
 } from '../lib/helpers';
 import { CharacterCombobox } from './character-combobox';
-
-const renderElementWithIcon = (
-  element: string,
-  iconClass = 'h-4 w-4',
-  wrapperClass = ''
-) => {
-  const meta = elements[element as keyof typeof elements];
-  const classes = ['inline-flex items-center gap-2', wrapperClass]
-    .filter(Boolean)
-    .join(' ');
-
-  if (!meta) {
-    return <span className={classes}>{element}</span>;
-  }
-
-  return (
-    <span className={classes}>
-      <img
-        src={`/assets/ui/${meta.icon}`}
-        alt={`${element} icon`}
-        className={iconClass}
-        aria-hidden
-      />
-      <span>{element}</span>
-    </span>
-  );
-};
-
-const renderWeaponWithIcon = (
-  weapon: string,
-  iconClass = 'h-4 w-4',
-  wrapperClass = ''
-) => {
-  const weaponMeta = weapons[weapon as keyof typeof weapons];
-  const classes = ['inline-flex items-center gap-2', wrapperClass]
-    .filter(Boolean)
-    .join(' ');
-
-  if (!weaponMeta?.icon) {
-    return <span className={classes}>{weapon}</span>;
-  }
-
-  const WeaponIcon = weaponMeta.icon;
-
-  return (
-    <span className={classes}>
-      <WeaponIcon className={iconClass} aria-hidden />
-      <span>{weapon}</span>
-    </span>
-  );
-};
+import { renderElementWithIcon, renderWeaponWithIcon } from '@/lib/helpers';
+import OutcomeNotice, { GuessErrorNotice } from '@/components/ResultMessage';
 
 export function DailyGame() {
   const [solution] = useState<Character>(() => pickDailyCharacter());
@@ -96,6 +45,7 @@ export function DailyGame() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [streakStats, setStreakStats] =
     useState<DailyStreakStats>(DEFAULT_STREAK_STATS);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const characters = useMemo(() => getAllCharacters(), []);
   const hints = useMemo(() => buildDailyHints(solution), [solution]);
@@ -172,6 +122,12 @@ export function DailyGame() {
   const submitGuess = useCallback(
     (guess: Character) => {
       if (guessState.solved) return;
+      if (guessState.history.some((entry) => entry.character.id === guess.id)) {
+        setFeedbackMessage(`You already guessed ${getDisplayName(guess)}`);
+        setPickerOpen(false);
+        return;
+      }
+      setFeedbackMessage(null);
       const timestamp = Date.now();
       const correct = guess.id === solution.id;
       let accepted = false;
@@ -216,6 +172,7 @@ export function DailyGame() {
     },
     [
       applySolvedForToday,
+      guessState.history,
       guessState.solved,
       hints,
       persist,
@@ -336,20 +293,13 @@ export function DailyGame() {
                   />
                 </div>
 
-                {guessState.solved && (
-                  <div className="rounded-xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100">
-                    Solved in {guessState.history.length} attempt
-                    {guessState.history.length === 1 ? '' : 's'}. Come back
-                    tomorrow for a new challenge.
-                  </div>
-                )}
-                {isOutOfAttempts && !guessState.solved && (
-                  <div className="rounded-xl border border-rose-400/30 bg-rose-500/15 px-4 py-3 text-sm text-rose-100">
-                    No attempts left. The correct answer was{' '}
-                    {getDisplayName(solution)}. Come back tomorrow for a new
-                    challenge.
-                  </div>
-                )}
+                <GuessErrorNotice message={feedbackMessage} />
+
+                <OutcomeNotice
+                  guessState={guessState}
+                  isOutOfAttempts={isOutOfAttempts}
+                  solution={solution}
+                />
               </div>
 
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
@@ -474,19 +424,6 @@ export function DailyGame() {
                     </div>
                   )}
                 </AnimatePresence>
-
-                {(guessState.history.some((g) => g.correct) ||
-                  isOutOfAttempts) && (
-                  <div className="rounded-xl border border-white/12 bg-white/8 p-4 text-sm text-white/80">
-                    <div className="font-semibold text-white">
-                      Solution revealed: {getDisplayName(solution)}
-                    </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-white/60">
-                      {renderElementWithIcon(solution.element, 'h-3.5 w-3.5')}
-                      {renderWeaponWithIcon(solution.weaponType, 'h-3.5 w-3.5')}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </section>
