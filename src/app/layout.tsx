@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://genshin-gw.com'),
   title: {
     default: 'Genshin Guess Who | Daily Character Challenge & Voice Line Quiz',
-    template: '%s | Genshin Guess Who',
+    template: ' | Genshin Guess Who',
   },
   description:
     'Play the fan-made Genshin Impact Guess Who game with a single daily puzzle and searchable voice lines to sharpen your Teyvat knowledge.',
