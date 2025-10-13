@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-
 type VoiceLineHintProps = {
   text: string;
   audioSrc?: string;
@@ -8,22 +6,16 @@ type VoiceLineHintProps = {
   hasError: boolean;
 };
 
-export function VoiceLineHint({
-  text,
-  audioSrc,
-  onPlay,
-  isPlaying,
-  hasError,
-}: VoiceLineHintProps) {
-  const isDisabled = !audioSrc;
-  const showUnavailable = hasError || isDisabled;
+export function VoiceLineHint({ text }: VoiceLineHintProps) {
+  // const isDisabled = !audioSrc;
+  // const showUnavailable = hasError || isDisabled;
 
   return (
     <div className="space-y-2">
       <p className="text-sm font-semibold whitespace-pre-line leading-6 text-white">
         {text}
       </p>
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+      {/* <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
         <Button
           type="button"
           size="sm"
@@ -39,8 +31,7 @@ export function VoiceLineHint({
             Voiceline not available
           </span>
         ) : null}
-      </div>
+      </div> */}
     </div>
   );
 }
-

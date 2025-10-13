@@ -35,7 +35,6 @@ import {
   EndlessOutcomeNotice,
   GuessErrorNotice,
 } from '@/components/ResultMessage';
-import Notice from '@/components/Notice';
 
 type RoundStatus = 'playing' | 'solved' | 'revealed';
 
@@ -360,7 +359,7 @@ export function EndlessGame() {
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold">Unlocked hints</h2>
-                  <Notice />
+                  {/* <Notice /> */}
                   <Badge
                     className="border"
                     style={{
