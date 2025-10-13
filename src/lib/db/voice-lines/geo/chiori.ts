@@ -16,7 +16,7 @@ export const chioriVL = {
     },
     '2': {
       title: "Chat: Tailor's Cutters",
-      audio: 'VO_Chiori_Chat_-_Tailor\'s_Cutters's_Cutters',
+      audio: "VO_Chiori_Chat_-_Tailor's_Cutters's_Cutters",
       text: 'Who says you have to use scissors to cut clothes? Leave those rigid rules behind. I much prefer using my own cutting tools.',
       tips: '',
       tasks: null,
