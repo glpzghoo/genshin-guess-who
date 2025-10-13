@@ -235,7 +235,7 @@ export function DailyGame() {
                     variant="outline"
                     className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
                   >
-                    <Link href="/endless">Play endless mode</Link>
+                    <Link href="/endless">Play endless mode - GW</Link>
                   </Button>
                   <Button
                     asChild

@@ -244,14 +244,14 @@ export function EndlessGame() {
                     variant="outline"
                     className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
                   >
-                    <Link href="/daily">Play daily mode</Link>
+                    <Link href="/daily">Play daily mode - GW</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
                     className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
                   >
-                    <Link href="/genshindle">Play genshindle</Link>
+                    <Link href="/genshindle">Play Genshindle</Link>
                   </Button>
                 </div>
               </div>

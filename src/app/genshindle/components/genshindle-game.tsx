@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Wand2, Trophy } from 'lucide-react';
+import { Wand2, Trophy, CalendarDays } from 'lucide-react';
 
 import {
   createStoredEntry,
@@ -35,6 +35,12 @@ import { CharacterCombobox } from '@/app/daily/components/character-combobox';
 import { GuessErrorNotice } from '@/components/ResultMessage';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { GenshindleBoard } from './Board';
 import { OutcomeNotice } from './OutcomeNotice';
 import { AttemptsBar } from '../lib/HelperComponents';
@@ -48,8 +54,79 @@ type GameConfig = {
   solution: Character;
 };
 
-const createGameConfig = (mode: GameMode): GameConfig => {
-  const date = mode === 'endless' ? getRandomGenshindleDate() : new Date();
+const HASH_DATE_PATTERN = /^\d{8}$/;
+
+const formatHashFromDate = (date: Date): string => {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  return `${year}${month}${day}`;
+};
+
+const toLocalMidnight = (d: Date) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+const parseDailyKeyToLocalDate = (key: string): Date | null => {
+  const [yearStr, monthStr, dayStr] = key.split('-');
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+  if (
+    !Number.isInteger(year) ||
+    !Number.isInteger(month) ||
+    !Number.isInteger(day) ||
+    month < 1 ||
+    month > 12 ||
+    day < 1 ||
+    day > 31
+  ) {
+    return null;
+  }
+  return new Date(year, month - 1, day);
+};
+
+const parseHashDate = (rawHash: string): Date | null => {
+  const sanitized = rawHash.startsWith('#')
+    ? rawHash.slice(1).trim()
+    : rawHash.trim();
+  if (!HASH_DATE_PATTERN.test(sanitized)) {
+    return null;
+  }
+
+  const year = Number(sanitized.slice(0, 4));
+  const month = Number(sanitized.slice(4, 6));
+  const day = Number(sanitized.slice(6, 8));
+  if (month < 1 || month > 12 || day < 1 || day > 31) {
+    return null;
+  }
+
+  const utcTimestamp = Date.UTC(year, month - 1, day);
+  const candidate = new Date(utcTimestamp);
+
+  if (
+    candidate.getUTCFullYear() !== year ||
+    candidate.getUTCMonth() + 1 !== month ||
+    candidate.getUTCDate() !== day
+  ) {
+    return null;
+  }
+
+  return candidate;
+};
+
+const readHashDate = (): Date | null => {
+  if (typeof window === 'undefined') return null;
+  return parseHashDate(window.location.hash ?? '');
+};
+
+const createGameConfig = (
+  mode: GameMode,
+  overrideDate?: Date | null
+): GameConfig => {
+  const date =
+    mode === 'endless'
+      ? getRandomGenshindleDate()
+      : (overrideDate ?? new Date());
   const key = getGenshindleKey(date);
   return {
     date,
@@ -59,9 +136,10 @@ const createGameConfig = (mode: GameMode): GameConfig => {
 };
 
 export function GenshindleGame() {
+  const [hashOverrideDate, setHashOverrideDate] = useState<Date | null>(null);
   const initialConfigRef = useRef<GameConfig | null>(null);
   if (!initialConfigRef.current) {
-    initialConfigRef.current = createGameConfig('daily');
+    initialConfigRef.current = createGameConfig('daily', hashOverrideDate);
   }
 
   const [referenceDate, setReferenceDate] = useState<Date>(
@@ -84,23 +162,132 @@ export function GenshindleGame() {
   const [hardMode, setHardMode] = useState(false);
   const [endlessMode, setEndlessMode] = useState(false);
   const [stats, setStats] = useState<GenshindleStats>(DEFAULT_GENSHINDLE_STATS);
+  const [playedKeys, setPlayedKeys] = useState<string[]>([]);
 
   const characters = useMemo(() => getAllCharacters(), []);
+  const todayLocalDate = useMemo(() => toLocalMidnight(new Date()), []);
+  const showTodayMonth = useCallback(
+    () => setCalendarMonth(todayLocalDate),
+    [todayLocalDate]
+  );
+  const [localSelected, setLocalSelected] = useState<Date>(() =>
+    toLocalMidnight(referenceDate)
+  );
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const applyHashDate = () => {
+      const next = readHashDate();
+      setHashOverrideDate((prev) => {
+        if (prev === next) {
+          return prev;
+        }
+        if (prev && next && getGenshindleKey(prev) === getGenshindleKey(next)) {
+          return prev;
+        }
+        return next;
+      });
+    };
 
-  const resetGame = useCallback((mode: GameMode) => {
-    const config = createGameConfig(mode);
-    setReferenceDate(config.date);
-    setGameKey(config.key);
-    setSolution(config.solution);
-    setState({
-      guesses: [],
-      solved: false,
-      solvedAt: null,
-    });
-    setSelection(null);
-    setFeedbackMessage(null);
-    setPickerOpen(false);
+    applyHashDate();
+    window.addEventListener('hashchange', applyHashDate);
+    return () => {
+      window.removeEventListener('hashchange', applyHashDate);
+    };
   }, []);
+
+  const resetGame = useCallback(
+    (mode: GameMode, overrideDate?: Date | null) => {
+      const config = createGameConfig(mode, overrideDate);
+      setReferenceDate(config.date);
+      setGameKey(config.key);
+      setSolution(config.solution);
+      setState({
+        guesses: [],
+        solved: false,
+        solvedAt: null,
+      });
+      setSelection(null);
+      setFeedbackMessage(null);
+      setPickerOpen(false);
+    },
+    []
+  );
+
+  const calendarSelectedDate = useMemo(() => {
+    // if referenceDate is a UTC canonical date, convert to local midnight for UI
+    return toLocalMidnight(referenceDate);
+  }, [referenceDate]);
+
+  const [calendarMonth, setCalendarMonth] = useState<Date>(
+    () => calendarSelectedDate
+  );
+
+  useEffect(() => {
+    setLocalSelected(toLocalMidnight(referenceDate));
+  }, [referenceDate]);
+
+  useEffect(() => {
+    setCalendarMonth(localSelected);
+  }, [localSelected]);
+
+  // ---- Played dates (LOCAL for UI) ----
+  const playedDates = useMemo(() => {
+    const seen = new Set<string>();
+    const dates: Date[] = [];
+    for (const key of playedKeys) {
+      const parsed = parseDailyKeyToLocalDate(key); // should return a local Date
+      if (!parsed) continue;
+      const y = parsed.getFullYear();
+      const m = parsed.getMonth();
+      const d = parsed.getDate();
+      const signature = `${y}-${m}-${d}`;
+      if (seen.has(signature)) continue;
+      seen.add(signature);
+      dates.push(new Date(y, m, d)); // local midnight
+    }
+    return dates;
+  }, [playedKeys]);
+
+  const calendarButtonLabel = useMemo(() => {
+    return new Intl.DateTimeFormat('en', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }).format(calendarSelectedDate);
+  }, [calendarSelectedDate]);
+
+  const playedModifierClass =
+    "relative after:absolute after:left-1/2 after:bottom-1 after:h-1.5 after:w-1.5 after:-translate-x-1/2 after:rounded-full after:bg-emerald-400 after:content-['']";
+
+  const handleDateSelect = useCallback(
+    (date: Date | undefined) => {
+      if (!date) return;
+
+      // 1) update UI immediately with LOCAL date
+      const local = toLocalMidnight(date);
+      setLocalSelected(local);
+      setCalendarMonth(local);
+
+      // 2) compute UTC canonical for hash/storage
+      const utc = new Date(
+        Date.UTC(local.getFullYear(), local.getMonth(), local.getDate())
+      );
+      setHashOverrideDate(utc);
+
+      // 3) update URL hash with UTC canonical
+      if (typeof window !== 'undefined') {
+        const nextHash = `#${formatHashFromDate(utc)}`;
+        const target = `${window.location.pathname}${window.location.search}${nextHash}`;
+        window.history.replaceState(null, '', target);
+      }
+    },
+    [setHashOverrideDate]
+  );
+
+  const selectTodayDate = useCallback(
+    () => handleDateSelect(todayLocalDate),
+    [handleDateSelect, todayLocalDate]
+  );
 
   const persistStats = useCallback((next: GenshindleStats) => {
     if (typeof window === 'undefined') return;
@@ -230,10 +417,11 @@ export function GenshindleGame() {
 
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      const parsed = raw
+      const parsed: Record<string, GenshindleStoredEntry> = raw
         ? (JSON.parse(raw) as Record<string, GenshindleStoredEntry>)
-        : undefined;
-      const entry = parsed?.[gameKey];
+        : {};
+      setPlayedKeys(Object.keys(parsed));
+      const entry = parsed[gameKey];
       const hydrated = parseStoredEntry(entry);
       setState(hydrated);
     } catch (error) {
@@ -308,8 +496,12 @@ export function GenshindleGame() {
   }, [endlessMode]);
 
   useEffect(() => {
-    resetGame(endlessMode ? 'endless' : 'daily');
-  }, [endlessMode, resetGame]);
+    if (endlessMode) {
+      resetGame('endless');
+    } else {
+      resetGame('daily', hashOverrideDate);
+    }
+  }, [endlessMode, hashOverrideDate, resetGame]);
 
   const persist = useCallback(
     (next: GenshindleState) => {
@@ -321,11 +513,12 @@ export function GenshindleGame() {
           : {};
         parsed[gameKey] = createStoredEntry(next);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+        setPlayedKeys(Object.keys(parsed));
       } catch (error) {
         console.warn('Failed to persist genshindle progress', error);
       }
     },
-    [endlessMode, gameKey]
+    [endlessMode, gameKey, setPlayedKeys]
   );
 
   const stillGuessing = !state.solved && state.guesses.length < MAX_ATTEMPTS;
@@ -373,13 +566,13 @@ export function GenshindleGame() {
       if (recordedWin) {
         if (endlessMode) {
           applyEndlessWin();
-        } else {
+        } else if (hashOverrideDate === null) {
           applyDailyWin(gameKey);
         }
       } else if (recordedFailure) {
         if (endlessMode) {
           applyEndlessFailure();
-        } else {
+        } else if (hashOverrideDate === null) {
           applyDailyFailure();
         }
       }
@@ -394,6 +587,7 @@ export function GenshindleGame() {
       applyEndlessFailure,
       applyEndlessWin,
       endlessMode,
+      hashOverrideDate,
       gameKey,
       persist,
       solution.id,
@@ -411,10 +605,7 @@ export function GenshindleGame() {
     []
   );
   const modeChipLabel = endlessMode ? 'Endless mode' : 'Genshindle mode';
-  const puzzleBadgeLabel = endlessMode
-    ? 'Endless puzzle'
-    : `Genshindle #${gameKey.replace(/-/g, '')}`;
-  const puzzleDateLabel = referenceDate.toISOString().slice(0, 10);
+  const puzzleBadgeLabel = endlessMode ? 'Endless puzzle' : `Genshindle`;
 
   return (
     <div
@@ -439,9 +630,62 @@ export function GenshindleGame() {
             <Badge className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs uppercase tracking-wide text-white/90">
               {puzzleBadgeLabel}
             </Badge>
-            <span className="text-xs uppercase tracking-wide text-white/70">
-              Puzzle date: {puzzleDateLabel}
-            </span>
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-white/70">
+              <span>Puzzle date:</span>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2 rounded-full border-white/20 bg-white/10 px-3 py-1 text-white/80 hover:bg-white/20 hover:text-white"
+                  >
+                    <CalendarDays className="h-3.5 w-3.5" aria-hidden />
+                    <span className="normal-case tracking-normal">
+                      {calendarButtonLabel}
+                    </span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-auto border border-white/20 bg-black/90 p-2 shadow-2xl backdrop-blur"
+                  align="end"
+                >
+                  <div className="flex items-center justify-between gap-2 px-2 pb-2 pt-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full border border-transparent bg-white/5 text-white/80 hover:bg-white/15 hover:text-white"
+                      onClick={showTodayMonth}
+                    >
+                      Show today
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full border-white/30 bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
+                      onClick={selectTodayDate}
+                    >
+                      Today
+                    </Button>
+                  </div>
+                  <Calendar
+                    mode="single"
+                    selected={localSelected}
+                    month={calendarMonth}
+                    onMonthChange={setCalendarMonth}
+                    onSelect={handleDateSelect}
+                    initialFocus
+                    modifiers={{ played: playedDates }}
+                    modifiersClassNames={{ played: playedModifierClass }}
+                    fromYear={2020}
+                    toYear={new Date().getUTCFullYear() + 1}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
 
           <section className="grid gap-6 rounded-3xl border border-white/12 bg-black/35 px-6 py-8 shadow-2xl backdrop-blur-xl md:grid-cols-[1.15fr,0.85fr] md:items-start xl:grid-cols-[1.25fr,0.95fr]">
@@ -481,12 +725,16 @@ export function GenshindleGame() {
                     variant="outline"
                     className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
                   >
-                    <Link href="/daily">Daily mode</Link>
+                    <Link href="/daily">Daily mode - GW</Link>
                   </Button>
                 </div>
               </div>
             </div>
-            <StatsTracker stats={stats} hardMode={hardMode} endlessMode={endlessMode} />
+            <StatsTracker
+              stats={stats}
+              hardMode={hardMode}
+              endlessMode={endlessMode}
+            />
             <div className="space-y-6">
               <div className="space-y-4 rounded-2xl border border-white/12 bg-black/30 p-6 backdrop-blur">
                 <div className="flex items-center justify-between text-xs uppercase tracking-wide text-white/70">
@@ -520,7 +768,7 @@ export function GenshindleGame() {
 
               <div className="space-y-4 rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">Guess grid</h2>
+                  <h2 className="text-lg font-semibold">Attempts</h2>
                   <Badge className="flex items-center gap-1 border border-white/15 bg-white/12 text-xs uppercase tracking-wide text-white/90">
                     <Trophy className="h-4 w-4" aria-hidden />
                     {state.solved
