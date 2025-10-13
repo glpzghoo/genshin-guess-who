@@ -222,6 +222,11 @@ export function GenshindleGame() {
     []
   );
 
+  const advanceEndlessRound = useCallback(() => {
+    if (!endlessMode) return;
+    resetGame('endless');
+  }, [endlessMode, resetGame]);
+
   const calendarSelectedDate = useMemo(() => {
     // if referenceDate is a UTC canonical date, convert to local midnight for UI
     return toLocalMidnight(referenceDate);
@@ -776,7 +781,12 @@ export function GenshindleGame() {
 
                 <GuessErrorNotice message={feedbackMessage} />
 
-                <OutcomeNotice state={state} solution={solution} />
+                <OutcomeNotice
+                  state={state}
+                  solution={solution}
+                  endlessMode={endlessMode}
+                  onNextRound={advanceEndlessRound}
+                />
               </div>
 
               <div className="space-y-4 rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur">
