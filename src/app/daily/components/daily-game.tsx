@@ -38,6 +38,7 @@ import {
 import { CharacterCombobox } from './character-combobox';
 import { renderElementWithIcon, renderWeaponWithIcon } from '@/lib/helpers';
 import OutcomeNotice, { GuessErrorNotice } from '@/components/ResultMessage';
+import Notice from '@/components/Notice';
 
 export function DailyGame() {
   const [solution] = useState<Character>(() => pickDailyCharacter());
@@ -369,6 +370,7 @@ export function DailyGame() {
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold">Unlocked hints</h2>
+                  <Notice />
                   <Badge
                     className="border"
                     style={{
@@ -399,17 +401,17 @@ export function DailyGame() {
                           animate="visible"
                           exit="exit"
                           transition={{ duration: 0.25 }}
-                      className="rounded-xl border border-white/12 bg-white/8 p-4"
-                    >
-                      <div className="text-xs uppercase tracking-wide text-white/55">
-                        {hint.label}
-                      </div>
-                      <div className="mt-2">{renderHintValue(hint)}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              )}
-            </AnimatePresence>
+                          className="rounded-xl border border-white/12 bg-white/8 p-4"
+                        >
+                          <div className="text-xs uppercase tracking-wide text-white/55">
+                            {hint.label}
+                          </div>
+                          <div className="mt-2">{renderHintValue(hint)}</div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </AnimatePresence>
               </div>
 
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">

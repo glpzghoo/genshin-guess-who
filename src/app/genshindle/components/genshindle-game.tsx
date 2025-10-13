@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Wand2, Trophy, CalendarDays } from 'lucide-react';
+import { Wand2, Trophy, CalendarDays, RefreshCcw } from 'lucide-react';
 
 import {
   createStoredEntry,
@@ -166,6 +166,15 @@ export function GenshindleGame() {
 
   const characters = useMemo(() => getAllCharacters(), []);
   const todayLocalDate = useMemo(() => toLocalMidnight(new Date()), []);
+  const todayKey = useMemo(() => getGenshindleKey(new Date()), []);
+  const hashMatchesToday = useMemo(() => {
+    if (!hashOverrideDate) return false;
+    return getGenshindleKey(hashOverrideDate) === todayKey;
+  }, [hashOverrideDate, todayKey]);
+  const effectiveOverrideDate = useMemo(
+    () => (hashMatchesToday ? null : hashOverrideDate),
+    [hashMatchesToday, hashOverrideDate]
+  );
   const showTodayMonth = useCallback(
     () => setCalendarMonth(todayLocalDate),
     [todayLocalDate]
@@ -413,23 +422,6 @@ export function GenshindleGame() {
   }, [endlessMode, gameKey, solution.id]);
 
   useEffect(() => {
-    if (typeof window === 'undefined' || endlessMode) return;
-
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      const parsed: Record<string, GenshindleStoredEntry> = raw
-        ? (JSON.parse(raw) as Record<string, GenshindleStoredEntry>)
-        : {};
-      setPlayedKeys(Object.keys(parsed));
-      const entry = parsed[gameKey];
-      const hydrated = parseStoredEntry(entry);
-      setState(hydrated);
-    } catch (error) {
-      console.warn('Failed to hydrate genshindle progress', error);
-    }
-  }, [endlessMode, gameKey]);
-
-  useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
       const stored = window.localStorage.getItem(HARD_MODE_STORAGE_KEY);
@@ -499,9 +491,26 @@ export function GenshindleGame() {
     if (endlessMode) {
       resetGame('endless');
     } else {
-      resetGame('daily', hashOverrideDate);
+      resetGame('daily', effectiveOverrideDate);
     }
-  }, [endlessMode, hashOverrideDate, resetGame]);
+  }, [endlessMode, effectiveOverrideDate, resetGame]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || endlessMode) return;
+
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      const parsed: Record<string, GenshindleStoredEntry> = raw
+        ? (JSON.parse(raw) as Record<string, GenshindleStoredEntry>)
+        : {};
+      setPlayedKeys(Object.keys(parsed));
+      const entry = parsed[gameKey];
+      const hydrated = parseStoredEntry(entry);
+      setState(hydrated);
+    } catch (error) {
+      console.warn('Failed to hydrate genshindle progress', error);
+    }
+  }, [endlessMode, gameKey]);
 
   const persist = useCallback(
     (next: GenshindleState) => {
@@ -521,6 +530,7 @@ export function GenshindleGame() {
     [endlessMode, gameKey, setPlayedKeys]
   );
 
+  const usingDailyPuzzle = !endlessMode && effectiveOverrideDate === null;
   const stillGuessing = !state.solved && state.guesses.length < MAX_ATTEMPTS;
 
   const submitGuess = useCallback(
@@ -566,13 +576,13 @@ export function GenshindleGame() {
       if (recordedWin) {
         if (endlessMode) {
           applyEndlessWin();
-        } else if (hashOverrideDate === null) {
+        } else if (usingDailyPuzzle) {
           applyDailyWin(gameKey);
         }
       } else if (recordedFailure) {
         if (endlessMode) {
           applyEndlessFailure();
-        } else if (hashOverrideDate === null) {
+        } else if (usingDailyPuzzle) {
           applyDailyFailure();
         }
       }
@@ -587,12 +597,12 @@ export function GenshindleGame() {
       applyEndlessFailure,
       applyEndlessWin,
       endlessMode,
-      hashOverrideDate,
       gameKey,
       persist,
       solution.id,
       state.guesses,
       stillGuessing,
+      usingDailyPuzzle,
     ]
   );
 
@@ -693,8 +703,11 @@ export function GenshindleGame() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-4 py-1 text-xs uppercase tracking-[0.3em] text-white/70">
                   <Wand2 className="h-4 w-4 text-emerald-300" />
-                  {modeChipLabel}
+                  {modeChipLabel}{' '}
                 </div>
+                <Link href={`/genshindle`}>
+                  <RefreshCcw />
+                </Link>
                 <div className="flex flex-wrap gap-2">
                   <Button
                     type="button"
