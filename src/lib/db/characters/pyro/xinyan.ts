@@ -1,0 +1,22 @@
+import { xinyanVL } from '../../voice-lines/pyro/xinyan';
+
+const xinyan: Character = {
+  id: 44,
+  rank: 4,
+  name: 'Xinyan',
+  element: 'Pyro',
+  weaponType: 'Claymore',
+  region: 'LIYUE',
+  specialProp: 'FIGHT_PROP_ATTACK_PERCENT',
+  bodyType: 'GIRL',
+  icon: 'UI_AvatarIcon_Xinyan',
+  birthday: [10, 16],
+  release: 1606874400,
+  VersionReleased: 1.1,
+  route: 'Xinyan',
+  EN_VA: 'Laura Stahl',
+   JP_VA: 'Takahashi Chiaki',
+  VL: xinyanVL,
+};
+
+export { xinyan };

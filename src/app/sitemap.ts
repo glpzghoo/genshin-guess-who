@@ -19,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/genshindle`,
+      lastModified: new Date('2025-10-13'),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
   ];
 
   return [...staticPages, ...gamePages];

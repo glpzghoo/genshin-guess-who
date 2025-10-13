@@ -229,13 +229,22 @@ export function DailyGame() {
                   <Trophy className="h-4 w-4 text-amber-300" />
                   Daily arena
                 </div>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
-                >
-                  <Link href="/endless">Play endless mode</Link>
-                </Button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
+                  >
+                    <Link href="/endless">Play endless mode</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
+                  >
+                    <Link href="/genshindle">Play genshindle</Link>
+                  </Button>
+                </div>
               </div>
               <h1 className="text-4xl font-bold leading-tight md:text-5xl">
                 The shared Teyvat mystery

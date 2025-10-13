@@ -2,7 +2,15 @@ export type Character = {
   id: string | number;
   rank: number;
   name: string;
-  element: 'Pyro' | 'Anemo' | 'Cryo' | 'Dendro' | 'Electro' | 'Geo' | 'Hydro';
+  element:
+    | 'Pyro'
+    | 'Anemo'
+    | 'Cryo'
+    | 'Dendro'
+    | 'Electro'
+    | 'Geo'
+    | 'Hydro'
+    | 'Unknown';
   weaponType: 'Sword' | 'Claymore' | 'Polearm' | 'Bow' | 'Catalyst';
   region: string;
   specialProp: string;
@@ -10,6 +18,7 @@ export type Character = {
   icon: string;
   birthday: number[];
   release: number;
+  VersionReleased: number;
   route: string;
   EN_VA: string;
   JP_VA: string;

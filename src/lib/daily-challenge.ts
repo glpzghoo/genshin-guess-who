@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import * as characterExports from '@/lib/character_db/characters';
+import * as characterExports from '@/lib/db/characters';
 import type { Character } from '@/lib/types';
 
 export type DailyHint = {
@@ -232,6 +232,18 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
       id: 'birthday',
       label: 'Birthday',
       value: birthday,
+    });
+  }
+
+  if (typeof character.VersionReleased === 'number' && character.VersionReleased > 0) {
+    const version =
+      character.VersionReleased % 1 === 0
+        ? character.VersionReleased.toFixed(1)
+        : character.VersionReleased.toString();
+    hints.push({
+      id: 'release-version',
+      label: 'Release Version',
+      value: `Version ${version}`,
     });
   }
 
