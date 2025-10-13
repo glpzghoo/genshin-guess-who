@@ -311,18 +311,6 @@ export function EndlessGame() {
                   </Button>
                 </div>
               </div>
-              <h1 className="text-4xl font-bold leading-tight md:text-5xl">
-                The shared Teyvat mystery
-              </h1>
-              <p className="text-white/75 text-sm md:text-base max-w-xl">
-                Make a call, unlock hints on misses, and see how fast you solve
-                it.
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs">
-                <Badge className="bg-white/10 border border-white/20 text-white">
-                  New character every round
-                </Badge>
-              </div>
               <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-white/60">
                 <span>Streaks</span>
                 <Badge className="gap-2 border border-white/20 bg-white/10 text-white hover:bg-white/20">

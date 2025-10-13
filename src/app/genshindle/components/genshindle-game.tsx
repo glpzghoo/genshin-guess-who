@@ -66,6 +66,9 @@ const formatHashFromDate = (date: Date): string => {
 const toLocalMidnight = (d: Date) =>
   new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
+const toUtcMidnight = (d: Date) =>
+  new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+
 const parseDailyKeyToLocalDate = (key: string): Date | null => {
   const [yearStr, monthStr, dayStr] = key.split('-');
   const year = Number(yearStr);
@@ -123,10 +126,11 @@ const createGameConfig = (
   mode: GameMode,
   overrideDate?: Date | null
 ): GameConfig => {
-  const date =
+  const baseDate =
     mode === 'endless'
       ? getRandomGenshindleDate()
       : (overrideDate ?? new Date());
+  const date = toUtcMidnight(baseDate);
   const key = getGenshindleKey(date);
   return {
     date,
@@ -165,8 +169,11 @@ export function GenshindleGame() {
   const [playedKeys, setPlayedKeys] = useState<string[]>([]);
 
   const characters = useMemo(() => getAllCharacters(), []);
-  const todayLocalDate = useMemo(() => toLocalMidnight(new Date()), []);
   const todayKey = useMemo(() => getGenshindleKey(new Date()), []);
+  const todayDisplayDate = useMemo(
+    () => parseDailyKeyToLocalDate(todayKey) ?? toLocalMidnight(new Date()),
+    [todayKey]
+  );
   const hashMatchesToday = useMemo(() => {
     if (!hashOverrideDate) return false;
     return getGenshindleKey(hashOverrideDate) === todayKey;
@@ -176,11 +183,15 @@ export function GenshindleGame() {
     [hashMatchesToday, hashOverrideDate]
   );
   const showTodayMonth = useCallback(
-    () => setCalendarMonth(todayLocalDate),
-    [todayLocalDate]
+    () => setCalendarMonth(todayDisplayDate),
+    [todayDisplayDate]
   );
+  const getDisplayDateFor = useCallback((date: Date) => {
+    const key = getGenshindleKey(date);
+    return parseDailyKeyToLocalDate(key) ?? toLocalMidnight(date);
+  }, []);
   const [localSelected, setLocalSelected] = useState<Date>(() =>
-    toLocalMidnight(referenceDate)
+    getDisplayDateFor(referenceDate)
   );
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -228,17 +239,17 @@ export function GenshindleGame() {
   }, [endlessMode, resetGame]);
 
   const calendarSelectedDate = useMemo(() => {
-    // if referenceDate is a UTC canonical date, convert to local midnight for UI
-    return toLocalMidnight(referenceDate);
-  }, [referenceDate]);
+    // if referenceDate is a UTC canonical date, convert to a display date using the daily key
+    return getDisplayDateFor(referenceDate);
+  }, [getDisplayDateFor, referenceDate]);
 
   const [calendarMonth, setCalendarMonth] = useState<Date>(
     () => calendarSelectedDate
   );
 
   useEffect(() => {
-    setLocalSelected(toLocalMidnight(referenceDate));
-  }, [referenceDate]);
+    setLocalSelected(getDisplayDateFor(referenceDate));
+  }, [getDisplayDateFor, referenceDate]);
 
   useEffect(() => {
     setCalendarMonth(localSelected);
@@ -279,13 +290,20 @@ export function GenshindleGame() {
 
       // 1) update UI immediately with LOCAL date
       const local = toLocalMidnight(date);
-      setLocalSelected(local);
-      setCalendarMonth(local);
-
-      // 2) compute UTC canonical for hash/storage
       const utc = new Date(
         Date.UTC(local.getFullYear(), local.getMonth(), local.getDate())
       );
+      const selectedKey = getGenshindleKey(utc);
+      // Prevent selecting dates after today (based on UTC key) even if the UI allows interaction.
+      if (selectedKey > todayKey) {
+        return;
+      }
+      const displayDate =
+        parseDailyKeyToLocalDate(selectedKey) ?? toLocalMidnight(local);
+      setLocalSelected(displayDate);
+      setCalendarMonth(displayDate);
+
+      // 2) store UTC canonical for hash/storage
       setHashOverrideDate(utc);
 
       // 3) update URL hash with UTC canonical
@@ -295,12 +313,12 @@ export function GenshindleGame() {
         window.history.replaceState(null, '', target);
       }
     },
-    [setHashOverrideDate]
+    [setHashOverrideDate, todayKey]
   );
 
   const selectTodayDate = useCallback(
-    () => handleDateSelect(todayLocalDate),
-    [handleDateSelect, todayLocalDate]
+    () => handleDateSelect(todayDisplayDate),
+    [handleDateSelect, todayDisplayDate]
   );
 
   const persistStats = useCallback((next: GenshindleStats) => {
@@ -683,21 +701,27 @@ export function GenshindleGame() {
                       className="rounded-full border-white/30 bg-white/10 text-white/80 hover:bg-white/20 hover:text-white"
                       onClick={selectTodayDate}
                     >
-                      Today
+                      {endlessMode ? 'Random' : 'Today'}
                     </Button>
                   </div>
-                  <Calendar
-                    mode="single"
-                    selected={localSelected}
-                    month={calendarMonth}
-                    onMonthChange={setCalendarMonth}
-                    onSelect={handleDateSelect}
-                    initialFocus
-                    modifiers={{ played: playedDates }}
-                    modifiersClassNames={{ played: playedModifierClass }}
-                    fromYear={2020}
-                    toYear={new Date().getUTCFullYear() + 1}
-                  />
+
+                  {endlessMode ? (
+                    'Turn of the endless mode to select date'
+                  ) : (
+                    <Calendar
+                      mode="single"
+                      selected={localSelected}
+                      month={calendarMonth}
+                      onMonthChange={setCalendarMonth}
+                      onSelect={handleDateSelect}
+                      autoFocus
+                      modifiers={{ played: playedDates }}
+                      modifiersClassNames={{ played: playedModifierClass }}
+                      startMonth={new Date(2020, 0)}
+                      hidden={{ after: new Date() }}
+                      disabled={endlessMode}
+                    />
+                  )}
                 </PopoverContent>
               </Popover>
             </div>
