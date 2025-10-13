@@ -15,7 +15,7 @@ const heizou: Character = {
   VersionReleased: 2.8,
   route: 'Shikanoin Heizou',
   EN_VA: 'Kieran Regan',
-   JP_VA: 'Iguchi Yuuichi',
+  JP_VA: 'Iguchi Yuuichi',
   VL: heizouVL,
 };
 

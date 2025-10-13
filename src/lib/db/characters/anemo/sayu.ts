@@ -15,7 +15,7 @@ const sayu: Character = {
   VersionReleased: 2,
   route: 'Sayu',
   EN_VA: 'Lily Ki',
-   JP_VA: 'Suzaki Aya',
+  JP_VA: 'Suzaki Aya',
   VL: sayuVL,
 };
 

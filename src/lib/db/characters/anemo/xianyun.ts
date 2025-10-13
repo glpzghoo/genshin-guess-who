@@ -15,7 +15,7 @@ const xianyun: Character = {
   VersionReleased: 4.4,
   route: 'Xianyun',
   EN_VA: 'Stephanie Panisello',
-   JP_VA: 'Nakatomi Mana',
+  JP_VA: 'Nakatomi Mana',
   VL: xianyunVL,
 };
 

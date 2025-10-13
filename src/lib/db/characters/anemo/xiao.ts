@@ -15,7 +15,7 @@ const xiao: Character = {
   VersionReleased: 1.3,
   route: 'Xiao',
   EN_VA: 'Laila Berzins',
-   JP_VA: 'Matsuoka Yoshitsugu',
+  JP_VA: 'Matsuoka Yoshitsugu',
   VL: xiaoVL,
 };
 

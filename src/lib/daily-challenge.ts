@@ -6,6 +6,7 @@ export type DailyHint = {
   id: string;
   label: string;
   value: string;
+  audioSrc?: string;
 };
 
 export type DailyStoredGuess = {
@@ -114,12 +115,27 @@ const formatRelease = (release: number): string | null => {
 
 const pickVoiceLine = (
   character: Character
-): { title: string; text: string } | null => {
+): { title: string; text: string; audioSrc?: string } | null => {
   const quotes = character?.VL?.quotes;
   if (!quotes) return null;
 
+  const routeSegment =
+    typeof character.route === 'string' ? character.route.trim() : '';
+
+  const toAudioSrc = (audioId?: string): string | undefined => {
+    if (!routeSegment || !audioId) return undefined;
+    const trimmedId = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
+    if (!trimmedId) return undefined;
+    const routePath = routeSegment
+      .split('/')
+      .map((part) => encodeURIComponent(part))
+      .join('/');
+    const fileName = encodeURIComponent(trimmedId);
+    return `/assets/voicelines/${routePath}/${fileName}.ogg`;
+  };
+
   const sortedKeys = Object.keys(quotes).sort();
-  const valid: { title: string; text: string }[] = [];
+  const valid: { title: string; text: string; audioSrc?: string }[] = [];
 
   const hasRedaction = (s?: string) => !!s && /_{3,}/.test(s); // 3+ underscores
 
@@ -133,7 +149,10 @@ const pickVoiceLine = (
     if (!cleanText) continue;
     if (hasRedaction(cleanText)) continue;
 
-    valid.push({ title, text: cleanText });
+    const audioSrc =
+      typeof q.audio === 'string' ? toAudioSrc(q.audio) : undefined;
+
+    valid.push({ title, text: cleanText, audioSrc });
   }
 
   if (valid.length === 0) return null;
@@ -265,6 +284,7 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
       id: 'voice-line',
       label: `Voice Line – ${voiceLine.title}`,
       value: voiceLine.text,
+      audioSrc: voiceLine.audioSrc,
     });
   }
 

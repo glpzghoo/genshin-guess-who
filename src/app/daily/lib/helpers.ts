@@ -150,7 +150,9 @@ export const parseDailyEntry = (
         !!hint &&
         typeof hint.id === 'string' &&
         typeof hint.label === 'string' &&
-        typeof hint.value === 'string'
+        typeof hint.value === 'string' &&
+        (typeof hint.audioSrc === 'undefined' ||
+          typeof hint.audioSrc === 'string')
     );
   }
 

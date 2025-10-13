@@ -19,6 +19,8 @@ import type { DailyStoredEntry } from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { VoiceLineHint } from '@/components/VoiceLineHint';
+import { useVoiceLinePlayer } from '@/lib/hooks/use-voice-line-player';
 import {
   applySolvedStreak,
   createStoredEntry,
@@ -199,6 +201,59 @@ export function DailyGame() {
     !guessState.solved && attemptsUsed >= MAX_DAILY_ATTEMPTS;
   const stillGuessing = !guessState.solved && !isOutOfAttempts;
 
+  const {
+    play: playVoiceLine,
+    stop: stopVoiceLine,
+    isPlaying: isVoiceLinePlaying,
+    hasError: voiceLineError,
+  } = useVoiceLinePlayer();
+
+  useEffect(() => {
+    const hasVoiceLine = revealedHints.some(
+      (hint) => hint.id === 'voice-line' && hint.audioSrc
+    );
+    if (!hasVoiceLine) {
+      stopVoiceLine();
+    }
+  }, [revealedHints, stopVoiceLine]);
+
+  const renderHintValue = useCallback(
+    (hint: (typeof revealedHints)[number]) => {
+      if (hint.id === 'element') {
+        return (
+          <div className="text-sm font-semibold whitespace-pre-line leading-6 text-white">
+            {renderElementWithIcon(hint.value)}
+          </div>
+        );
+      }
+      if (hint.id === 'weapon') {
+        return (
+          <div className="text-sm font-semibold whitespace-pre-line leading-6 text-white">
+            {renderWeaponWithIcon(hint.value)}
+          </div>
+        );
+      }
+      if (hint.id === 'voice-line') {
+        return (
+          <VoiceLineHint
+            text={hint.value}
+            audioSrc={hint.audioSrc}
+            onPlay={playVoiceLine}
+            isPlaying={isVoiceLinePlaying}
+            hasError={voiceLineError}
+          />
+        );
+      }
+
+      return (
+        <div className="text-sm font-semibold whitespace-pre-line leading-6 text-white">
+          {hint.value}
+        </div>
+      );
+    },
+    [isVoiceLinePlaying, playVoiceLine, voiceLineError]
+  );
+
   return (
     <div
       className="relative min-h-screen overflow-hidden text-white"
@@ -344,23 +399,17 @@ export function DailyGame() {
                           animate="visible"
                           exit="exit"
                           transition={{ duration: 0.25 }}
-                          className="rounded-xl border border-white/12 bg-white/8 p-4"
-                        >
-                          <div className="text-xs uppercase tracking-wide text-white/55">
-                            {hint.label}
-                          </div>
-                          <div className="mt-2 text-sm font-semibold whitespace-pre-line leading-6 text-white">
-                            {hint.id === 'element'
-                              ? renderElementWithIcon(hint.value)
-                              : hint.id === 'weapon'
-                                ? renderWeaponWithIcon(hint.value)
-                                : hint.value}
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
-                </AnimatePresence>
+                      className="rounded-xl border border-white/12 bg-white/8 p-4"
+                    >
+                      <div className="text-xs uppercase tracking-wide text-white/55">
+                        {hint.label}
+                      </div>
+                      <div className="mt-2">{renderHintValue(hint)}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </AnimatePresence>
               </div>
 
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">

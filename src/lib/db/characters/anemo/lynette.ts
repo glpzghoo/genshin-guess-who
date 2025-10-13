@@ -15,7 +15,7 @@ const lynette: Character = {
   VersionReleased: 4,
   route: 'Lynette',
   EN_VA: 'Anairis Quiñones',
-   JP_VA: 'Sasahara Yu',
+  JP_VA: 'Sasahara Yu',
   VL: lynetteVL,
 };
 

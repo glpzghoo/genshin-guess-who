@@ -15,7 +15,7 @@ const jean: Character = {
   VersionReleased: 1.0,
   route: 'Jean',
   EN_VA: 'Stephanie Southerland',
-   JP_VA: 'Saito Chiwa',
+  JP_VA: 'Saito Chiwa',
   VL: jeanVl,
 };
 
