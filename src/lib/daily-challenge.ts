@@ -235,7 +235,10 @@ export const buildDailyHints = (character: Character): DailyHint[] => {
     });
   }
 
-  if (typeof character.VersionReleased === 'number' && character.VersionReleased > 0) {
+  if (
+    typeof character.VersionReleased === 'number' &&
+    character.VersionReleased > 0
+  ) {
     const version =
       character.VersionReleased % 1 === 0
         ? character.VersionReleased.toFixed(1)
@@ -411,6 +414,16 @@ const elementThemes: Record<Character['element'], ElementTheme> = {
     badge: 'rgba(74, 222, 128, 0.22)',
     badgeText: '#dcfce7',
     button: 'linear-gradient(120deg, #86efac 0%, #22c55e 45%, #14b8a6 100%)',
+  },
+  Unknown: {
+    gradient:
+      'linear-gradient(135deg, rgba(148, 163, 184, 0.25) 0%, rgba(100, 116, 139, 0.22) 45%, rgba(30, 41, 59, 0.3) 100%)',
+    glow: 'rgba(148, 163, 184, 0.45)',
+    accent: '#94a3b8',
+    surface: 'rgba(15, 23, 42, 0.7)',
+    badge: 'rgba(148, 163, 184, 0.22)',
+    badgeText: '#e2e8f0',
+    button: 'linear-gradient(120deg, #94a3b8 0%, #64748b 45%, #475569 100%)',
   },
 };
 
