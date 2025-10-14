@@ -126,10 +126,11 @@ const pickVoiceLine = (
     if (!routeSegment || !audioId) return undefined;
     const trimmedId = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
     if (!trimmedId) return undefined;
-    const routePath = routeSegment
-      .split('/')
-      .map((part) => encodeURIComponent(part))
-      .join('/');
+    const routePath = character.route
+      .replace(/^\//, '')
+      .replace(/\/+/g, '/')
+      .replace(/\.{2,}/g, '.')
+      .trim();
     const fileName = encodeURIComponent(trimmedId);
     return `https://genshin-voicelines.s3.eu-north-1.amazonaws.com/voicelines/${routePath}/${fileName}.ogg`;
   };
