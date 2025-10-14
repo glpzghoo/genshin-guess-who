@@ -2,7 +2,7 @@ export const furinaVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Furina_Hello',
       text: "Why are you just standing there with your mouth gaping? Ah, you must be stunned and at a loss for words... Understandable, it is I after all... Fontaine's most beloved star, ___. I'm on a very tight schedule, so you're lucky to even get an appointment with me.",
       tips: '',
       tasks: null,
@@ -30,63 +30,63 @@ export const furinaVL = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Furina_When_It_Rains',
       text: "It's pouring out here! Wait, the water levels aren't rising, are they?",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'When It Snows',
-      audio: '1202',
+      audio: 'VO_Furina_When_It_Snows',
       text: 'Wow, this would be the perfect location for shooting a film.',
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When the Sun Is Out',
-      audio: '1203',
+      audio: 'VO_Furina_When_the_Sun_Is_Out',
       text: "The sun feels almost as hot as those studio lights I'm in front of all the time... Good thing there can only be one sun.",
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'When the Wind Is Blowing',
-      audio: '1204',
+      audio: 'VO_Furina_When_the_Wind_Is_Blowing',
       text: '"Listen, there is a disturbing growling in the wind. That\'s the sound of a long-forgotten sea monster having a nightmare." Huh? Why is it having a nightmare? Uh... I dunno, because fear has to manifest itself somehow?',
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'In the Desert',
-      audio: '1205',
+      audio: 'VO_Furina_In_the_Desert',
       text: 'What a wild and desolate sight... Allow me to grant you the blessing of water!',
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Furina_Good_Morning',
       text: 'Good morning... Must I really get up this early? Just let me sleep a little longer...',
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Furina_Good_Afternoon',
       text: "Good afternoon! Where's my cake? What? I just had cake for breakfast? Well, I think it's been long enough!",
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Furina_Good_Evening',
       text: "Good evening. *sigh* Mademoiselle Crabaletta has been muttering about getting in shape lately and even said that she wanted to drag me along with her. Hmph, I'm already eating much healthier than last month. I work very hard to maintain my figure. Hey, you can tell, can't you!?",
       tips: '',
       tasks: null,
     },
     '12': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Furina_Good_Night',
       text: "Whew, I'm getting sleepy myself. See you tomorrow. Remember to wake me up on time...",
       tips: '',
       tasks: null,
@@ -132,7 +132,7 @@ export const furinaVL = {
     },
     '17': {
       title: 'About the Vision',
-      audio: '3001',
+      audio: 'VO_Furina_About_the_Vision',
       text: "Once the ancient prophecy came to an end and everything was over, I fell into low spirits for a very long time. People who stand on the stage basking in the adulation of their audience must also bear the pressures of being in the public eye and living up to everyone's expectations. But I knew very well my person wouldn't be enough, and that putting on the act of a god would be the only way to satisfy their adoration... And at the end of the day, all I ever experienced was loneliness. So there came a point when I loathed the very thought of acting and locked myself in my room. It wasn't until the moment I stood on stage and faced the audience again that I realized the anxiety in my heart had dissipated. The reason I can now stand before the crowd's watchful gaze is perhaps because... I have finally started to act as myself.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -164,7 +164,7 @@ export const furinaVL = {
     },
     '20': {
       title: 'About Lyney and Lynette',
-      audio: '4001',
+      audio: 'VO_Furina_About_Lyney_and_Lynette',
       text: "Of course I know Lyney and Lynette. I used to frequently attend their magic shows. Though they're very popular, they're still much less popular than me. Only my performances would draw a completely sold-out crowd... even standing tickets would be out. But now... Uh... I've already decided to hang up my acting career, so it's perfectly normal for my popularity to decline!",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -182,7 +182,7 @@ export const furinaVL = {
     },
     '21': {
       title: 'About Neuvillette',
-      audio: '4002',
+      audio: 'VO_Furina_About_Neuvillette',
       text: "I'm very grateful to Neuvillette for all the hard work he's done for Fontaine in the past few centuries. It seems he doesn't intend to investigate my crimes of deceiving the people. Anyway, we're no longer working in tandem, and it's been a long time since I've been to the Palais Mermonia. I imagine that this is good for both of us, right?",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -225,7 +225,7 @@ export const furinaVL = {
     },
     '24': {
       title: 'About The Knave',
-      audio: '4005',
+      audio: 'VO_Furina_About_The_Knave',
       text: "The Knave? Wh—Who's that? Oh... Uh, I'd already forgotten about her... Keeping such a terrible figure like her in your mind will only give you nightmares.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -243,7 +243,7 @@ export const furinaVL = {
     },
     '25': {
       title: 'About Charlotte',
-      audio: '4006',
+      audio: 'VO_Furina_About_Charlotte',
       text: "I've often seen Charlotte busily running back and forth lately. She still seems to be hoping to arrange an exclusive interview with me. No matter how many times I refuse, she still hasn't given up. To be honest, her persistence made me angry at first... but then she told me with a resolute look in her eyes that she wanted to let people understand the real ___, and that she believed people would understand my troubles. I don't know how to respond to her kind intentions... I suppose she might be right, but I'm just not ready yet...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -261,14 +261,14 @@ export const furinaVL = {
     },
     '26': {
       title: 'About Wriothesley',
-      audio: '4007',
+      audio: 'VO_Furina_About_Wriothesley',
       text: "I haven't communicated with him much, but Neuvillette claims he's trustworthy, so I suppose he must be a good person. Oh, come to think of it, I've received some tea from Wriothesley before and it was exquisite!",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '27': {
       title: 'About Clorinde',
-      audio: '4008',
+      audio: 'VO_Furina_About_Clorinde',
       text: "As I remember, Clorinde isn't very talkative, but she has stood by me and protected me on several occasions, so I trust her very much. Hmm... I do miss her ever so slightly, but I don't have any real reason to see her now. Oh, right! I should invite her to my next tea party!",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -286,7 +286,7 @@ export const furinaVL = {
     },
     '28': {
       title: 'About Escoffier',
-      audio: '4009',
+      audio: 'VO_Furina_About_Escoffier',
       text: "Oh? You've met my Patissiere Supreme? Thanks to Escoffier, I used to have my pick of delectable confections, even beyond Gateau Debord. Unfortunately, after everything that happened, I can no longer afford what the Palais Mermonia was paying her. Hm? Oh, don't worry, we're still in touch. I like to send her homemade dishes of my own. I even invented a new one not too long ago — \"Harra Fruit Fish Jelly Macaroni\"... Sounds good, right? I'll make it for you sometime.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -375,14 +375,14 @@ export const furinaVL = {
     },
     '36': {
       title: 'Favorite Food',
-      audio: '6003',
+      audio: 'VO_Furina_Favorite_Food',
       text: "No one complains about exquisite confectioneries, but it'll take a lot of effort to make some that I like. Listen carefully, desserts are like operas... Everything from choosing the characters to imagining the setting requires a lot of effort in order to make the final performance a hit!",
       tips: '',
       tasks: null,
     },
     '37': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Furina_Least_Favorite_Food',
       text: 'Simply put, I detest most of those "creative" dishes. I have tasted many wonderful dishes throughout the years which did nothing but leave me with some moments that I never want to look back on.',
       tips: '',
       tasks: null,
@@ -410,7 +410,7 @@ export const furinaVL = {
     },
     '41': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Furina_Birthday',
       text: "Happy Birthday! Here, please take this ticket as your gift. It's a VIP seat to see Happy Day, just don't forget to show up to the performance! Hmm? What's \"Happy Day\"? *sigh* Well, I wanted to keep it a surprise... But it's an opera that I've rehearsed personally. It's about a big group of people that gather together to celebrate a certain very important person. You understand now, right? Just don't forget to come!",
       tips: '',
       tasks: null,

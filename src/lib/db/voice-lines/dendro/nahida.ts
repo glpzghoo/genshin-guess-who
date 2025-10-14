@@ -2,7 +2,7 @@ export const nahidaVl = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Nahida_Hello',
       text: "Nice to meet you! Hehe, I've actually been watching you for a long time already. My name's ___. I might look like a child, but don't be fooled: I understand this world much better than any grown-up. So... can we trade knowledge? I want to hear all about your travel stories. So, what would you like to know in return?",
       tips: '',
       tasks: null,
@@ -30,28 +30,28 @@ export const nahidaVl = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Nahida_When_It_Rains',
       text: "Quick, let's find shelter, or mushrooms will start growing on our heads.",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'When Thunder Strikes',
-      audio: '1202',
+      audio: 'VO_Nahida_When_Thunder_Strikes',
       text: 'Did you know that the sound of thunder is the prelude to new life? *sigh* Soon, this land will be brimming with vitality.',
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When It Snows',
-      audio: '1203',
+      audio: 'VO_Nahida_When_It_Snows',
       text: 'Can you hear that? The heavens are whispering to all living things, "It\'s time for bed now."',
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'When the Sun Is Out',
-      audio: '1204',
+      audio: 'VO_Nahida_When_the_Sun_Is_Out',
       text: 'Ah, the weather is lovely and warm. Things are about to start getting lively again.',
       tips: '',
       tasks: null,
@@ -65,28 +65,28 @@ export const nahidaVl = {
     },
     '9': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Nahida_Good_Morning',
       text: "Good morning. We should get going right away. There are too many things in this world that you'll miss if you don't get there on time.",
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Nahida_Good_Afternoon',
       text: "Ah, time for a break. I'd really like a Berry & Mint Burst... If you get one for me, I'll tell you a couple of stories about the sun. Okay?",
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Nahida_Good_Evening',
       text: "The sun's setting. It's time to wave goodbye and let the creatures of the night take center stage.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '12': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Nahida_Good_Night',
       text: "You should go to sleep now. Don't worry, I've made sure there's a sweet dream waiting for you.",
       tips: '',
       tasks: null,
@@ -132,14 +132,14 @@ export const nahidaVl = {
     },
     '17': {
       title: 'About the Vision',
-      audio: '3001',
+      audio: 'VO_Nahida_About_the_Vision',
       text: "The heavens grew eyes to behold the true beauty of the world below, but humans already have eyes to begin with. So, what is it they see when they look at the world not with their eyes, but their vision? You're very smart. Can you figure out what the answer is?",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '18': {
       title: 'Something to Share',
-      audio: '3002',
+      audio: 'VO_Nahida_Something_to_Share',
       text: "Very often, only once we get hurt badly are we finally forced to face our own laziness, ignorance, recklessness, or arrogance. There's nothing to regret, though. We have no way of seeing all the possibilities that lie ahead in the future, so we have to rely on clumsy trial-and-error to gain knowledge. Just think of pain as the tuition you have to pay.",
       tips: '',
       tasks: null,
@@ -178,35 +178,35 @@ export const nahidaVl = {
     },
     '22': {
       title: 'About Tighnari',
-      audio: '4003',
+      audio: 'VO_Nahida_About_Tighnari',
       text: "The Forest Watchers played an essential role in helping the rainforest to withstand the Withering and continue to flourish, and Tighnari is the best of them all. Still... I do hope he learns to be a little gentler with people. Otherwise, it's gonna be difficult for the Forest Rangers to attract new top talent.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '23': {
       title: 'About Collei',
-      audio: '4004',
+      audio: 'VO_Nahida_About_Collei',
       text: "When I heard her story for the first time, her tenacity shone through like a dazzling gemstone. She's been through so much... I hope that just as the rainforest supports all kinds of life, Sumeru will always provide a safe and nurturing environment for her, so that she can grow up healthy and strong.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '24': {
       title: 'About Alhaitham',
-      audio: '4005',
+      audio: 'VO_Nahida_About_Alhaitham',
       text: 'He holds a body of knowledge more advanced than most could imagine, and his mind is constantly thinking, so maybe nothing in this world could ever fool him. But is the wise man truly wise to view the mediocre majority as defective? Because without them, there is no us.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '25': {
       title: 'About Nilou',
-      audio: '4006',
+      audio: 'VO_Nahida_About_Nilou',
       text: "I once borrowed someone else's body to ask her if she'd mind allowing Lesser Lord Kusanali to watch her dance... Actually, I had already watched her lots of times before in secret, but I wanted to attend her dance at the Sabzeruz Festival properly, in person, as a sign of respect. Anyway, it turned out that she gently declined the offer... I was a little sad about that.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '26': {
       title: 'About Dori',
-      audio: '4007',
+      audio: 'VO_Nahida_About_Dori',
       text: "The first thing she said when she saw me was \"Nice palace. How much?\" Of course, I couldn't possibly sell her the Sanctuary of Surasthana. But still, her question had me stumped. I thought about it long and hard, but I still can't figure out how much Mora it's worth...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -224,14 +224,14 @@ export const nahidaVl = {
     },
     '27': {
       title: 'About Kaveh',
-      audio: '4008',
+      audio: 'VO_Nahida_About_Kaveh',
       text: "He has an almost-perfect grasp of what it truly means for Sumeru to be a Nation of Wisdom. Sadly, the truth as he understands it will never be accepted as the mainstream. Hmm? He's roommates with Alhaitham? Wow... the world really is full of surprises...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '28': {
       title: 'About Faruzan',
-      audio: '4009',
+      audio: 'VO_Nahida_About_Faruzan',
       text: "She is suffering from exposure to remnants of King Deshret's power. It's as if the great tortoise of time accidentally threw her off its back and left her suspended in the past. If you're interested, you should be able to catch a glimpse of Sumeru from a bygone age through her.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -285,7 +285,7 @@ export const nahidaVl = {
     },
     '31': {
       title: 'About The Balladeer',
-      audio: '4012',
+      audio: 'VO_Nahida_About_The_Balladeer',
       text: "When he finally achieved the ambition he thought he'd been pursuing all along, was he content at last, or only emptier still? We only yearn for the skies because we cannot fly... Hmm, perhaps he should reflect on this once he has held the sheer emptiness of the skies in his grasp.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -303,7 +303,7 @@ export const nahidaVl = {
     },
     '32': {
       title: 'About Furina',
-      audio: '4013',
+      audio: 'VO_Nahida_About_Furina',
       text: 'People often say that wisdom isn\'t about what you know, but knowing what you can change. It is beyond question that the "prophecy" was carved into Irminsul long ago... and while it may look like nothing has changed, it also seems like everything has. I think we both know her to be smart enough to turn the fate of the world around.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -410,14 +410,14 @@ export const nahidaVl = {
     },
     '41': {
       title: 'Favorite Food',
-      audio: '6005',
+      audio: 'VO_Nahida_Favorite_Food',
       text: "Definitely Candied Ajilenakh Nuts. I just need one little bite and my brain starts chugging away at top speed, and suddenly there's no problem too difficult for me to solve. The only thing you need to watch out for is: Don't put the jar somewhere that's too easy to reach.",
       tips: '',
       tasks: null,
     },
     '42': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Nahida_Least_Favorite_Food',
       text: "Sea creatures are born into infinite darkness and live their lives in the depths of the ocean. It's a complete unknown to me. Eating them is like swallowing an icky storm cloud.",
       tips: '',
       tasks: null,
@@ -445,7 +445,7 @@ export const nahidaVl = {
     },
     '46': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Nahida_Birthday',
       text: "I was thinking, your birthday celebration needs to be at least as grand as the Sabzeruz Festival, so... Hmm? Too much? But everyone's already done preparing for it. C'mon, c'mon, let's go! Just this once — I'll make sure you love it!",
       tips: '',
       tasks: null,

@@ -2,7 +2,7 @@ export const neuvilletteVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Neuvillette_Hello',
       text: 'Greetings. I am the Chief Justice, or "Iudex" of Fontaine, but you may simply address me by using my surname, "___." Not because I wish to keep my distance from you... No, I am merely conscious that being overly familiar may bring the impartiality of the judiciary into question in some people\'s eyes.\\nIf you have any requests or concerns, then — to the extent permissible by law, at least — we can sit down and discuss them together as we partake of some imported water from Qiaoying Village.',
       tips: '',
       tasks: null,
@@ -30,21 +30,21 @@ export const neuvilletteVL = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Neuvillette_When_It_Rains',
       text: 'Ah, my apologies. This heavy rain must be quite an inconvenience for you.',
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'After the Rain',
-      audio: '1202',
+      audio: 'VO_Neuvillette_After_the_Rain',
       text: "It's over...",
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When Thunder Strikes',
-      audio: '1203',
+      audio: 'VO_Neuvillette_When_Thunder_Strikes',
       text: 'What\'s that saying again... "A bolt from the blue"? Yes, yes, I believe that captures how it feels to me.',
       tips: 'Complete "Cataclysm\'s Quickening."',
       tasks: [
@@ -62,49 +62,49 @@ export const neuvilletteVL = {
     },
     '7': {
       title: 'When It Snows',
-      audio: '1204',
+      audio: 'VO_Neuvillette_When_It_Snows',
       text: "Snow is in fact one of water's natural self-cleansing mechanisms. But human activity tends to reduce snow's purity, so do not consume it.",
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'When the Sun Is Out',
-      audio: '1205',
+      audio: 'VO_Neuvillette_When_the_Sun_Is_Out',
       text: 'I find that the, um... beauty of bright sunlight is best appreciated from the indoors through a window.',
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'In the Desert',
-      audio: '1206',
+      audio: 'VO_Neuvillette_In_the_Desert',
       text: 'I cannot help but feel that you bringing me here is some sort of an assassination attempt...',
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Neuvillette_Good_Morning',
       text: 'Good morning. I hope you have a wonderful day.',
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Neuvillette_Good_Afternoon',
       text: "Ah, it's past noon. You must be looking forward to your afternoon tea or coffee break? I certainly am.",
       tips: '',
       tasks: null,
     },
     '12': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Neuvillette_Good_Evening',
       text: 'Good evening. I hope you have not encountered any unpleasantness today.',
       tips: '',
       tasks: null,
     },
     '13': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Neuvillette_Good_Night',
       text: 'Good night. I am quite fond of the image of a perfectly still body of water, and it is on this note that I would like to wish you a peaceful, undisturbed sleep. May no waves of emotional distress ripple through your dreams tonight.',
       tips: '',
       tasks: null,
@@ -254,7 +254,7 @@ export const neuvilletteVL = {
     },
     '25': {
       title: 'About the Geo Archon',
-      audio: '4001',
+      audio: 'VO_Neuvillette_About_the_Geo_Archon',
       text: 'Nothing will stop me from rendering judgment on each of The Seven. As the Archon who won the Authority of Geo, Deus Auri must be called to trial. If one does not wish to see us on opposite sides of a conflict, they need not worry, for I intend to stay in Fontaine for the foreseeable future, which could well mean another four hundred years. As another point of consolation, even when the trial eventually takes place, it is still not a given that the judgment will lead to a physical confrontation.',
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: [
@@ -272,7 +272,7 @@ export const neuvilletteVL = {
     },
     '26': {
       title: 'About the Anemo Archon',
-      audio: '4002',
+      audio: 'VO_Neuvillette_About_the_Anemo_Archon',
       text: 'I shall fulfill my vow to judge all of The Seven in turn, even if the sky should fall and the ground give way. As the recipient of the Authority of Anemo, the God of Breeze and Hope must also stand trial. ...Hmm? He spends most of his time being a harmless drunkard? Well, even so, I must meet him for myself and proceed from there.',
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: [
@@ -290,7 +290,7 @@ export const neuvilletteVL = {
     },
     '27': {
       title: 'About the Electro Archon',
-      audio: '4003',
+      audio: 'VO_Neuvillette_About_the_Electro_Archon',
       text: 'As a survivor of the dragon race who has regained my full dragonhood, I must fulfill my oaths and obligations even if it means returning all the water in the oceans back to the heavens. In taking the Authority of Electro, the Narukami placed herself on the list of the usurpers, she will... Oh, you say she has isolated herself in the Plane of Euthymia, and now rarely appears in public? Then I shall pay her a visit in another few centuries.',
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: [
@@ -308,7 +308,7 @@ export const neuvilletteVL = {
     },
     '28': {
       title: 'About the Dendro Archon',
-      audio: '4004',
+      audio: 'VO_Neuvillette_About_the_Dendro_Archon',
       text: 'Though the day will come when I put her on trial, I must commend the God of Verdure on her sense of responsibility. Few things are without flaws in this world, but the devotion and benevolence she displays are a testament to her commitment to continued progress. I felt enormous regret when I learned of the mistreatment she has endured over the past five hundred years.',
       tips: 'Unlocks at Friendship Lv. 6',
       tasks: [
@@ -326,35 +326,35 @@ export const neuvilletteVL = {
     },
     '29': {
       title: 'About Wriothesley',
-      audio: '4005',
+      audio: 'VO_Neuvillette_About_Wriothesley',
       text: 'Wriothesley is a trustworthy man. I fought hard for the title and reputation he now has. I expect you to think that I\'ve simply been duped by his flattery and appearance of loyalty... But to that, I would quote the Inazuman proverb: "The words unspoken are the flower." Which means, some things are best left unsaid.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '30': {
       title: 'About Clorinde',
-      audio: '4006',
+      audio: 'VO_Neuvillette_About_Clorinde',
       text: "Clorinde's peerless skills have made her the most powerful Champion Duelist in our nation. As a successor to the Marechaussee Hunters of old, she plays a vital role in ensuring the fairness and impartiality of the courtroom. Also, she's actually not as stoic as she might appear.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '31': {
       title: 'About Lyney and Lynette',
-      audio: '4007',
+      audio: 'VO_Neuvillette_About_Lyney_and_Lynette',
       text: "Their performances are just fascinating, don't you think? They draw you into a magical world where, on one hand, everything that takes place is part of an elaborate deception — but on the other, all manner of miracles are possible if you are only willing to believe.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '32': {
       title: 'About Sigewinne',
-      audio: '4008',
+      audio: 'VO_Neuvillette_About_Sigewinne',
       text: "I don't know how Sigewinne is faring these days. But if I hear so much as the whiff of a rumor that she's being bullied, I shall summon Wriothesley here and demand an explanation. She's so kind and vulnerable... She brought me some Kamera film the last time she visited, and asked to listen to more of my commentary on the water of Natlan... How long is it until her next vacation?",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '33': {
       title: 'About Furina',
-      audio: '4009',
+      audio: 'VO_Neuvillette_About_Furina',
       text: 'Now, the curtain has finally fallen on her "performance"... The character she portrayed was an imaginary one, yet in playing that role she fulfilled her duties... Though she is meek and full of doubt by nature, she was able to use madness to stiffen her resolve and see her duty through to its conclusion. The work that she has done over the centuries is truly immense. If she were to ever make a return to the stage, I should personally attend the performance and give her my heartfelt applause... Yes, I must do so when the opportunity arises.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -372,7 +372,7 @@ export const neuvilletteVL = {
     },
     '34': {
       title: 'About Navia',
-      audio: '4010',
+      audio: 'VO_Neuvillette_About_Navia',
       text: "I regret to say that after my various interactions with her — such as when I inadvertently angered her, and when I accepted her apology — and even now, in spite of the guilt I continue to feel over what happened to her father, I feel... very distant from her, as if I'm observing the starry sky from the bottom of a deep lake. It is by no means intentional, and I also know it is not something that I can easily make up for. Unlike water, emotion does not settle quickly once agitated, nor is it naturally inclined towards equilibrium.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -390,7 +390,7 @@ export const neuvilletteVL = {
     },
     '35': {
       title: 'About the Pyro Archon',
-      audio: '4016',
+      audio: 'VO_Neuvillette_About_the_Pyro_Archon',
       text: "The Pyro Archon triumphed over the Abyss by leveraging rules and legacy — a truly commendable feat. Yet, holding an Authority seized from the dragons remains an unpardonable sin. I recognize, however, that Natlan has experienced great suffering, so I am in no hurry to act. Hm? You claim that historical records describe the battle against Xbalanque as a formal duel, and the victim's family was treated fairly? Complicated indeed, but a worthwhile consideration nonetheless...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -457,14 +457,14 @@ export const neuvilletteVL = {
     },
     '43': {
       title: 'Favorite Food',
-      audio: '6003',
+      audio: 'VO_Neuvillette_Favorite_Food',
       text: 'Animals can survive for weeks without food, but merely a few days without water. There is no dish that could ever compare to pure, unadulterated water. With that in mind, food items that contain plenty of liquid are the next best thing.',
       tips: '',
       tasks: null,
     },
     '44': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Neuvillette_Least_Favorite_Food',
       text: 'How can people bring themselves to consume deep-fried foods? Or grilled food with no sauce? The worst culprits in my view are those Charcoal-Baked Ajilenakh Cakes. Surely, even eating a dehumidifying agent would be kinder on the stomach?',
       tips: '',
       tasks: null,
@@ -492,7 +492,7 @@ export const neuvilletteVL = {
     },
     '48': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Neuvillette_Birthday',
       text: "Ah, so it's your birthday. Happy birthday. I do not know if rain is in the forecast today, but let me see what I can do.",
       tips: '',
       tasks: null,

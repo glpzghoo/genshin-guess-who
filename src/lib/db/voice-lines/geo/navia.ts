@@ -2,7 +2,7 @@ export const naviaVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Navia_Hello',
       text: 'Nice to meet you! I am ___, the esteemed president, leader, commander-in-chief, executive director, and Boss of Spina di Rosula. You strike me as somebody special — a person of character. Something tells me that this is the beginning of a long partnership between us... perhaps even as long as all the titles in front of my name.',
       tips: '',
       tasks: null,
@@ -30,77 +30,77 @@ export const naviaVL = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Navia_When_It_Rains',
       text: "Ugh... It's raining again...",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'When Thunder Strikes',
-      audio: '1202',
+      audio: 'VO_Navia_When_Thunder_Strikes',
       text: 'Aaah! Ugh, I should have covered my ears when I saw the flash!',
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When It Snows',
-      audio: '1203',
+      audio: 'VO_Navia_When_It_Snows',
       text: 'Maybe I should take off my hat, and let the snowflakes fall onto my face... I feel like that would be really refreshing.',
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'When the Sun Is Out',
-      audio: '1204',
+      audio: 'VO_Navia_When_the_Sun_Is_Out',
       text: "Quick, look! Up in the sky! Look at that scorching sun, it's like a blast furnace! You know what this means? It means we have to drop everything, right now, and make a run for the ice cream store! We need to get two of the biggest cones they sell, and then it's an all-out race to see who can finish before it melts!",
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'After the Rain',
-      audio: '1205',
+      audio: 'VO_Navia_After_the_Rain',
       text: 'Finally! The rain has stopped!',
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'When the Wind Is Blowing',
-      audio: '1206',
+      audio: 'VO_Navia_When_the_Wind_Is_Blowing',
       text: "*gasp* My hat! No, my skirt! Aah, don't make me choose!",
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'In the Desert',
-      audio: '1207',
+      audio: 'VO_Navia_In_the_Desert',
       text: "Sunglasses are great at keeping the sand out of your eyes so you can see your way! Except at night... then you can't see anything at all...",
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Navia_Good_Morning',
       text: "Morning! Any plans for the day yet? If not, why don't you hang out with me?",
       tips: '',
       tasks: null,
     },
     '12': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Navia_Good_Afternoon',
       text: "I've heard about this weird new kind of lasagna that's just come out. You wanna try it together? Sounds like it'll taste pretty strange... but I still gotta try it!",
       tips: '',
       tasks: null,
     },
     '13': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Navia_Good_Evening',
       text: 'In the headlines tonight, President of Spina di Rosula in "awesome" mood after spending another fantastic day with her favorite partner!',
       tips: '',
       tasks: null,
     },
     '14': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Navia_Good_Night',
       text: "Come on now, time to empty your mind and get a good night's sleep! I'll see you tomorrow~",
       tips: '',
       tasks: null,
@@ -168,7 +168,7 @@ export const naviaVL = {
     },
     '19': {
       title: 'About the Vision',
-      audio: '3001',
+      audio: 'VO_Navia_About_the_Vision',
       text: "Here, take a look at my Vision! I love how shiny it is. Doesn't it go great with my dress?\\nStill, it's nothing compared to using the elements without a Vision... And with no training or anything either, right? So cool.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
@@ -189,14 +189,14 @@ export const naviaVL = {
     },
     '22': {
       title: 'Interesting Things',
-      audio: '3003',
+      audio: 'VO_Navia_Interesting_Things',
       text: "I really love the Pluie Lotus — it's such a beautiful color. Plus, when you see them in full bloom, it's a sure sign that the rainy season is finally over.",
       tips: '',
       tasks: null,
     },
     '23': {
       title: 'About Clorinde',
-      audio: '4001',
+      audio: 'VO_Navia_About_Clorinde',
       text: "She might not say much, or show a lot of emotion, but I can tell that she feels deeply. After my father's death, I... well, it caused quite a rift between us for a long time. But even then, I never did like having her constantly walking on eggshells around me... I much prefer how things are now.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -214,21 +214,21 @@ export const naviaVL = {
     },
     '24': {
       title: 'About Charlotte',
-      audio: '4002',
+      audio: 'VO_Navia_About_Charlotte',
       text: "Charlotte's known for her fast-and-furious reporting, but it's her photography skills that really impress me. She once snapped a quick photo of me, a waist-up shot, and the result was absolutely stunning — it was like looking at an oil painting. She seems to have a knack for writing extraordinary news stories and taking the most eye-catching photos. Guess she was born to be a journalist.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '25': {
       title: 'About Chiori',
-      audio: '4003',
+      audio: 'VO_Navia_About_Chiori',
       text: "Ah, the fashion designer who brought the coolest Inazuman trends to Fontaine? She's actually been a great help to the Spina behind the scenes. She says my unorthodox ideas always give her a lot of inspiration for her work, and from what I can tell, I think she means it. Still, she drew the line at my request for a ten-meter-tall top hat. *sigh* Missed opportunity, if you ask me... Imagine seeing one of those in front of the shop! It would be a great way to draw in customers.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '26': {
       title: 'About Furina',
-      audio: '4004',
+      audio: 'VO_Navia_About_Furina',
       text: 'I was lucky enough to catch her in an opera when I was young. Even though it was a charity show, the tickets were nearly impossible to get! She was performing in character then, but I thought she seemed more in her element then than she ever did as an Archon, giving speeches up in the opera box... Looking back, I guess my intuition was right.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -246,7 +246,7 @@ export const naviaVL = {
     },
     '27': {
       title: 'About Neuvillette',
-      audio: '4005',
+      audio: 'VO_Navia_About_Neuvillette',
       text: "Ah, how to describe Monsieur Neuvillette... He's... complex, in some ways — but very straightforward in others. I guess a good analogy would be rocky reefs in the sea: Trying to navigate through obstacles you can't see makes for a bumpy ride, but if you can figure out how they work, you start to spot the signs.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -264,14 +264,14 @@ export const naviaVL = {
     },
     '28': {
       title: 'About Wriothesley',
-      audio: '4006',
+      audio: 'VO_Navia_About_Wriothesley',
       text: "Trying to discuss anything with that guy is an exhausting process. Clorinde says I needn't have any reservations about collaborating with him in the scope of our preexisting agreement, but I still shouldn't trust everything that comes out of his mouth. No wonder my father never tried to get involved with the affairs of the Fortress... I think I'll play it safe and keep things that way.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '29': {
       title: 'About The Knave',
-      audio: '4007',
+      audio: 'VO_Navia_About_The_Knave',
       text: "She is a formidable but caring leader, and definitely comes across like a master of the house. But she's still a Fatui Harbinger, and that means she must have a more ruthless side. So don't worry — while I'll always appreciate what she did for Poisson, I'm not about to let my guard down around her completely.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -289,7 +289,7 @@ export const naviaVL = {
     },
     '30': {
       title: 'About Lyney and Lynette',
-      audio: '4008',
+      audio: 'VO_Navia_About_Lyney_and_Lynette',
       text: "I know magicians can often be all bravado and razzmatazz, but I can tell that Lyney is a sincere guy who cares deeply about his friends and family. He's so mature for his age, it catches me off guard sometimes... Oh, and how could I forget — it was so kind of him to try and cheer up the children in Poisson with an impromptu free magic show during the flood! I'll have to invite him and Lynette over for some macarons at my place when I get the chance. I know Lynette's always conjuring teacups out of thin air, so surely at least she's a fan of a proper tea break?",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -307,7 +307,7 @@ export const naviaVL = {
     },
     '31': {
       title: 'About Escoffier',
-      audio: '4009',
+      audio: 'VO_Navia_About_Escoffier',
       text: "My good friend Escoffier is finally out and about again... It's about time. Shutting herself away like that, all to try and surpass her own magnum opus, Gateau Debord. It's a wonder she can even stand the sunlight after all that time inside. You know what? We should all go for a picnic sometime! I'll make sure to bring her a pair of sunglasses and a parasol. Believe me, you're in for a treat! With Escoffier, even the simplest of outings feel like fine dining!",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -396,14 +396,14 @@ export const naviaVL = {
     },
     '39': {
       title: 'Favorite Food',
-      audio: '6003',
+      audio: 'VO_Navia_Favorite_Food',
       text: "I like trying new things, for the surprise factor. But before you question my sense of taste, let me clarify that just because I can appreciate the novelty in a dish doesn't mean I'm claiming it tastes amazing.",
       tips: '',
       tasks: null,
     },
     '40': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Navia_Least_Favorite_Food',
       text: "I never enjoy leftovers that have been left too long. It just feels like sacrilege to neglect the poor food when it's fresh, then eat after it's gone stale...",
       tips: '',
       tasks: null,
@@ -431,7 +431,7 @@ export const naviaVL = {
     },
     '44': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Navia_Birthday',
       text: "Do you believe that wishes can come true? You know, like when you toss a coin into a fountain for good luck? As long as you throw enough coins in, one of your wishes is sure to come true, right?\\nWell anyway, today's your birthday, so I'm not leaving anything to chance — I've got a whole bag of Mora here dedicated to making your birthday wish come true. Whatever you want, I'll do everything in my power to make it happen!",
       tips: '',
       tasks: null,

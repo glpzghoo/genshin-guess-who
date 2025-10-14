@@ -2,7 +2,7 @@ export const dehyaVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Dehya_Hello',
       text: "My name's ___. I'm the merc you hired. So what you got for me? A commission? A fight? Armed escort? Whatever it is — you know where to find me.",
       tips: '',
       tasks: null,
@@ -30,70 +30,70 @@ export const dehyaVL = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Dehya_When_It_Rains',
       text: "According to some of the older Eremites, it does actually rain in the desert on occasion. And when it does, it's always a lot heavier than this.",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'When Thunder Strikes',
-      audio: '1202',
+      audio: 'VO_Dehya_When_Thunder_Strikes',
       text: "Man, this thunder is loud. They won't hear us coming... or vice versa.",
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When It Snows',
-      audio: '1203',
+      audio: 'VO_Dehya_When_It_Snows',
       text: '*grimace* ...Are you kidding me? This is even colder than the nights in the desert...',
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'When the Sun Is Out',
-      audio: '1204',
+      audio: 'VO_Dehya_When_the_Sun_Is_Out',
       text: "Ah, sun's out, guns out, hehe... Just sucks that I got so much work to do.",
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'When the Wind Is Blowing',
-      audio: '1205',
+      audio: 'VO_Dehya_When_the_Wind_Is_Blowing',
       text: "Wind's picking up... Let's play it safe and pitch camp downwind of our target.",
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'In the Desert',
-      audio: '1206',
+      audio: 'VO_Dehya_In_the_Desert',
       text: "Stay close, no going off on your own. The desert doesn't take prisoners.",
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Dehya_Good_Morning',
       text: "Ready to roll? Good. Then let's pack up and move out.",
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Dehya_Good_Afternoon',
       text: "Where did the morning go... Alright, soon as I see a good spot, I'll set up the stove and cook us some lunch.",
       tips: '',
       tasks: null,
     },
     '12': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Dehya_Good_Evening',
       text: "You're still working at this hour? Ugh, and I thought we mercs had it tough.",
       tips: '',
       tasks: null,
     },
     '13': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Dehya_Good_Night',
       text: "It's late. Go get some rest, I'll take the night watch.",
       tips: '',
       tasks: null,
@@ -161,7 +161,7 @@ export const dehyaVL = {
     },
     '18': {
       title: 'About the Vision',
-      audio: '3001',
+      audio: 'VO_Dehya_About_the_Vision',
       text: "How's my life changed since getting my Vision? Huh... Well, obviously it gives me an extra edge in battle, but honestly, the biggest thing for me is that it's helped me bring a few more mercs into the Blazing Beasts...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -179,7 +179,7 @@ export const dehyaVL = {
     },
     '19': {
       title: 'Something to Share',
-      audio: '3002',
+      audio: 'VO_Dehya_Something_to_Share',
       text: "You know Ajilenakh Nuts, right? I used to go crazy for them as a kid... but my dad was the worst at shelling them. He'd just hack 'em to pieces with his knife, leaving a bunch of inedible mush behind. In the end, he'd salvage what he could by scraping pieces of the flesh off the shell, then mixing it with some milk and calling it porridge.\\n...I do miss the taste of that porridge sometimes... and I miss that old nut-cracker, too.",
       tips: 'Complete "Lionsblood"',
       tasks: [
@@ -197,21 +197,21 @@ export const dehyaVL = {
     },
     '20': {
       title: 'Interesting Things',
-      audio: '3003',
+      audio: 'VO_Dehya_Interesting_Things',
       text: "A lot of people see the Red Vulture as an omen of death and disaster, because it feeds on the carcasses of the dead. But the way it soars high above the desert... I've always seen it as a symbol of the tenacity of life.\\nI wonder what the Great Red Sand looks like from all the way up there.",
       tips: '',
       tasks: null,
     },
     '21': {
       title: 'About Tighnari',
-      audio: '4001',
+      audio: 'VO_Dehya_About_Tighnari',
       text: "Hahaha, the one that got away... I came thiiis close to doing a job for that guy. A contact put us in touch — I was supposed to be his guide through the desert for some kind of investigation. But then it got canceled out of the blue, no idea why. Wait, actually... I think there was something about him not being good with the heat? I'm not sure, but it could have been that...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '22': {
       title: 'About Lesser Lord Kusanali',
-      audio: '4002',
+      audio: 'VO_Dehya_About_Lesser_Lord_Kusanali',
       text: "Hmph... You know, I always thought the Akademiya's worst were just a bunch of greedy dogs, each fighting for their slice of the pie... Nope. Turns out they were a vicious pack of wolves who betrayed the whole nation. If you want my opinion... Lesser Lord Kusanali was too good to them. Those animals didn't deserve her mercy — she should've broken every single bone in their bodies! Instead, they got a nice little vacation in the rainforest... To say they got off lightly is just putting it mildly.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -229,7 +229,7 @@ export const dehyaVL = {
     },
     '23': {
       title: 'About Candace',
-      audio: '4003',
+      audio: 'VO_Dehya_About_Candace',
       text: "Ah, Candace... I love her to bits, but she can be as stubborn as a Sumpter Beast sometimes. I keep telling her she oughtta cut herself some slack, take some time off, maybe go take a walk around Sumeru City, buy herself some nice new clothes or jewelry... but she always says the same old thing: She can't bear to leave the village unprotected. I dunno how many times she's turned me down now. Ugh, if I really can't persuade her, I guess I'll just have to watch the village for her sometime, and get one of my Eremite girls to take her shopping...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -247,7 +247,7 @@ export const dehyaVL = {
     },
     '24': {
       title: 'About Alhaitham',
-      audio: '4004',
+      audio: 'VO_Dehya_About_Alhaitham',
       text: 'He offered me a position in the Akademiya once. I declined — working in a place like that would bore me to death. He, on the other hand, is exactly the kind of person I can imagine working there... always talking in long, convoluted sentences, and in that snooty tone... Tsk.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -265,14 +265,14 @@ export const dehyaVL = {
     },
     '25': {
       title: 'About Cyno',
-      audio: '4005',
+      audio: 'VO_Dehya_About_Cyno',
       text: "The General Mahamatra? Doesn't suffer fools gladly, and certainly doesn't beat around the bush. Having seen the way he works, he gets a thumbs up from me.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '26': {
       title: 'About Nilou',
-      audio: '4006',
+      audio: 'VO_Dehya_About_Nilou',
       text: "Now that the whole saga with the Akademiya's over, I guess she can finally dance as much as she wants. She offered me some of her face powder last time I saw her, but I didn't have the time to go fetch it. So I told her to give it to Candace instead. Hmm... I wonder how she's liking it? I need to go check sometime...",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -290,21 +290,21 @@ export const dehyaVL = {
     },
     '27': {
       title: 'About Dori',
-      audio: '4007',
+      audio: 'VO_Dehya_About_Dori',
       text: "Ah, the famous merchant. I've heard that her prices aren't cheap, but is it true that she can get a hold of anything you want? Hahaha, then I should start talking to her, 'cause uh... some of the supplies we mercs need are impossible to get anywhere else on the market, no matter what you're willing to pay.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '28': {
       title: 'About Layla',
-      audio: '4008',
+      audio: 'VO_Dehya_About_Layla',
       text: "Ahh, the sleepy girl, yeah, I think I remember her. I ran into her once at an oasis on the outskirts of the desert. She was out with some group from the Akademiya doing astronomical observations, or something. I wasn't really paying attention. ...Huh? Candace... what now? Emissary from the stars? The heck is that all about? Almost sounds like she didn't wake up before getting out of bed.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '29': {
       title: 'About Sethos',
-      audio: '4009',
+      audio: 'VO_Dehya_About_Sethos',
       text: "Oh yeah, I only found out about him being from the Temple of Silence recently, too. Ahh, sorry, no — I'm no expert in mysterious organizations like that. Seen him a few times in the desert though. He's very down-to-earth. Once when my guys got into some trouble in the desert, he was kind enough to share his drinking water with them. Nice guy.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
@@ -382,14 +382,14 @@ export const dehyaVL = {
     },
     '37': {
       title: 'Favorite Food',
-      audio: '6005',
+      audio: 'VO_Dehya_Favorite_Food',
       text: 'Candied Ajilenakh Nuts, no contest. Easy to take on the road, and of course delicious.',
       tips: '',
       tasks: null,
     },
     '38': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Dehya_Least_Favorite_Food',
       text: "Anything bitter. Nope. Keep it away from me. Can't stand it.",
       tips: '',
       tasks: null,
@@ -417,7 +417,7 @@ export const dehyaVL = {
     },
     '42': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Dehya_Birthday',
       text: "Happy Birthday! Reach into your pocket, your present's already in there. How'd I do it? Hehe, just a little trick of the trade. Anyway, more importantly, I've booked us a real feast at Lambad's Tavern, so let's get ourselves over there! ...Huh? Oh, don't worry, I didn't invite any of the other mercs. Nah, that rowdy bunch is always getting into arguments — not the kind of people you'd want at a birthday celebration. It'll just be me and you, like it should be... Ahem, c'mon, c'mon, let's go.",
       tips: '',
       tasks: null,

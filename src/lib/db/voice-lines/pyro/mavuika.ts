@@ -2,7 +2,7 @@ export const mavuikaVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Mavuika_Hello',
       text: 'With the flames to guide us across time, we took a land shrouded in darkness, and used our own blood and tears to forge it into a home. Now, our journey continues, and a new chapter awaits. As the current Pyro Archon, allow me, ___, to light your way forward.',
       tips: '',
       tasks: null,
@@ -30,56 +30,56 @@ export const mavuikaVL = {
     },
     '4': {
       title: 'When It Snows',
-      audio: '1201',
+      audio: 'VO_Mavuika_When_It_Snows',
       text: "Ah, nice and cool. Natlan doesn't have places like this.",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'When the Sun Is Out',
-      audio: '1202',
+      audio: 'VO_Mavuika_When_the_Sun_Is_Out',
       text: 'Weather like this is perfect for enjoying the outdoors. Wanna go for a spin? Here, hop on.',
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'After the Rain',
-      audio: '1203',
+      audio: 'VO_Mavuika_After_the_Rain',
       text: "Ah, you're dripping wet. That must be uncomfortable... Let's take a break. I'll use my fire to dry you off.",
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'In the Desert',
-      audio: '1204',
+      audio: 'VO_Mavuika_In_the_Desert',
       text: 'Sand is the natural enemy of fire and civilization. In the desert, ruins are all that remain to tell the story of the past.',
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Mavuika_Good_Morning',
       text: 'After waking up, I always go over the plan for the day in my head... Unfortunately, sleeping in is never on the agenda.',
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Mavuika_Good_Afternoon',
       text: 'Have you had lunch? The Collective of Plenty sent over some fresh fruit — the perfect thing to round out a meal. Here, try some.',
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Mavuika_Good_Evening',
       text: 'Hm, so this is the proposal and approximate budget to rebuild the roads in the Children of Echoes... Oh, good evening. Is it that late already?',
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Mavuika_Good_Night',
       text: "Good Night! I'm going to take it easy and wrap up some work. Oh, don't worry — I see keeping busy as a great way to relax.",
       tips: '',
       tasks: null,
@@ -147,35 +147,35 @@ export const mavuikaVL = {
     },
     '16': {
       title: 'About the Vision',
-      audio: '3006',
+      audio: 'VO_Mavuika_About_the_Vision',
       text: 'For humans, Visions and Ancient Names are both gifts from the gods, where the former bestows Elemental power and the latter spiritual inspiration. However, I have always believed that no external factor is a condition for greatness — heroism comes from within.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '17': {
       title: 'Something to Share',
-      audio: '3002',
+      audio: 'VO_Mavuika_Something_to_Share',
       text: "When I was little, my father told me that a barrel can only hold as much water as the shortest plank. If you want to reach your full potential, you need to be willing to become the weakest link, to acknowledge your shortcomings and learn from others. That doesn't make you a failure, it pushes you to succeed.",
       tips: '',
       tasks: null,
     },
     '18': {
       title: 'Interesting Things',
-      audio: '3003',
+      audio: 'VO_Mavuika_Interesting_Things',
       text: 'Baby Yumkasaurs are incredibly cute, and my Saurian companion, Hitata, was especially clingy. He used to jump into my arms the minute he saw me, even from quite a distance. My sister, Hine, would get so jealous — whenever she saw Hitata run towards me, she would do the same. Before I knew it, I would have an armful of baby Saurian and baby sister at the same time, haha.',
       tips: '',
       tasks: null,
     },
     '19': {
       title: 'About Xilonen',
-      audio: '4001',
+      audio: 'VO_Mavuika_About_Xilonen',
       text: "Xilonen is one of the best craftsmen in Natlan. She has the ability to forge Ancient Names and is well-versed in Secret Source technology. Not to mention, she never backs away from a challenge, even when it's completely uncharted territory. The process isn't without twists and turns — like design changes and other modifications — but the results speak for themselves.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '20': {
       title: 'About Citlali',
-      audio: '4002',
+      audio: 'VO_Mavuika_About_Citlali',
       text: "Many people find her strange or difficult to get along with. But, this is how I see it — Citlali doesn't concern herself with trivial matters, but she's always there when it counts. I'm sure you've seen that for yourself. She's someone who can easily tunnel vision and get herself embroiled in trouble, so I try to keep certain things from her. But, she can see right through me... She's too sharp.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -193,7 +193,7 @@ export const mavuikaVL = {
     },
     '21': {
       title: 'About Chasca',
-      audio: '4003',
+      audio: 'VO_Mavuika_About_Chasca',
       text: 'Being able to survive under the influence of Abyssal corrosion was already a miracle, but thanks to the people and Saurians of this land, she even found a reason not just to survive, but to live. I have every faith in her fortitude, but I will still do what I can to make this land a "gentler" place — even the strongest among us need a break sometimes.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -211,7 +211,7 @@ export const mavuikaVL = {
     },
     '22': {
       title: 'About Ororon',
-      audio: '4004',
+      audio: 'VO_Mavuika_About_Ororon',
       text: "In my opinion, Ororon's true personality is very different from what he projects on the outside — like lava covered in ice. His tribe and his friends bring him peace, but his drive to protect them and his need to become a hero leave him restless. It's inadvisable to act on impulse, but these are precious qualities all the same.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -243,7 +243,7 @@ export const mavuikaVL = {
     },
     '25': {
       title: 'About Mualani',
-      audio: '4007',
+      audio: 'VO_Mavuika_About_Mualani',
       text: "In terms of personality, Mualani and Tupac are completely different, and yet both inherited the name, Umoja. Unity lies not in a particular action, but in a state of mind — a willingness to give your all for your nation, family and friends. But, I doubt Mualani was thinking about any of that back then. She knew one thing to be true — that Kachina's life was worth any risk to her own.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -261,7 +261,7 @@ export const mavuikaVL = {
     },
     '26': {
       title: 'About Kinich',
-      audio: '4008',
+      audio: 'VO_Mavuika_About_Kinich',
       text: 'In addition to the Turnfire, Malipo has another meaning, "cost" or "price." It may seem less overtly heroic compared to the other Ancient Names, but in truth, Malipo teaches us to be calm and analytical — to ask the questions people may not want to hear. Without people who possess these qualities, it\'s just too easy for the rest of us to act on impulse and emotion, and make decisions we\'ll come to regret.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -279,7 +279,7 @@ export const mavuikaVL = {
     },
     '27': {
       title: 'About Kachina',
-      audio: '4009',
+      audio: 'VO_Mavuika_About_Kachina',
       text: "After you rescued Kachina from the Night Kingdom, I visited her family with Chief Pacal, and brought a few gifts to once again apologize for what happened. Kachina's time in the Night Kingdom left her with many scars she will have to carry into the future — scars she should never have had to bear... And for that, the fault is mine.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -297,21 +297,21 @@ export const mavuikaVL = {
     },
     '28': {
       title: 'About Varesa',
-      audio: '4010',
+      audio: 'VO_Mavuika_About_Varesa',
       text: "During the Pilgrimage, I cover all the expenses at the Weary Inn, and without fail, there's always an order for a party tray for eighty. I used to assume it was someone ordering for a large group of friends, but as it turns out... Varesa ordered it all for herself.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '29': {
       title: 'About Ifa',
-      audio: '4011',
+      audio: 'VO_Mavuika_About_Ifa',
       text: "The truly great doctors often possess vast medical knowledge as well as great communication skills. And, when the patient and the doctor do not speak the same language, observation and empathy become even more important. That's why Ifa can make friends with just about anyone.\\nSuffice it to say, if someone is on bad terms with Ifa — human or saurian — I doubt the problem lies with him, haha.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
     },
     '30': {
       title: 'About The Captain',
-      audio: '4012',
+      audio: 'VO_Mavuika_About_The_Captain',
       text: 'For him, I suspect the past five hundred years felt endless. When someone is deprived of death, life becomes a journey with no end, and the human spirit easily grows weary. And yet, he managed to seize the only chance of victory to arrive at the end he sought all along. I have great respect for warriors like him.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -329,7 +329,7 @@ export const mavuikaVL = {
     },
     '31': {
       title: 'About The Seven',
-      audio: '4013',
+      audio: 'VO_Mavuika_About_The_Seven',
       text: "To be quite honest, you likely know them better than me. However, their nations continue to survive and thrive to this day, and that would be impossible without strong leadership. Once this chapter of Natlan's history comes to a close, I plan on strengthening our relationship with other nations so that Natlan can continue to grow.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -347,7 +347,7 @@ export const mavuikaVL = {
     },
     '32': {
       title: 'About Yumemizuki Mizuki',
-      audio: '4014',
+      audio: 'VO_Mavuika_About_Yumemizuki_Mizuki',
       text: "Ah, she left a very positive impression. When she first arrived in Natlan, I heard that she had a great deal of interest in our hot springs and spent quite some time studying their properties. But, it wasn't for profit. She was interested in their role in improving mental health. Such a pure cause deserved our support and respect.\\nSpeaking of which... Is it true that the current Archon of Inazuma enjoys hot springs as well? If that's the case, I believe I've found a good starting point for our next conversation.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: null,
@@ -436,14 +436,14 @@ export const mavuikaVL = {
     },
     '40': {
       title: 'Favorite Food',
-      audio: '6003',
+      audio: 'VO_Mavuika_Favorite_Food',
       text: "Even when it comes to the simplest home-cooked meals, every family has their own recipe, and the flavor can change a lot. I've tried a bunch of different stews around the Stadium, each unique and delicious in its own way. But, if I'm cooking for myself, I still prefer my family recipe.",
       tips: '',
       tasks: null,
     },
     '41': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Mavuika_Least_Favorite_Food',
       text: "I like most ingredients, but I don't really appreciate dishes that are more form than substance, like a full course dinner that will take three whole hours to get through... I respect culinary innovation, of course, but I prefer to spend my time on something more productive.",
       tips: '',
       tasks: null,
@@ -471,7 +471,7 @@ export const mavuikaVL = {
     },
     '45': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Mavuika_Birthday',
       text: "#Starting from today, you should write down all your accomplishments on a piece of paper. Then, when you take it out on your next birthday, you'll have a gift from yourself! That way, you'll never forget how amazing you are. Happy Birthday, Traveler.",
       tips: '',
       tasks: null,

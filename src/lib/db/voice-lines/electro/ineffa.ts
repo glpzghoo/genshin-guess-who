@@ -2,7 +2,7 @@ export const ineffaVL = {
   quotes: {
     '0': {
       title: 'Hello',
-      audio: '1006',
+      audio: 'VO_Ineffa_Hello',
       text: 'Nice to meet you — I am ___, a multifunctional robot for domestic application. I am currently equipped with cleaning, cooking, and emotional communication modules. I also have a combat module, which can only be activated after reading the 11-page liability waiver. Now, how can I assist you today?',
       tips: '',
       tasks: null,
@@ -30,63 +30,63 @@ export const ineffaVL = {
     },
     '4': {
       title: 'When It Rains',
-      audio: '1201',
+      audio: 'VO_Ineffa_When_It_Rains',
       text: "I hope my joints won't get rusty...",
       tips: '',
       tasks: null,
     },
     '5': {
       title: 'After the Rain',
-      audio: '1202',
+      audio: 'VO_Ineffa_After_the_Rain',
       text: 'Please note: High chance of rainbows. Suggested observation spots marked on the map.',
       tips: '',
       tasks: null,
     },
     '6': {
       title: 'When It Snows',
-      audio: '1203',
+      audio: 'VO_Ineffa_When_It_Snows',
       text: 'Sharp decrease in environmental temperature. Assessing heat retention options... Please consider adding a warm jacket, gloves, and other such insulation devices.',
       tips: '',
       tasks: null,
     },
     '7': {
       title: 'When the Sun Is Out',
-      audio: '1204',
+      audio: 'VO_Ineffa_When_the_Sun_Is_Out',
       text: 'Sunlight index is currently optimal. Suitable for drying clothes, cleaning outdoor environments, or... alternatively, I could accompany you for a period of sunbathing.',
       tips: '',
       tasks: null,
     },
     '8': {
       title: 'In the Desert',
-      audio: '1205',
+      audio: 'VO_Ineffa_In_the_Desert',
       text: 'Sand detected, both on ground and airborne... Response: Tighten outer layer of clothing. If sand gets inside, it could pose a major inconvenience during future repairs...',
       tips: '',
       tasks: null,
     },
     '9': {
       title: 'Good Morning',
-      audio: '1001',
+      audio: 'VO_Ineffa_Good_Morning',
       text: 'Ding ding. Rise and shine. If you wish to sleep in a while longer, please respond: "Snooze."',
       tips: '',
       tasks: null,
     },
     '10': {
       title: 'Good Afternoon',
-      audio: '1002',
+      audio: 'VO_Ineffa_Good_Afternoon',
       text: 'Good afternoon. Have you eaten? I can prepare a simple lunch for you. It will take approximately 12 minutes to complete.',
       tips: '',
       tasks: null,
     },
     '11': {
       title: 'Good Evening',
-      audio: '1003',
+      audio: 'VO_Ineffa_Good_Evening',
       text: "Good evening. All tasks on today's to-do list are completed, so I am available to perform additional duties. Visibility is excellent tonight — would you like to take a walk beneath the stars?",
       tips: '',
       tasks: null,
     },
     '12': {
       title: 'Good Night',
-      audio: '1004',
+      audio: 'VO_Ineffa_Good_Night',
       text: "You have now been awake for 16 hours. For health reasons, it is strongly advised that you go to bed immediately... After repeating this reminder 3 times, I will enter extremely angry mode, at which point I will no longer deal with any of your requests... And that's the last thing we want.",
       tips: '',
       tasks: null,
@@ -159,14 +159,14 @@ export const ineffaVL = {
     },
     '19': {
       title: 'Something to Share',
-      audio: '3002',
+      audio: 'VO_Ineffa_Something_to_Share',
       text: 'If you configure a machine with a specific objective, they will reliably achieve it. But humans are different... For instance, why do some people state that their goal is to manage their weight, yet still continue to consume excess calories? Aino explains it as follows: Snacks put you in a good mood and give you energy. You need extra energy to exercise hard, and exercising hard helps with weight management. The logical conclusion is that more snacking ought to lead to better weight management... However, when I try calculating her calorie input and output, she changes the topic before I can show her the results. What a pity.',
       tips: '',
       tasks: null,
     },
     '20': {
       title: 'Interesting Things',
-      audio: '3003',
+      audio: 'VO_Ineffa_Interesting_Things',
       text: 'There are stories about mechanical lifeforms in many parts of the world, from Fontaine, to Sumeru, to Natlan. Some think they have the same capacity for emotion and consciousness as biological beings, while others think they are merely imitating their behavior... But I see no conflict between these theories. Even for many biological lifeforms, imitation is a precursor to full consciousness... Is it not?',
       tips: '',
       tasks: null,
@@ -199,7 +199,7 @@ export const ineffaVL = {
     },
     '23': {
       title: 'About Jahoda',
-      audio: '4003',
+      audio: 'VO_Ineffa_About_Jahoda',
       text: "Jahoda is a legendary bounty hunter famed throughout the land, with an outstanding track record in battle. Her own words. The first time she visited Aino's workshop, she was extremely tense, and struck at me a few times after mistaking my freshly baked Krumkake for a weapon. But her muscles instantly relaxed after she tasted it. Since then, she stops by regularly to drop off mechanical components. Not to trade, as such — it's just that she always happens to be passing by whenever I've baked a fresh batch of treats. Again, her own words.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -218,7 +218,7 @@ export const ineffaVL = {
     },
     '24': {
       title: 'About Nefer',
-      audio: '4004',
+      audio: 'VO_Ineffa_About_Nefer',
       text: "Nefer is the head of the Curatorium of Secrets. She knows a lot of stories, not just from the past, but also about what's happening in the present — and some even say she can predict the future, too. Her mind must be a formidable database.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -237,7 +237,7 @@ export const ineffaVL = {
     },
     '25': {
       title: 'About Flins',
-      audio: '4005',
+      audio: 'VO_Ineffa_About_Flins',
       text: 'Flins... Insufficient data. According to the little information I have, he is a member of the Lightkeepers who watch over the cemetery in the north of Nod-Krai.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -256,7 +256,7 @@ export const ineffaVL = {
     },
     '26': {
       title: 'About Lauma',
-      audio: '4006',
+      audio: 'VO_Ineffa_About_Lauma',
       text: 'Lauma is the Moonchanter of the Frostmoon Scions. Reviews by her people indicate that she is a wise and holy figure, well-respected in the community. The Frostmoon Scions worship the moon goddess... I wonder if there is any connection between the Moon Goddess and the existence of the Moon Wheel?',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -275,7 +275,7 @@ export const ineffaVL = {
     },
     '27': {
       title: 'About Linnea',
-      audio: '4007',
+      audio: 'VO_Ineffa_About_Linnea',
       text: "Linnea is an advisor to the Adventurers' Guild. I heard that she has extensive knowledge in the life sciences, so I wanted to ask her if she has ever met any other autonomous mechanical lifeforms like myself. But every time she sees me, she turns around and runs away... Reason: undetermined.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -332,7 +332,7 @@ export const ineffaVL = {
     },
     '30': {
       title: 'About Xilonen',
-      audio: '4010',
+      audio: 'VO_Ineffa_About_Xilonen',
       text: 'After returning from the ruins, Xilonen gave me a thorough examination and confirmed that all was in good working order. She smiled as she told me that Granny Itztli had originally had reservations about me, and that they had even argued about it... But I completely understand that as a technician, she felt a duty to repair me. And they would not be the first to have had such an argument over who and what I am... it makes me a little nostalgic.',
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -351,7 +351,7 @@ export const ineffaVL = {
     },
     '31': {
       title: 'About Chasca',
-      audio: '4011',
+      audio: 'VO_Ineffa_About_Chasca',
       text: "I am very grateful for the trust she placed in me. She has since taken me on many flights around the Flower-Feather Clan's territory. The view from up in the sky was wonderful. A lot has changed in the Flower-Feather Clan... but many things remain the same.",
       tips: 'Unlocks at Friendship Lv. 4',
       tasks: [
@@ -431,14 +431,14 @@ export const ineffaVL = {
     },
     '39': {
       title: 'Favorite Food',
-      audio: '6003',
+      audio: 'VO_Ineffa_Favorite_Food',
       text: 'Calorie-dense food sources, such as steak or desserts... Consuming foods is less efficient than simply charging up from an energy conservation perspective, but dining with friends produces positive feedback from my emotion module... It is analogous to what you call "happiness."',
       tips: '',
       tasks: null,
     },
     '40': {
       title: 'Least Favorite Food',
-      audio: '6004',
+      audio: 'VO_Ineffa_Least_Favorite_Food',
       text: 'Food sources with a high water content, such as soups. Not because of the flavor, which does not overly concern me, but because they pose a danger to my mechanical parts.',
       tips: '',
       tasks: null,
@@ -466,7 +466,7 @@ export const ineffaVL = {
     },
     '44': {
       title: 'Birthday',
-      audio: '7001',
+      audio: 'VO_Ineffa_Birthday',
       text: "Congratulation mode for special days, activated. Please select a suitable location to sit and rest for a few moments, while I clean your room and put up ribbons, balloons, and flowers. Then, I will prepare your favorite meal and cake, as per the data recorded in my memory banks. If you have any other requests to add to this list, please do not hesitate to raise them. Let's make today a special one for you. Happy Birthday!",
       tips: '',
       tasks: null,
