@@ -241,8 +241,10 @@ export function EndlessGame() {
             text={hint.value}
             audioSrc={hint.audioSrc}
             onPlay={playVoiceLine}
+            onStop={stopVoiceLine}
             isPlaying={isVoiceLinePlaying}
             hasError={voiceLineError}
+            character={getDisplayName(currentCharacter)}
           />
         );
       }
