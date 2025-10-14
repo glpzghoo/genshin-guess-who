@@ -7,13 +7,6 @@ export const zhongliVL = {
       tips: '',
       tasks: null,
     },
-    '1': {
-      title: 'Chat: Journeys',
-      audio: '1101',
-      text: "Every journey has its final day. Don't rush.",
-      tips: '',
-      tasks: null,
-    },
     '2': {
       title: 'Chat: Tours',
       audio: '1102',
