@@ -4,7 +4,12 @@ import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { getAllCharacters, getDisplayName } from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { useVoiceLinePlayer } from '@/lib/hooks/use-voice-line-player';
@@ -12,16 +17,29 @@ import { VoiceLineHint } from '@/components/VoiceLineHint';
 
 type VoiceLineEntry = { title: string; text: string; audioSrc?: string };
 
-const toAudioSrc = (character: Character, audioId?: string): string | undefined => {
-  if (!character?.route || !audioId) return undefined;
+const toAudioSrc = (
+  character: Character,
+  audioId?: string
+): string | undefined => {
+  if (!character.route || !audioId) return undefined;
+
+  // Remove any file extension like .mp3/.ogg/.wav
   const trimmedId = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
   if (!trimmedId) return undefined;
+
+  // Clean + encode each part of the route
   const routePath = character.route
-    .replace(/^\//, '')
-    .replace(/\/+/g, '/')
-    .replace(/\.{2,}/g, '.')
-    .trim();
+    .replace(/^\//, '') // remove leading slash
+    .replace(/\/+/g, '/') // collapse multiple slashes
+    .replace(/\.{2,}/g, '.') // remove suspicious dots
+    .trim()
+    .split('/') // break into parts
+    .filter(Boolean) // remove empty segments
+    .map((part) => encodeURIComponent(part)) // make URL-safe
+    .join('/');
+
   const fileName = encodeURIComponent(trimmedId);
+
   return `https://genshin-voicelines.s3.eu-north-1.amazonaws.com/voicelines/${routePath}/${fileName}.ogg`;
 };
 
@@ -35,7 +53,8 @@ const extractVoiceLines = (character: Character): VoiceLineEntry[] => {
     const text = String(q.text).replace(/\\n/g, '\n').trim();
     if (!text) continue;
     const title = (q.title ?? 'Voice Line').toString().trim();
-    const audioSrc = typeof q.audio === 'string' ? toAudioSrc(character, q.audio) : undefined;
+    const audioSrc =
+      typeof q.audio === 'string' ? toAudioSrc(character, q.audio) : undefined;
     out.push({ title, text, audioSrc });
   }
   return out;
@@ -48,14 +67,7 @@ export default function AdminPanel() {
     if (!query.trim()) return characters;
     const q = query.toLowerCase();
     return characters.filter((c) =>
-      [
-        c.name,
-        c.element,
-        c.weaponType,
-        c.region,
-        c.EN_VA,
-        c.JP_VA,
-      ]
+      [c.name, c.element, c.weaponType, c.region, c.EN_VA, c.JP_VA]
         .filter(Boolean)
         .some((v) => String(v).toLowerCase().includes(q))
     );
@@ -78,14 +90,23 @@ export default function AdminPanel() {
             onChange={(e) => setQuery(e.target.value)}
             className="max-w-md"
           />
-          <Badge className="bg-white/10 border border-white/15 text-white/80">{filtered.length} characters</Badge>
+          <Badge className="bg-white/10 border border-white/15 text-white/80">
+            {filtered.length} characters
+          </Badge>
         </div>
-        <Button variant="outline" onClick={handleLogout} className="border-white/30 bg-white/10 text-white hover:bg-white/20">
+        <Button
+          variant="outline"
+          onClick={handleLogout}
+          className="border-white/30 bg-white/10 text-white hover:bg-white/20"
+        >
           Logout
         </Button>
       </div>
 
-      <Accordion type="multiple" className="divide-y divide-white/10 rounded-xl border border-white/10">
+      <Accordion
+        type="multiple"
+        className="divide-y divide-white/10 rounded-xl border border-white/10"
+      >
         {filtered.map((c) => {
           const voiceLines = extractVoiceLines(c);
           return (
@@ -93,10 +114,16 @@ export default function AdminPanel() {
               <AccordionTrigger className="py-4">
                 <div className="flex items-center gap-4">
                   <div className="h-12 w-12 overflow-hidden rounded-lg border border-white/10 bg-black/30">
-                    <img src={`/assets/ui/${c.icon}.png`} alt={c.name} className="h-full w-full object-cover" />
+                    <img
+                      src={`/assets/ui/${c.icon}.png`}
+                      alt={c.name}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div>
-                    <div className="text-base font-semibold text-white">{getDisplayName(c)}</div>
+                    <div className="text-base font-semibold text-white">
+                      {getDisplayName(c)}
+                    </div>
                     <div className="mt-1 text-xs text-white/70">
                       {c.element} • {c.weaponType} • {c.region} • {c.rank}-Star
                     </div>
@@ -106,7 +133,9 @@ export default function AdminPanel() {
               <AccordionContent className="pb-6">
                 <div className="grid gap-6 md:grid-cols-3">
                   <div className="md:col-span-1 space-y-2">
-                    <div className="text-sm font-medium text-white/80">Character Info</div>
+                    <div className="text-sm font-medium text-white/80">
+                      Character Info
+                    </div>
                     <div className="grid grid-cols-2 gap-2 text-sm text-white/80">
                       <div className="text-white/60">Body Type</div>
                       <div>{c.bodyType}</div>
@@ -115,24 +144,43 @@ export default function AdminPanel() {
                       <div className="text-white/60">Japanese VA</div>
                       <div>{c.JP_VA || '—'}</div>
                       <div className="text-white/60">Birthday</div>
-                      <div>{Array.isArray(c.birthday) && c.birthday.length === 2 ? `${c.birthday[0]}/${c.birthday[1]}` : '—'}</div>
+                      <div>
+                        {Array.isArray(c.birthday) && c.birthday.length === 2
+                          ? `${c.birthday[0]}/${c.birthday[1]}`
+                          : '—'}
+                      </div>
                       <div className="text-white/60">Release Ver.</div>
                       <div>{c.VersionReleased || '—'}</div>
                       <div className="text-white/60">Release</div>
-                      <div>{c.release ? new Date(c.release * 1000).toLocaleDateString() : '—'}</div>
+                      <div>
+                        {c.release
+                          ? new Date(c.release * 1000).toLocaleDateString()
+                          : '—'}
+                      </div>
                       <div className="text-white/60">Route</div>
-                      <div className="truncate" title={c.route}>{c.route || '—'}</div>
+                      <div className="truncate" title={c.route}>
+                        {c.route || '—'}
+                      </div>
                     </div>
                   </div>
                   <div className="md:col-span-2">
-                    <div className="text-sm font-medium text-white/80 mb-2">All Voice Lines</div>
+                    <div className="text-sm font-medium text-white/80 mb-2">
+                      All Voice Lines
+                    </div>
                     {voiceLines.length === 0 ? (
-                      <div className="text-sm text-white/60">No voice lines found.</div>
+                      <div className="text-sm text-white/60">
+                        No voice lines found.
+                      </div>
                     ) : (
                       <div className="space-y-4">
                         {voiceLines.map((vl, idx) => (
-                          <div key={`${c.id}-${idx}`} className="rounded-lg border border-white/10 bg-white/5 p-3">
-                            <div className="text-xs uppercase tracking-wide text-white/55">{vl.title}</div>
+                          <div
+                            key={`${c.id}-${idx}`}
+                            className="rounded-lg border border-white/10 bg-white/5 p-3"
+                          >
+                            <div className="text-xs uppercase tracking-wide text-white/55">
+                              {vl.title}
+                            </div>
                             <div className="mt-2">
                               <VoiceLineHint
                                 text={vl.text}
@@ -158,4 +206,3 @@ export default function AdminPanel() {
     </div>
   );
 }
-
