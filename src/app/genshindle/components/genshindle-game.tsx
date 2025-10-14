@@ -20,6 +20,7 @@ import {
   STORAGE_KEY,
   HARD_MODE_STORAGE_KEY,
   isNextDayKey,
+  type GenshindleDifficulty,
   type GenshindleState,
   type GenshindleStoredEntry,
   type GenshindleStats,
@@ -345,9 +346,10 @@ export function GenshindleGame() {
   );
 
   const applyDailyWin = useCallback(
-    (dailyKey: string) => {
+    (dailyKey: string, difficultyOverride?: GenshindleDifficulty) => {
       updateStats((prev) => {
-        const difficulty = hardMode ? 'hard' : 'normal';
+        const difficulty =
+          difficultyOverride ?? (hardMode ? 'hard' : 'normal');
         const bucket = prev.daily[difficulty];
         if (bucket.lastSolvedKey === dailyKey) {
           return prev;
@@ -380,25 +382,29 @@ export function GenshindleGame() {
     [hardMode, updateStats]
   );
 
-  const applyDailyFailure = useCallback(() => {
-    updateStats((prev) => {
-      const difficulty = hardMode ? 'hard' : 'normal';
-      const bucket = prev.daily[difficulty];
-      if (bucket.current === 0) {
-        return prev;
-      }
-      return {
-        ...prev,
-        daily: {
-          ...prev.daily,
-          [difficulty]: {
-            ...bucket,
-            current: 0,
+  const applyDailyFailure = useCallback(
+    (difficultyOverride?: GenshindleDifficulty) => {
+      updateStats((prev) => {
+        const difficulty =
+          difficultyOverride ?? (hardMode ? 'hard' : 'normal');
+        const bucket = prev.daily[difficulty];
+        if (bucket.current === 0) {
+          return prev;
+        }
+        return {
+          ...prev,
+          daily: {
+            ...prev.daily,
+            [difficulty]: {
+              ...bucket,
+              current: 0,
+            },
           },
-        },
-      };
-    });
-  }, [hardMode, updateStats]);
+        };
+      });
+    },
+    [hardMode, updateStats]
+  );
 
   const applyEndlessWin = useCallback(() => {
     updateStats((prev) => {
@@ -518,6 +524,11 @@ export function GenshindleGame() {
     }
   }, [endlessMode, effectiveOverrideDate, resetGame]);
 
+  const usingDailyPuzzle =
+    !endlessMode &&
+    (effectiveOverrideDate === null ||
+      getGenshindleKey(effectiveOverrideDate) === todayKey);
+
   useEffect(() => {
     if (typeof window === 'undefined' || endlessMode) return;
 
@@ -529,11 +540,25 @@ export function GenshindleGame() {
       setPlayedKeys(Object.keys(parsed));
       const entry = parsed[gameKey];
       const hydrated = parseStoredEntry(entry);
-      setState(hydrated);
+      setState(hydrated.state);
+
+      if (usingDailyPuzzle && hydrated.difficulty) {
+        if (hydrated.state.solved) {
+          applyDailyWin(gameKey, hydrated.difficulty);
+        } else if (hydrated.state.guesses.length >= MAX_ATTEMPTS) {
+          applyDailyFailure(hydrated.difficulty);
+        }
+      }
     } catch (error) {
       console.warn('Failed to hydrate genshindle progress', error);
     }
-  }, [endlessMode, gameKey]);
+  }, [
+    applyDailyFailure,
+    applyDailyWin,
+    endlessMode,
+    gameKey,
+    usingDailyPuzzle,
+  ]);
 
   const persist = useCallback(
     (next: GenshindleState) => {
@@ -543,17 +568,17 @@ export function GenshindleGame() {
         const parsed: Record<string, GenshindleStoredEntry> = raw
           ? (JSON.parse(raw) as Record<string, GenshindleStoredEntry>)
           : {};
-        parsed[gameKey] = createStoredEntry(next);
+        const difficulty = hardMode ? 'hard' : 'normal';
+        parsed[gameKey] = createStoredEntry(next, difficulty);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
         setPlayedKeys(Object.keys(parsed));
       } catch (error) {
         console.warn('Failed to persist genshindle progress', error);
       }
     },
-    [endlessMode, gameKey, setPlayedKeys]
+    [endlessMode, gameKey, hardMode, setPlayedKeys]
   );
 
-  const usingDailyPuzzle = !endlessMode && effectiveOverrideDate === null;
   const stillGuessing = !state.solved && state.guesses.length < MAX_ATTEMPTS;
 
   const submitGuess = useCallback(

@@ -36,7 +36,10 @@ export type GenshindleStreakRecord = {
   lastSolvedKey: string | null;
 };
 
-export type GenshindleModeStats = Record<GenshindleDifficulty, GenshindleStreakRecord>;
+export type GenshindleModeStats = Record<
+  GenshindleDifficulty,
+  GenshindleStreakRecord
+>;
 
 export type GenshindleStats = {
   daily: GenshindleModeStats;
@@ -71,21 +74,46 @@ const coerceRecord = (
       : null,
 });
 
+const coerceModeStats = (
+  maybeMode?:
+    | Partial<GenshindleModeStats>
+    | Partial<GenshindleStreakRecord>
+    | null
+): GenshindleModeStats => {
+  const hasDifficultyBuckets =
+    typeof maybeMode === 'object' &&
+    maybeMode !== null &&
+    ('normal' in maybeMode || 'hard' in maybeMode);
+
+  if (hasDifficultyBuckets) {
+    const mode = maybeMode as Partial<GenshindleModeStats>;
+    return {
+      normal: coerceRecord(mode.normal),
+      hard: coerceRecord(mode.hard),
+    };
+  }
+
+  const record = coerceRecord(
+    maybeMode as Partial<GenshindleStreakRecord> | null | undefined
+  );
+  return {
+    normal: { ...record },
+    hard: { ...record },
+  };
+};
+
 export const parseGenshindleStats = (raw: string | null): GenshindleStats => {
   if (!raw) {
     return DEFAULT_GENSHINDLE_STATS;
   }
   try {
-    const parsed = JSON.parse(raw) as Partial<GenshindleStats>;
+    const parsed = JSON.parse(raw) as Partial<GenshindleStats> & {
+      daily?: unknown;
+      endless?: unknown;
+    };
     return {
-      daily: {
-        normal: coerceRecord(parsed?.daily?.normal),
-        hard: coerceRecord(parsed?.daily?.hard),
-      },
-      endless: {
-        normal: coerceRecord(parsed?.endless?.normal),
-        hard: coerceRecord(parsed?.endless?.hard),
-      },
+      daily: coerceModeStats(parsed?.daily as any),
+      endless: coerceModeStats(parsed?.endless as any),
     };
   } catch {
     return DEFAULT_GENSHINDLE_STATS;
@@ -101,6 +129,12 @@ export type GenshindleStoredEntry = {
   solved: boolean;
   solvedAt?: number;
   guesses: GenshindleStoredGuess[];
+  difficulty?: GenshindleDifficulty;
+};
+
+export type ParsedGenshindleEntry = {
+  state: GenshindleState;
+  difficulty: GenshindleDifficulty | null;
 };
 
 export type GenshindleCellId =
@@ -282,9 +316,12 @@ export const evaluateGuess = (
 
 export const parseStoredEntry = (
   entry: GenshindleStoredEntry | undefined
-): GenshindleState => {
+): ParsedGenshindleEntry => {
   if (!entry) {
-    return initialState;
+    return {
+      state: initialState,
+      difficulty: null,
+    };
   }
 
   const guesses: GenshindleGuess[] = [];
@@ -302,7 +339,14 @@ export const parseStoredEntry = (
     }
   }
 
-  return {
+  const difficulty: GenshindleDifficulty | null =
+    entry.difficulty === 'hard'
+      ? 'hard'
+      : entry.difficulty === 'normal'
+        ? 'normal'
+        : null;
+
+  const state: GenshindleState = {
     guesses,
     solved: Boolean(entry.solved),
     solvedAt:
@@ -310,10 +354,16 @@ export const parseStoredEntry = (
         ? entry.solvedAt
         : (entry.solvedAt ?? null),
   };
+
+  return {
+    state,
+    difficulty,
+  };
 };
 
 export const createStoredEntry = (
-  state: GenshindleState
+  state: GenshindleState,
+  difficulty: GenshindleDifficulty = 'normal'
 ): GenshindleStoredEntry => ({
   solved: state.solved,
   solvedAt: state.solved ? (state.solvedAt ?? Date.now()) : undefined,
@@ -321,6 +371,7 @@ export const createStoredEntry = (
     characterId: String(guess.character.id),
     timestamp: guess.timestamp,
   })),
+  difficulty,
 });
 
 const stringHash = (input: string): number => {
