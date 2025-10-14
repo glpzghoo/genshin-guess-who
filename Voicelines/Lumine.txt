@@ -30,8 +30,7 @@ VO_Lumine_About_Dihua_Marsh
 VO_Lumine_About_Divination
 VO_Lumine_About_Divine_Predictions_in_Liyue
 VO_Lumine_About_Diving
-VO_Lumine_About_Don't_Play_With_Food
-_or_With_Money
+VO_Lumine_About_Don't_Play_With_Food_or_With_Money
 VO_Lumine_About_Dori's_Genie
 VO_Lumine_About_Drawing_Fortune_Slips
 VO_Lumine_About_Effort_and_Reward
@@ -90,9 +89,7 @@ VO_Lumine_About_Razor
 VO_Lumine_About_Relaxing
 VO_Lumine_About_Resolving_Conflicts
 VO_Lumine_About_Riches
-VO_Lumine_About_Rock
-_Paper
-_Scissors
+VO_Lumine_About_Rock_Paper_Scissors
 VO_Lumine_About_Sakura_Blooms
 VO_Lumine_About_Sangonomiya_Kokomi
 VO_Lumine_About_Saurian_Companions
