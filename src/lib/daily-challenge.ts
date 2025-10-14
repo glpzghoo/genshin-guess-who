@@ -131,7 +131,7 @@ const pickVoiceLine = (
       .map((part) => encodeURIComponent(part))
       .join('/');
     const fileName = encodeURIComponent(trimmedId);
-    return `/assets/voicelines/${routePath}/${fileName}.ogg`;
+    return `https://genshin-voicelines.s3.eu-north-1.amazonaws.com/voicelines/${routePath}/${fileName}.ogg`;
   };
 
   const sortedKeys = Object.keys(quotes).sort();
