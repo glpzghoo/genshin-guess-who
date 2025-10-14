@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/', // allow all pages
+      disallow: '/admin', // disallow admin page
     },
     sitemap: `${baseUrl}/sitemap.xml`, // tell bots where your sitemap is
   };
