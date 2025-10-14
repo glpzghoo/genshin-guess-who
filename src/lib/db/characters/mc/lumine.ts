@@ -11,7 +11,7 @@ const lumine: Character = {
   bodyType: 'GIRL',
   icon: 'UI_AvatarIcon_PlayerGirl',
   birthday: [0, 0],
-  route: 'Anemo Traveler Girl',
+  route: 'Lumine',
   release: 1601244000,
   VersionReleased: 1.0,
   JP_VA: 'Yuuki Aoi',

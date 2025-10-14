@@ -11,7 +11,7 @@ const aether: Character = {
   bodyType: 'BOY',
   icon: 'UI_AvatarIcon_PlayerBoy',
   birthday: [0, 0],
-  route: 'Pyro Traveler Boy',
+  route: 'Aether',
   release: 1735758000,
   VersionReleased: 1.0,
   EN_VA: 'Zach Aguilar',
