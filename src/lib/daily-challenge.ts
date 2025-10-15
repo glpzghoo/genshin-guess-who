@@ -76,6 +76,56 @@ const regionLabels: Record<string, string> = {
   MAINACTOR: 'Traveler',
 };
 
+const sanitizeRoutePath = (routeSegment?: string): string | null => {
+  if (!routeSegment) return null;
+
+  const normalized = routeSegment
+    .replace(/^\//, '')
+    .replace(/\/+/g, '/')
+    .replace(/\.{2,}/g, '.')
+    .trim();
+
+  if (!normalized) return null;
+
+  const segments = normalized
+    .split('/')
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  if (
+    segments.length === 0 ||
+    segments.some((part) => part === '.' || part === '..')
+  ) {
+    return null;
+  }
+
+  return segments.map((part) => encodeURIComponent(part)).join('/');
+};
+
+const sanitizeAudioId = (audioId?: string): string | null => {
+  if (!audioId) return null;
+
+  const trimmed = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
+  if (!trimmed) return null;
+
+  const cleaned = trimmed.replace(/^\.+|\.+$/g, '').replace(/\.{2,}/g, '.');
+  if (!cleaned) return null;
+
+  return encodeURIComponent(cleaned);
+};
+
+export const buildVoiceLineAudioSrc = (
+  routeSegment?: string,
+  audioId?: string
+): string | undefined => {
+  const routePath = sanitizeRoutePath(routeSegment);
+  const fileName = sanitizeAudioId(audioId);
+
+  if (!routePath || !fileName) return undefined;
+
+  return `/api/voicelines?route=${routePath}&file=${fileName}`;
+};
+
 const formatWithFallback = (
   source: string,
   dictionary: Record<string, string>
@@ -122,29 +172,6 @@ const pickVoiceLine = (
   const routeSegment =
     typeof character.route === 'string' ? character.route.trim() : '';
 
-  const toAudioSrc = (audioId?: string): string | undefined => {
-    if (!routeSegment || !audioId) return undefined;
-
-    // Remove any file extension like .mp3/.ogg/.wav
-    const trimmedId = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
-    if (!trimmedId) return undefined;
-
-    // Clean + encode each part of the route
-    const routePath = routeSegment
-      .replace(/^\//, '') // remove leading slash
-      .replace(/\/+/g, '/') // collapse multiple slashes
-      .replace(/\.{2,}/g, '.') // remove suspicious dots
-      .trim()
-      .split('/') // break into parts
-      .filter(Boolean) // remove empty segments
-      .map((part) => encodeURIComponent(part)) // make URL-safe
-      .join('/');
-
-    const fileName = encodeURIComponent(trimmedId);
-
-    return `https://genshin-voicelines.s3.eu-north-1.amazonaws.com/voicelines/${routePath}/${fileName}.ogg`;
-  };
-
   const sortedKeys = Object.keys(quotes).sort();
   const valid: { title: string; text: string; audioSrc?: string }[] = [];
 
@@ -161,7 +188,9 @@ const pickVoiceLine = (
     if (hasRedaction(cleanText)) continue;
 
     const audioSrc =
-      typeof q.audio === 'string' ? toAudioSrc(q.audio) : undefined;
+      typeof q.audio === 'string'
+        ? buildVoiceLineAudioSrc(routeSegment, q.audio)
+        : undefined;
 
     valid.push({ title, text: cleanText, audioSrc });
   }

@@ -11,39 +11,76 @@ type UseVoiceLinePlayerReturn = {
 
 export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const currentSrcRef = useRef<string | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  const stop = useCallback(() => {
+  const cleanupCurrentAudio = useCallback((release = false) => {
     const current = audioRef.current;
     if (!current) return;
     current.pause();
     current.onended = null;
     current.onerror = null;
-    audioRef.current = null;
+    if (release) {
+      audioRef.current = null;
+      currentSrcRef.current = undefined;
+    }
+  }, []);
+
+  const stop = useCallback(() => {
+    const current = audioRef.current;
+    if (!current) return;
+    current.pause();
     setIsPlaying(false);
   }, []);
 
-  useEffect(() => stop, [stop]);
+  useEffect(() => {
+    return () => {
+      cleanupCurrentAudio(true);
+    };
+  }, [cleanupCurrentAudio]);
 
   const play = useCallback<PlayVoiceLine>(
     (audioSrc) => {
-      stop();
       if (!audioSrc) {
         setHasError(true);
         return;
       }
 
+      const isSameSource = currentSrcRef.current === audioSrc;
+      const existingAudio = audioRef.current;
+
+      if (isSameSource && existingAudio) {
+        setHasError(false);
+        setIsPlaying(true);
+
+        const resumePromise = existingAudio.play();
+        if (resumePromise?.catch) {
+          resumePromise.catch((error) => {
+            console.warn('Failed to resume voice line audio', error);
+            setHasError(true);
+            setIsPlaying(false);
+          });
+        }
+        return;
+      }
+
+      cleanupCurrentAudio(true);
+
       setHasError(false);
       const audio = new Audio(audioSrc);
+      audio.preload = 'auto';
       audioRef.current = audio;
+      currentSrcRef.current = audioSrc;
 
       audio.onended = () => {
         setIsPlaying(false);
+        audio.currentTime = 0;
       };
       audio.onerror = () => {
         setHasError(true);
-        stop();
+        setIsPlaying(false);
+        cleanupCurrentAudio(true);
       };
 
       setIsPlaying(true);
@@ -56,7 +93,7 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
         });
       }
     },
-    [stop]
+    [stop, cleanupCurrentAudio]
   );
 
   return {
@@ -66,4 +103,3 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
     hasError,
   };
 };
-

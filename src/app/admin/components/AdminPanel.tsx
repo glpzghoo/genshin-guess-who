@@ -10,38 +10,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { getAllCharacters, getDisplayName } from '@/lib/daily-challenge';
+import {
+  buildVoiceLineAudioSrc,
+  getAllCharacters,
+  getDisplayName,
+} from '@/lib/daily-challenge';
 import type { Character } from '@/lib/types';
 import { useVoiceLinePlayer } from '@/lib/hooks/use-voice-line-player';
 import { VoiceLineHint } from '@/components/VoiceLineHint';
 
 type VoiceLineEntry = { title: string; text: string; audioSrc?: string };
-
-const toAudioSrc = (
-  character: Character,
-  audioId?: string
-): string | undefined => {
-  if (!character.route || !audioId) return undefined;
-
-  // Remove any file extension like .mp3/.ogg/.wav
-  const trimmedId = audioId.replace(/\.(ogg|mp3|wav)$/i, '').trim();
-  if (!trimmedId) return undefined;
-
-  // Clean + encode each part of the route
-  const routePath = character.route
-    .replace(/^\//, '') // remove leading slash
-    .replace(/\/+/g, '/') // collapse multiple slashes
-    .replace(/\.{2,}/g, '.') // remove suspicious dots
-    .trim()
-    .split('/') // break into parts
-    .filter(Boolean) // remove empty segments
-    .map((part) => encodeURIComponent(part)) // make URL-safe
-    .join('/');
-
-  const fileName = encodeURIComponent(trimmedId);
-
-  return `https://genshin-voicelines.s3.eu-north-1.amazonaws.com/voicelines/${routePath}/${fileName}.ogg`;
-};
 
 const extractVoiceLines = (character: Character): VoiceLineEntry[] => {
   const quotes = character?.VL?.quotes || {};
@@ -54,7 +32,9 @@ const extractVoiceLines = (character: Character): VoiceLineEntry[] => {
     if (!text) continue;
     const title = (q.title ?? 'Voice Line').toString().trim();
     const audioSrc =
-      typeof q.audio === 'string' ? toAudioSrc(character, q.audio) : undefined;
+      typeof q.audio === 'string'
+        ? buildVoiceLineAudioSrc(character.route, q.audio)
+        : undefined;
     out.push({ title, text, audioSrc });
   }
   return out;
