@@ -21,7 +21,6 @@ import { VoiceLineHint } from '@/components/VoiceLineHint';
 import { useVoiceLinePlayer } from '@/lib/hooks/use-voice-line-player';
 import { renderElementWithIcon, renderWeaponWithIcon } from '@/lib/helpers';
 import OutcomeNotice, { GuessErrorNotice } from '@/components/ResultMessage';
-import Notice from '@/components/Notice';
 import {
   GuessState,
   guessVariant,
@@ -38,7 +37,11 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 type SolutionPickerProps = {
   characters: Character[];
@@ -46,7 +49,11 @@ type SolutionPickerProps = {
   onSelect: (character: Character) => void;
 };
 
-function SolutionPicker({ characters, selection, onSelect }: SolutionPickerProps) {
+function SolutionPicker({
+  characters,
+  selection,
+  onSelect,
+}: SolutionPickerProps) {
   const [open, setOpen] = useState(false);
 
   const displayValue = selection
@@ -78,7 +85,12 @@ function SolutionPicker({ characters, selection, onSelect }: SolutionPickerProps
                 <CommandItem
                   key={character.id}
                   value={String(character.id)}
-                  keywords={[character.name, character.element, character.weaponType, character.region]}
+                  keywords={[
+                    character.name,
+                    character.element,
+                    character.weaponType,
+                    character.region,
+                  ]}
                   onSelect={() => {
                     onSelect(character);
                     setOpen(false);
@@ -93,8 +105,12 @@ function SolutionPicker({ characters, selection, onSelect }: SolutionPickerProps
                       />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium">{getDisplayName(character)}</span>
-                      <span className="text-xs text-white/60">{character.element} • {character.weaponType}</span>
+                      <span className="text-sm font-medium">
+                        {getDisplayName(character)}
+                      </span>
+                      <span className="text-xs text-white/60">
+                        {character.element} • {character.weaponType}
+                      </span>
                     </div>
                     {selection?.id === character.id ? (
                       <CheckIcon className="ml-auto h-4 w-4 text-emerald-400" />
@@ -112,14 +128,20 @@ function SolutionPicker({ characters, selection, onSelect }: SolutionPickerProps
 
 export function DevGame() {
   const characters = useMemo(() => getAllCharacters(), []);
-  const [solution, setSolution] = useState<Character | null>(() => (characters.length ? characters[0] : null));
+  const [solution, setSolution] = useState<Character | null>(() =>
+    characters.length ? characters[0] : null
+  );
   const [guessState, setGuessState] = useState<GuessState>(initialGuessState);
   const [selection, setSelection] = useState<Character | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   // Theme reacts to the current solution
-  const theme = useMemo<ElementTheme>(() => (solution ? getElementTheme(solution) : getElementTheme({} as Character)), [solution]);
+  const theme = useMemo<ElementTheme>(
+    () =>
+      solution ? getElementTheme(solution) : getElementTheme({} as Character),
+    [solution]
+  );
 
   // Reset game when solution changes
   useEffect(() => {
@@ -128,8 +150,14 @@ export function DevGame() {
     setFeedbackMessage(null);
   }, [solution?.id]);
 
-  const hints = useMemo(() => (solution ? buildDailyHints(solution) : []), [solution]);
-  const availableHintCount = useMemo(() => filterDependentHints(hints).length, [hints]);
+  const hints = useMemo(
+    () => (solution ? buildDailyHints(solution) : []),
+    [solution]
+  );
+  const availableHintCount = useMemo(
+    () => filterDependentHints(hints).length,
+    [hints]
+  );
 
   const submitGuess = useCallback(
     (guess: Character) => {
@@ -146,11 +174,18 @@ export function DevGame() {
 
       setGuessState((prev) => {
         if (prev.solved) return prev;
-        const history = [...prev.history, { character: guess, correct, timestamp }];
+        const history = [
+          ...prev.history,
+          { character: guess, correct, timestamp },
+        ];
         const solved = prev.solved || correct;
-        const solvedAt = solved ? (prev.solvedAt ?? (correct ? timestamp : null)) : null;
+        const solvedAt = solved
+          ? (prev.solvedAt ?? (correct ? timestamp : null))
+          : null;
         const failed = history.filter((entry) => !entry.correct).length;
-        const revealedHints = failed ? filterDependentHints(hints.slice(0, failed)) : [];
+        const revealedHints = failed
+          ? filterDependentHints(hints.slice(0, failed))
+          : [];
         return { history, solved, solvedAt, revealedHints };
       });
 
@@ -176,13 +211,21 @@ export function DevGame() {
   }, [failedAttempts, guessState.revealedHints, hints]);
 
   const attemptsUsed = guessState.history.length;
-  const isOutOfAttempts = !guessState.solved && attemptsUsed >= MAX_DAILY_ATTEMPTS;
+  const isOutOfAttempts =
+    !guessState.solved && attemptsUsed >= MAX_DAILY_ATTEMPTS;
   const stillGuessing = !guessState.solved && !isOutOfAttempts;
 
-  const { play: playVoiceLine, stop: stopVoiceLine, isPlaying: isVoiceLinePlaying, hasError: voiceLineError } = useVoiceLinePlayer();
+  const {
+    play: playVoiceLine,
+    stop: stopVoiceLine,
+    isPlaying: isVoiceLinePlaying,
+    hasError: voiceLineError,
+  } = useVoiceLinePlayer();
 
   useEffect(() => {
-    const hasVoiceLine = revealedHints.some((hint) => hint.id === 'voice-line' && hint.audioSrc);
+    const hasVoiceLine = revealedHints.some(
+      (hint) => hint.id === 'voice-line' && hint.audioSrc
+    );
     if (!hasVoiceLine) {
       stopVoiceLine();
     }
@@ -218,7 +261,9 @@ export function DevGame() {
         );
       }
       return (
-        <div className="text-sm font-semibold whitespace-pre-line leading-6 text-white">{hint.value}</div>
+        <div className="text-sm font-semibold whitespace-pre-line leading-6 text-white">
+          {hint.value}
+        </div>
       );
     },
     [isVoiceLinePlaying, playVoiceLine, voiceLineError, solution]
@@ -233,19 +278,26 @@ export function DevGame() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-white" style={{ backgroundImage: theme.gradient }}>
+    <div
+      className="relative min-h-screen overflow-hidden text-white"
+      style={{ backgroundImage: theme.gradient }}
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_55%)]" />
       <motion.div
         className="absolute inset-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        style={{ background: `radial-gradient(circle at 80% 10%, ${theme.glow}, transparent 55%)` }}
+        style={{
+          background: `radial-gradient(circle at 80% 10%, ${theme.glow}, transparent 55%)`,
+        }}
       />
 
       <div className="relative z-10">
         <div className="container mx-auto max-w-6xl px-4 py-8 space-y-8">
           <div className="flex items-center justify-between">
-            <Badge className="bg-white/10 border border-white/20 text-white uppercase tracking-wide">Dev Mode</Badge>
+            <Badge className="bg-white/10 border border-white/20 text-white uppercase tracking-wide">
+              Dev Mode
+            </Badge>
           </div>
 
           <section className="grid gap-6 rounded-3xl border border-white/12 bg-black/35 px-6 py-8 shadow-2xl backdrop-blur-xl md:grid-cols-[1.15fr,0.85fr] md:items-start xl:grid-cols-[1.25fr,0.95fr]">
@@ -256,13 +308,25 @@ export function DevGame() {
                   Dev arena
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Button asChild variant="outline" className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
+                  >
                     <Link href="/daily">Play daily mode - GW</Link>
                   </Button>
-                  <Button asChild variant="outline" className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
+                  >
                     <Link href="/endless">Play endless mode - GW</Link>
                   </Button>
-                  <Button asChild variant="outline" className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-9 rounded-full border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-wide text-white/80 hover:bg-white/20 hover:text-white"
+                  >
                     <Link href="/genshindle">Play genshindle</Link>
                   </Button>
                 </div>
@@ -291,7 +355,9 @@ export function DevGame() {
             <div className="space-y-6">
               <div className="rounded-2xl border border-white/15 bg-black/30 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between text-xs uppercase tracking-wide text-white/60">
-                  <span>{guessState.solved ? 'Solved' : 'Make your guess'}</span>
+                  <span>
+                    {guessState.solved ? 'Solved' : 'Make your guess'}
+                  </span>
                   <span>
                     {guessState.history.length} / {MAX_DAILY_ATTEMPTS} attempts
                   </span>
@@ -322,7 +388,6 @@ export function DevGame() {
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold">Unlocked hints</h2>
-                  <Notice />
                   <Badge
                     className="border"
                     style={{
@@ -369,7 +434,9 @@ export function DevGame() {
               <div className="rounded-3xl border border-white/12 bg-black/35 p-6 backdrop-blur space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-semibold">Guess timeline</h2>
-                  <p className="text-xs text-white/60">Track your attempts and status</p>
+                  <p className="text-xs text-white/60">
+                    Track your attempts and status
+                  </p>
                 </div>
                 <AnimatePresence initial={false} mode="popLayout">
                   {guessState.history.length === 0 ? (
@@ -408,8 +475,14 @@ export function DevGame() {
                                 {getDisplayName(guess.character)}
                               </div>
                               <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-white/70">
-                                {renderElementWithIcon(guess.character.element, 'h-3.5 w-3.5')}
-                                {renderWeaponWithIcon(guess.character.weaponType, 'h-3.5 w-3.5')}
+                                {renderElementWithIcon(
+                                  guess.character.element,
+                                  'h-3.5 w-3.5'
+                                )}
+                                {renderWeaponWithIcon(
+                                  guess.character.weaponType,
+                                  'h-3.5 w-3.5'
+                                )}
                               </div>
                             </div>
                           </div>
