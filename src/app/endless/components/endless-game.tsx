@@ -207,6 +207,7 @@ export function EndlessGame() {
     stop: stopVoiceLine,
     isPlaying: isVoiceLinePlaying,
     hasError: voiceLineError,
+    isLoading: isVoiceLineLoading,
   } = useVoiceLinePlayer();
 
   useEffect(() => {
@@ -244,6 +245,7 @@ export function EndlessGame() {
             isPlaying={isVoiceLinePlaying}
             hasError={voiceLineError}
             character={getDisplayName(currentCharacter)}
+            isLoading={isVoiceLineLoading}
           />
         );
       }
@@ -254,7 +256,7 @@ export function EndlessGame() {
         </div>
       );
     },
-    [isVoiceLinePlaying, playVoiceLine, voiceLineError]
+    [isVoiceLinePlaying, playVoiceLine, voiceLineError, isVoiceLineLoading]
   );
 
   if (!currentCharacter) {

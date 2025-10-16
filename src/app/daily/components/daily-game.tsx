@@ -206,6 +206,7 @@ export function DailyGame() {
     stop: stopVoiceLine,
     isPlaying: isVoiceLinePlaying,
     hasError: voiceLineError,
+    isLoading: isVoiceLineLoading,
   } = useVoiceLinePlayer();
 
   useEffect(() => {
@@ -243,6 +244,7 @@ export function DailyGame() {
             isPlaying={isVoiceLinePlaying}
             hasError={voiceLineError}
             character={getDisplayName(solution)}
+            isLoading={isVoiceLineLoading}
           />
         );
       }
@@ -253,7 +255,7 @@ export function DailyGame() {
         </div>
       );
     },
-    [isVoiceLinePlaying, playVoiceLine, voiceLineError]
+    [isVoiceLinePlaying, playVoiceLine, voiceLineError, isVoiceLineLoading]
   );
 
   return (

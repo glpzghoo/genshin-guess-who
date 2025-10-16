@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Flag, MoreVertical } from 'lucide-react';
+import { Flag, Loader2, MoreVertical } from 'lucide-react';
 import { toast } from 'sonner';
 
 type VoiceLineHintProps = {
@@ -18,6 +18,7 @@ type VoiceLineHintProps = {
   isPlaying: boolean;
   hasError: boolean;
   character?: string;
+  isLoading: boolean;
 };
 
 export function VoiceLineHint({
@@ -28,11 +29,13 @@ export function VoiceLineHint({
   isPlaying,
   hasError,
   character,
+  isLoading,
 }: VoiceLineHintProps) {
   const [hasAttempted, setHasAttempted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isDisabled = !audioSrc;
-  const showUnavailable = (hasAttempted && hasError) || isDisabled;
+  const canPlay = Boolean(audioSrc);
+  const isActionDisabled = !canPlay || isLoading;
+  const showUnavailable = (hasAttempted && hasError) || !canPlay;
 
   const handleFeedback = async (issue: string) => {
     if (!character) return;
@@ -90,9 +93,16 @@ export function VoiceLineHint({
           variant="outline"
           className="w-fit border-white/30 bg-white/10 text-white hover:bg-white/20"
           onClick={isPlaying ? handleStop : handlePlay}
-          disabled={isDisabled}
+          disabled={isActionDisabled}
+          aria-busy={isLoading}
         >
-          {isPlaying ? 'Pause' : 'Play voice line'}
+          {isLoading ? (
+            <Loader2 className=" animate-spin">Please wait...</Loader2>
+          ) : isPlaying ? (
+            'Pause'
+          ) : (
+            'Play voice line'
+          )}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

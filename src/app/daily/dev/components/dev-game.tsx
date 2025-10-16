@@ -220,6 +220,7 @@ export function DevGame() {
     stop: stopVoiceLine,
     isPlaying: isVoiceLinePlaying,
     hasError: voiceLineError,
+    isLoading: isVoiceLineLoading,
   } = useVoiceLinePlayer();
 
   useEffect(() => {
@@ -257,6 +258,7 @@ export function DevGame() {
             isPlaying={isVoiceLinePlaying}
             hasError={voiceLineError}
             character={solution ? getDisplayName(solution) : ''}
+            isLoading={isVoiceLineLoading}
           />
         );
       }
@@ -266,7 +268,7 @@ export function DevGame() {
         </div>
       );
     },
-    [isVoiceLinePlaying, playVoiceLine, voiceLineError, solution]
+    [isVoiceLinePlaying, playVoiceLine, voiceLineError, solution, isVoiceLineLoading]
   );
 
   if (!solution) {

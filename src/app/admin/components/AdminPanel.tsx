@@ -53,7 +53,7 @@ export default function AdminPanel() {
     );
   }, [characters, query]);
 
-  const { play, stop, isPlaying, hasError } = useVoiceLinePlayer();
+  const { play, stop, isPlaying, hasError, isLoading } = useVoiceLinePlayer();
 
   const handleLogout = async () => {
     await fetch('/api/admin', { method: 'DELETE' });
@@ -170,6 +170,7 @@ export default function AdminPanel() {
                                 isPlaying={isPlaying}
                                 hasError={hasError}
                                 character={getDisplayName(c)}
+                                isLoading={isLoading}
                               />
                             </div>
                           </div>

@@ -7,6 +7,7 @@ type UseVoiceLinePlayerReturn = {
   stop: () => void;
   isPlaying: boolean;
   hasError: boolean;
+  isLoading: boolean;
 };
 
 export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
@@ -14,6 +15,7 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
   const currentSrcRef = useRef<string | undefined>(undefined);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const cleanupCurrentAudio = useCallback((release = false) => {
     const current = audioRef.current;
@@ -21,10 +23,14 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
     current.pause();
     current.onended = null;
     current.onerror = null;
+    current.onplaying = null;
+    current.onwaiting = null;
     if (release) {
       audioRef.current = null;
       currentSrcRef.current = undefined;
     }
+    setIsPlaying(false);
+    setIsLoading(false);
   }, []);
 
   const stop = useCallback(() => {
@@ -32,6 +38,7 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
     if (!current) return;
     current.pause();
     setIsPlaying(false);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -52,15 +59,23 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
 
       if (isSameSource && existingAudio) {
         setHasError(false);
-        setIsPlaying(true);
+        setIsLoading(false);
 
         const resumePromise = existingAudio.play();
-        if (resumePromise?.catch) {
-          resumePromise.catch((error) => {
-            console.warn('Failed to resume voice line audio', error);
-            setHasError(true);
-            setIsPlaying(false);
-          });
+        if (resumePromise?.then) {
+          resumePromise
+            .then(() => {
+              setIsPlaying(true);
+              setIsLoading(false);
+            })
+            .catch((error) => {
+              console.warn('Failed to resume voice line audio', error);
+              setHasError(true);
+              setIsPlaying(false);
+              setIsLoading(false);
+            });
+        } else {
+          setIsPlaying(true);
         }
         return;
       }
@@ -68,32 +83,50 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
       cleanupCurrentAudio(true);
 
       setHasError(false);
+      setIsLoading(true);
       const audio = new Audio(audioSrc);
       audio.preload = 'auto';
       audioRef.current = audio;
       currentSrcRef.current = audioSrc;
 
+      audio.onplaying = () => {
+        setIsPlaying(true);
+        setIsLoading(false);
+      };
       audio.onended = () => {
         setIsPlaying(false);
+        setIsLoading(false);
         audio.currentTime = 0;
       };
       audio.onerror = () => {
         setHasError(true);
         setIsPlaying(false);
+        setIsLoading(false);
         cleanupCurrentAudio(true);
       };
+      audio.onwaiting = () => {
+        setIsLoading(true);
+      };
 
-      setIsPlaying(true);
       const playPromise = audio.play();
-      if (playPromise?.catch) {
-        playPromise.catch((error) => {
-          console.warn('Failed to play voice line audio', error);
-          setHasError(true);
-          stop();
-        });
+      if (playPromise?.then) {
+        playPromise
+          .then(() => {
+            setHasError(false);
+          })
+          .catch((error) => {
+            console.warn('Failed to play voice line audio', error);
+            setHasError(true);
+            setIsPlaying(false);
+            setIsLoading(false);
+            cleanupCurrentAudio(true);
+          });
+      } else {
+        setIsPlaying(true);
+        setIsLoading(false);
       }
     },
-    [stop, cleanupCurrentAudio]
+    [cleanupCurrentAudio]
   );
 
   return {
@@ -101,5 +134,6 @@ export const useVoiceLinePlayer = (): UseVoiceLinePlayerReturn => {
     stop,
     isPlaying,
     hasError,
+    isLoading,
   };
 };
