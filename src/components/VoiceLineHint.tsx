@@ -97,7 +97,7 @@ export function VoiceLineHint({
           aria-busy={isLoading}
         >
           {isLoading ? (
-            <Loader2 className=" animate-spin">Please wait...</Loader2>
+            <Loader2 className=" animate-spin" />
           ) : isPlaying ? (
             'Pause'
           ) : (
